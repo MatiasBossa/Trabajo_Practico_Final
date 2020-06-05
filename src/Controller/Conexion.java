@@ -20,7 +20,6 @@ public class Conexion {
     private String usuario = "root";
     private String password = "";
     private Connection conexion;
-
     
     public Conexion() throws ClassNotFoundException {
         Class.forName("org.mariadb.jdbc.Driver");
