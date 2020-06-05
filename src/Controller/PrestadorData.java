@@ -99,8 +99,8 @@ public class PrestadorData {
                 aux.setApellido(rs.getString(3));
                 aux.setDni(rs.getLong(4));
                 aux.setActivo(rs.getBoolean(5));
-                aux.setEspecialidad(especialidad);
-                aux.setHorarios(horarios);
+                //aux.setEspecialidad(especialidad);
+                //aux.setHorarios(horarios);
                 
             }
         }catch(SQLException e){
