@@ -32,6 +32,10 @@ public class Prestador extends Persona {
         this.especialidad = especialidad;
         this.horarios = horarios;
     }
+    
+    public Prestador(){
+        
+    }
 
     public Especialidad getEspecialidad() {
         return especialidad;

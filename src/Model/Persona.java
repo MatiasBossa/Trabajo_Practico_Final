@@ -68,7 +68,7 @@ public class Persona {
         this.dni = dni;
     }
 
-    public boolean isActivo() {
+    public boolean getActivo() {
         return activo;
     }
 

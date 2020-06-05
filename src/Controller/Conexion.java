@@ -8,36 +8,44 @@ package Controller;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
- * @author matia
+ * @author HP
  */
 public class Conexion {
     private String HOST = "localhost:3306";
-    private String DB = "obrasocial";
+    private String DB = "universidad";
     private String URL = "jdbc:mariadb://" + HOST + "/" + DB;
-    //private String URL = "jdbc:mysql://" + HOST + "/" + DB;
-    private String user = "root";
+    private String usuario = "root";
     private String password = "";
-    private Connection con = null;
+    private Connection conexion;
 
     
-    public Connection getConexion()
-    {
-        try{
-            Class.forName("org.mariadb.jdbc.Driver");
-            //Class.forName("com.mysql.jdbc.Driver");
-            con = (Connection) DriverManager.getConnection(this.URL, this.user, this.password);
-            
-        } catch(SQLException e)
-        {
-            System.err.println(e);
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(Conexion.class.getName()).log(Level.SEVERE, null, ex);
-        }
-      return con;  
+    public Conexion() throws ClassNotFoundException {
+        Class.forName("org.mariadb.jdbc.Driver");
+        
     }
+
+    public Conexion(String url, String usuario, String password) throws ClassNotFoundException {
+        this.URL = url;
+        this.usuario = usuario;
+        this.password = password;
+
+        //Cargamos las clases de mariadb que implementan JDBC
+        Class.forName("org.mariadb.jdbc.Driver");
+
+    }
+    
+    public Connection getConexion() throws SQLException{
+        if(conexion == null){
+            // Setup the connection with the DB
+            conexion = DriverManager
+                .getConnection(URL + "?useLegacyDatetimeCode=false&serverTimezone=UTC"
+                        + "&user=" + usuario + "&password=" + password);
+
+        }
+        return conexion;
+    }
+    
 }
