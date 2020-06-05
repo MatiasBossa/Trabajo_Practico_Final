@@ -15,7 +15,7 @@ import java.sql.SQLException;
  */
 public class Conexion {
     private String HOST = "localhost:3306";
-    private String DB = "universidad";
+    private String DB = "obrasocial";
     private String URL = "jdbc:mariadb://" + HOST + "/" + DB;
     private String usuario = "root";
     private String password = "";
