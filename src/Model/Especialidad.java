@@ -1,0 +1,43 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package Model;
+
+/**
+ *
+ * @author matia
+ */
+public class Especialidad {
+    
+    private int idEspecialidad;
+    private String titulo;
+
+    public Especialidad(int idEspecialidad, String titulo) {
+        this.idEspecialidad = idEspecialidad;
+        this.titulo = titulo;
+    }
+
+    public int getIdEspecialidad() {
+        return idEspecialidad;
+    }
+
+    public void setIdEspecialidad(int idEspecialidad) {
+        this.idEspecialidad = idEspecialidad;
+    }
+
+    public String getTitulo() {
+        return titulo;
+    }
+
+    public void setTitulo(String titulo) {
+        this.titulo = titulo;
+    }
+
+    @Override
+    public String toString() {
+        return "idEspecialidad=" + idEspecialidad + ", titulo=" + titulo;
+    }
+    
+}

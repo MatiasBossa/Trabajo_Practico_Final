@@ -11,13 +11,37 @@ import java.util.List;
  *
  * @author matia
  */
-public class Afiliado {
+public class Afiliado extends Persona {
     
-    private int id;
-    private String nombre;
-    private String apellido;
-    private long dni;
+    
     private List<Orden> movimientos;
-    
+
+    public Afiliado(List<Orden> movimientos, int id, String nombre, String apellido, long dni, boolean activo) {
+        super(id, nombre, apellido, dni, activo);
+        this.movimientos = movimientos;
+    }
+
+    public Afiliado(List<Orden> movimientos, String nombre, String apellido, long dni, boolean activo) {
+        super(nombre, apellido, dni, activo);
+        this.movimientos = movimientos;
+    }
+
+    public Afiliado(List<Orden> movimientos) {
+        this.movimientos = movimientos;
+    }
+
+    public List<Orden> getMovimientos() {
+        return movimientos;
+    }
+
+    public void setMovimientos(List<Orden> movimientos) {
+        this.movimientos = movimientos;
+    }
+
+    @Override
+    public String toString() {
+        return "Afiliado{ " + super.toString() + ", movimientos=" + movimientos + '}';
+    }
+
     
 }
