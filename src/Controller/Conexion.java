@@ -40,7 +40,7 @@ public class Conexion {
         if(conexion == null){
             // Setup the connection with the DB
             conexion = DriverManager
-                .getConnection(URL + "?useLegacyDatetimeCode=false&serverTimezone=UTC"
+                .getConnection(URL + "?useLegacyDatetimeCode=false&serverTimezone=América/Buenos_Aires"
                         + "&user=" + usuario + "&password=" + password);
 
         }
