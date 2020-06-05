@@ -17,7 +17,7 @@ import java.util.logging.Logger;
  */
 public class Conexion {
     private String HOST = "localhost:3306";
-    private String DB = "nombreDeLaBaseDeDatos";
+    private String DB = "obrasocial";
     private String URL = "jdbc:mariadb://" + HOST + "/" + DB;
     //private String URL = "jdbc:mysql://" + HOST + "/" + DB;
     private String user = "root";
