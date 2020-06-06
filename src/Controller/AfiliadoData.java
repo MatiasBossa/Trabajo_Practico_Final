@@ -33,14 +33,21 @@ public class AfiliadoData {
             ps.setBoolean(4, afiliado.getActivo());
             
             ps.executeUpdate();
-           
             
+            ResultSet rs = ps.getGeneratedKeys();
+           
+            if(rs.next()){
+                afiliado.setId(rs.getInt(1));
+            } else {
+              System.out.println("No se pudo obtener el id luego de insertar un afiliado");
+            }
+                
         } catch (SQLException ex){
             Logger.getLogger(AfiliadoData.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     
-    public void bajaAfiliado(long dni) {
+    public void bajaAfiliado(long dni) {  //Borramos con DNI
         try {
             String sql = "DELETE FROM `afiliado` WHERE dni = ?;";
             PreparedStatement ps = con.prepareStatement(sql);
@@ -54,7 +61,7 @@ public class AfiliadoData {
         }        
     }
     
-    public void actualizarAfiliado(Afiliado afiliado){
+    public void actualizarAfiliado(Afiliado afiliado){  
         try {
             String sql = "UPDATE `afiliado` SET nombre`=?,"
                     + "`apellido`=?,`activo`=? WHERE `dni`=?;";
