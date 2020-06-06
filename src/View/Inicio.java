@@ -5,13 +5,14 @@
  */
 package View;
 
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author matia
  */
 public class Inicio extends javax.swing.JFrame {
     
-    vistaAfiliado vistaAfiliado = new vistaAfiliado();
     
     /**
      * Creates new form Inicio
@@ -32,35 +33,11 @@ public class Inicio extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jFrame1 = new javax.swing.JFrame();
-        jFrame2 = new javax.swing.JFrame();
         contenedor = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         btn_afiliados = new javax.swing.JButton();
         btn_prestador = new javax.swing.JButton();
         btn_orden = new javax.swing.JButton();
-
-        javax.swing.GroupLayout jFrame1Layout = new javax.swing.GroupLayout(jFrame1.getContentPane());
-        jFrame1.getContentPane().setLayout(jFrame1Layout);
-        jFrame1Layout.setHorizontalGroup(
-            jFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
-        jFrame1Layout.setVerticalGroup(
-            jFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
-
-        javax.swing.GroupLayout jFrame2Layout = new javax.swing.GroupLayout(jFrame2.getContentPane());
-        jFrame2.getContentPane().setLayout(jFrame2Layout);
-        jFrame2Layout.setHorizontalGroup(
-            jFrame2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
-        );
-        jFrame2Layout.setVerticalGroup(
-            jFrame2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
-        );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(204, 204, 204));
@@ -81,10 +58,20 @@ public class Inicio extends javax.swing.JFrame {
         btn_prestador.setIcon(new javax.swing.ImageIcon("H:\\Facultad\\ULP\\1º Año\\Laboratorio Programacion I\\Trabajos\\Trabajo_Practico_Final\\src\\View\\prestador.png")); // NOI18N
         btn_prestador.setText("Prestadores");
         btn_prestador.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btn_prestador.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_prestadorActionPerformed(evt);
+            }
+        });
 
         btn_orden.setIcon(new javax.swing.ImageIcon("H:\\Facultad\\ULP\\1º Año\\Laboratorio Programacion I\\Trabajos\\Trabajo_Practico_Final\\src\\View\\orden.png")); // NOI18N
         btn_orden.setText("Ordenes");
         btn_orden.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btn_orden.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_ordenActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout contenedorLayout = new javax.swing.GroupLayout(contenedor);
         contenedor.setLayout(contenedorLayout);
@@ -119,8 +106,20 @@ public class Inicio extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btn_afiliadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_afiliadosActionPerformed
+        this.setVisible(false);
+        vistaAfiliado v = new vistaAfiliado();
+        v.setVisible(true);
+        
         
     }//GEN-LAST:event_btn_afiliadosActionPerformed
+
+    private void btn_prestadorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_prestadorActionPerformed
+        JOptionPane.showMessageDialog(this, "Aqui se editarian prestadores");
+    }//GEN-LAST:event_btn_prestadorActionPerformed
+
+    private void btn_ordenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_ordenActionPerformed
+        JOptionPane.showMessageDialog(this, "Aqui se editarian ordenes");
+    }//GEN-LAST:event_btn_ordenActionPerformed
 
     /**
      * @param args the command line arguments
@@ -162,8 +161,6 @@ public class Inicio extends javax.swing.JFrame {
     private javax.swing.JButton btn_orden;
     private javax.swing.JButton btn_prestador;
     private javax.swing.JPanel contenedor;
-    private javax.swing.JFrame jFrame1;
-    private javax.swing.JFrame jFrame2;
     private javax.swing.JLabel jLabel1;
     // End of variables declaration//GEN-END:variables
 }

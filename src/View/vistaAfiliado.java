@@ -9,15 +9,14 @@ package View;
  *
  * @author Matias
  */
-public class vistaAfiliado extends javax.swing.JPanel {
+public class vistaAfiliado extends javax.swing.JFrame {
 
     /**
      * Creates new form vistaAfiliado
      */
     public vistaAfiliado() {
         initComponents();
-        
-        
+        this.setLocationRelativeTo(null);
     }
 
     /**
@@ -29,30 +28,110 @@ public class vistaAfiliado extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jButton1 = new javax.swing.JButton();
+        btn_añadirAfiliado = new javax.swing.JButton();
+        btn_añadirAfiliado1 = new javax.swing.JButton();
+        btn_añadirAfiliado2 = new javax.swing.JButton();
 
-        jButton1.setText("jButton1");
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
+        btn_añadirAfiliado.setText("Añadir Afiliado");
+        btn_añadirAfiliado.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_añadirAfiliadoActionPerformed(evt);
+            }
+        });
+
+        btn_añadirAfiliado1.setText("Eliminar Afiliado");
+        btn_añadirAfiliado1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_añadirAfiliado1ActionPerformed(evt);
+            }
+        });
+
+        btn_añadirAfiliado2.setText("Modificar Afiliado");
+        btn_añadirAfiliado2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_añadirAfiliado2ActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(152, 152, 152)
-                .addComponent(jButton1)
-                .addContainerGap(175, Short.MAX_VALUE))
+                .addGap(25, 25, 25)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btn_añadirAfiliado, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btn_añadirAfiliado1, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btn_añadirAfiliado2, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(28, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(112, 112, 112)
-                .addComponent(jButton1)
-                .addContainerGap(165, Short.MAX_VALUE))
+                .addGap(25, 25, 25)
+                .addComponent(btn_añadirAfiliado, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(25, 25, 25)
+                .addComponent(btn_añadirAfiliado1, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(25, 25, 25)
+                .addComponent(btn_añadirAfiliado2, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(33, Short.MAX_VALUE))
         );
+
+        pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btn_añadirAfiliadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_añadirAfiliadoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btn_añadirAfiliadoActionPerformed
+
+    private void btn_añadirAfiliado1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_añadirAfiliado1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btn_añadirAfiliado1ActionPerformed
+
+    private void btn_añadirAfiliado2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_añadirAfiliado2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btn_añadirAfiliado2ActionPerformed
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String args[]) {
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(vistaAfiliado.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(vistaAfiliado.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(vistaAfiliado.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(vistaAfiliado.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
+
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new vistaAfiliado().setVisible(true);
+            }
+        });
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton btn_añadirAfiliado;
+    private javax.swing.JButton btn_añadirAfiliado1;
+    private javax.swing.JButton btn_añadirAfiliado2;
     // End of variables declaration//GEN-END:variables
 }
