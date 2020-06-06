@@ -5,7 +5,8 @@
  */
 package Model;
 
-import java.sql.Time;
+
+import java.time.LocalTime;
 
 /**
  *
@@ -15,17 +16,17 @@ public class Horario {
     
     private int idHorario;
     private String dia;
-    private Time horarioAtencion;
+    private LocalTime horarioAtencion;
     private Prestador prestador;
 
-    public Horario(int idHorario, String dia, Time horarioAtencion, Prestador prestador) {
+    public Horario(int idHorario, String dia, LocalTime horarioAtencion, Prestador prestador) {
         this.idHorario = idHorario;
         this.dia = dia;
         this.horarioAtencion = horarioAtencion;
         this.prestador = prestador;
     }
 
-    public Horario(String dia, Time horarioAtencion, Prestador prestador) {
+    public Horario(String dia, LocalTime horarioAtencion, Prestador prestador) {
         this.dia = dia;
         this.horarioAtencion = horarioAtencion;
         this.prestador = prestador;
@@ -50,11 +51,11 @@ public class Horario {
         this.dia = dia;
     }
 
-    public Time getHorarioAtencion() {
+    public LocalTime getHorarioAtencion() {
         return horarioAtencion;
     }
 
-    public void setHorarioAtencion(Time horarioAtencion) {
+    public void setHorarioAtencion(LocalTime horarioAtencion) {
         this.horarioAtencion = horarioAtencion;
     }
 
