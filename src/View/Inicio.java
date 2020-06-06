@@ -10,12 +10,17 @@ package View;
  * @author matia
  */
 public class Inicio extends javax.swing.JFrame {
-
+    
+    vistaAfiliado vistaAfiliado = new vistaAfiliado();
+    
     /**
      * Creates new form Inicio
      */
     public Inicio() {
         initComponents();
+        this.setLocationRelativeTo(null);
+        
+        
     }
 
     /**
@@ -29,6 +34,11 @@ public class Inicio extends javax.swing.JFrame {
 
         jFrame1 = new javax.swing.JFrame();
         jFrame2 = new javax.swing.JFrame();
+        contenedor = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        btn_afiliados = new javax.swing.JButton();
+        btn_prestador = new javax.swing.JButton();
+        btn_orden = new javax.swing.JButton();
 
         javax.swing.GroupLayout jFrame1Layout = new javax.swing.GroupLayout(jFrame1.getContentPane());
         jFrame1.getContentPane().setLayout(jFrame1Layout);
@@ -53,20 +63,64 @@ public class Inicio extends javax.swing.JFrame {
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setBackground(new java.awt.Color(204, 204, 204));
+        setResizable(false);
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 357, Short.MAX_VALUE)
+        jLabel1.setIcon(new javax.swing.ImageIcon("H:\\Facultad\\ULP\\1º Año\\Laboratorio Programacion I\\Trabajos\\Trabajo_Practico_Final\\src\\View\\MasSalud.png")); // NOI18N
+        jLabel1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.black, java.awt.Color.darkGray, java.awt.Color.red, java.awt.Color.red));
+
+        btn_afiliados.setIcon(new javax.swing.ImageIcon("H:\\Facultad\\ULP\\1º Año\\Laboratorio Programacion I\\Trabajos\\Trabajo_Practico_Final\\src\\View\\afiliado.png")); // NOI18N
+        btn_afiliados.setText("Afiliados");
+        btn_afiliados.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btn_afiliados.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_afiliadosActionPerformed(evt);
+            }
+        });
+
+        btn_prestador.setIcon(new javax.swing.ImageIcon("H:\\Facultad\\ULP\\1º Año\\Laboratorio Programacion I\\Trabajos\\Trabajo_Practico_Final\\src\\View\\prestador.png")); // NOI18N
+        btn_prestador.setText("Prestadores");
+        btn_prestador.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+
+        btn_orden.setIcon(new javax.swing.ImageIcon("H:\\Facultad\\ULP\\1º Año\\Laboratorio Programacion I\\Trabajos\\Trabajo_Practico_Final\\src\\View\\orden.png")); // NOI18N
+        btn_orden.setText("Ordenes");
+        btn_orden.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+
+        javax.swing.GroupLayout contenedorLayout = new javax.swing.GroupLayout(contenedor);
+        contenedor.setLayout(contenedorLayout);
+        contenedorLayout.setHorizontalGroup(
+            contenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(contenedorLayout.createSequentialGroup()
+                .addGap(50, 50, 50)
+                .addGroup(contenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btn_afiliados, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btn_prestador, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btn_orden, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(50, Short.MAX_VALUE))
         );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 331, Short.MAX_VALUE)
+        contenedorLayout.setVerticalGroup(
+            contenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(contenedorLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(btn_afiliados, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(btn_prestador, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(btn_orden, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(40, Short.MAX_VALUE))
         );
+
+        getContentPane().add(contenedor, java.awt.BorderLayout.CENTER);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btn_afiliadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_afiliadosActionPerformed
+        
+    }//GEN-LAST:event_btn_afiliadosActionPerformed
 
     /**
      * @param args the command line arguments
@@ -104,7 +158,12 @@ public class Inicio extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btn_afiliados;
+    private javax.swing.JButton btn_orden;
+    private javax.swing.JButton btn_prestador;
+    private javax.swing.JPanel contenedor;
     private javax.swing.JFrame jFrame1;
     private javax.swing.JFrame jFrame2;
+    private javax.swing.JLabel jLabel1;
     // End of variables declaration//GEN-END:variables
 }
