@@ -22,7 +22,7 @@ public class AfiliadoData {
 
     }
     
-    public void altaAfiliado(Afiliado afiliado){
+    public void guardarAfiliado(Afiliado afiliado){
         try {
             String sql = "INSERT INTO `afiliado` (`nombre`, `apellido`, `dni`, `activo`) VALUES (?, ?, ?, ?);";
             
@@ -47,7 +47,7 @@ public class AfiliadoData {
         }
     }
     
-    public void bajaAfiliado(long dni) {  //Borramos con DNI
+    public void borrarAfiliado(long dni) {  //Borramos con DNI
         try {
             String sql = "DELETE FROM `afiliado` WHERE dni = ?;";
             PreparedStatement ps = con.prepareStatement(sql);
@@ -61,7 +61,7 @@ public class AfiliadoData {
         }        
     }
     
-    public void actualizarAfiliado(Afiliado afiliado){  
+    public void modificarAfiliado(Afiliado afiliado){  
         try {
             String sql = "UPDATE `afiliado` SET nombre`=?,"
                     + "`apellido`=?,`activo`=? WHERE `dni`=?;";

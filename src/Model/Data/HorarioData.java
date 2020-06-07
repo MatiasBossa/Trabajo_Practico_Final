@@ -80,7 +80,7 @@ public class HorarioData {
         }
     }
     
-    public Horario obtenerHorario(int id){
+    public Horario buscarHorario(int id){
         String SQL_SELECT = "SELECT * FROM horario WHERE idHorario = ?";
         PrestadorData pd = new PrestadorData(conexion);
         ResultSet rs;

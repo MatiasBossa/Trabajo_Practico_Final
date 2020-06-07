@@ -83,11 +83,11 @@ public class OrdenData {
         }
     }
     
-    public void eliminarOrden(Orden orden) {
+    public void borrarOrden(int idOrden) {
         String sql = "DELETE FROM orden WEHRE idOrden =  ?;";
         try {
             PreparedStatement ps = con.prepareStatement(sql);
-            ps.setInt(1, orden.getIdOrden());
+            ps.setInt(1, idOrden);
             
             ps.executeUpdate();
             
@@ -98,12 +98,12 @@ public class OrdenData {
         }
     }
     
-    public void anularOrden(Orden orden) {
+    public void anularOrden(int idOrden) {
         String sql = "UPDATE orden SET anulado = ? WHERE idOrden = ?;";
         try {
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setBoolean(1, false);
-            ps.setInt(2, orden.getIdOrden());
+            ps.setInt(2, idOrden);
             
             ps.executeUpdate();
             

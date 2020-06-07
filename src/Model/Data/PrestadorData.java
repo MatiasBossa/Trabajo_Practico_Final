@@ -69,10 +69,10 @@ public class PrestadorData {
         }
     }
     
-    public void eliminarPrestador(Prestador prestador){
+    public void borrarPrestador(int idPrestador){
         try{
             PreparedStatement ps = con.prepareStatement(SQL_DELETE);
-            ps.setInt(1, prestador.getId());
+            ps.setInt(1, idPrestador);
             
             ps.executeUpdate();
             
@@ -83,12 +83,12 @@ public class PrestadorData {
         }
     }
     
-    public Prestador buscarPrestador(int id){
+    public Prestador buscarPrestador(int idPrestador){
         Prestador aux = null;
         try{
             PreparedStatement ps = con.prepareStatement(SQL_SELECT);
             ResultSet rs;
-            ps.setInt(1, id);
+            ps.setInt(1, idPrestador);
             
             rs = ps.executeQuery();
             
