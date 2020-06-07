@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Model;
+package Model.Entities;
 
 import java.util.Date;
 
@@ -29,9 +29,21 @@ public class Orden {
     private double totalPagar;
     private boolean anulado;
 
+    /**
+     * Constructor vacio
+     */
     public Orden() {
     }
 
+    /**
+     * Constructor sin el campo idOrden
+     * @param fechaEmision
+     * @param afiliado
+     * @param horario
+     * @param formaPago
+     * @param totalPagar
+     * @param anulado 
+     */
     public Orden(Date fechaEmision, Afiliado afiliado, Horario horario, String formaPago, double totalPagar, boolean anulado) {
         this.fechaEmision = fechaEmision;
         this.afiliado = afiliado;
@@ -41,6 +53,16 @@ public class Orden {
         this.anulado = anulado;
     }
 
+    /**
+     * Constructor con todos los campos
+     * @param idOrden
+     * @param fechaEmision
+     * @param afiliado
+     * @param horario
+     * @param formaPago
+     * @param totalPagar
+     * @param anulado 
+     */
     public Orden(int idOrden, Date fechaEmision, Afiliado afiliado, Horario horario, String formaPago, double totalPagar, boolean anulado) {
         this.idOrden = idOrden;
         this.fechaEmision = fechaEmision;

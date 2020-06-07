@@ -43,10 +43,8 @@ public class Inicio extends javax.swing.JFrame {
         setBackground(new java.awt.Color(204, 204, 204));
         setResizable(false);
 
-        jLabel1.setIcon(new javax.swing.ImageIcon("H:\\Facultad\\ULP\\1º Año\\Laboratorio Programacion I\\Trabajos\\Trabajo_Practico_Final\\src\\View\\MasSalud.png")); // NOI18N
         jLabel1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.black, java.awt.Color.darkGray, java.awt.Color.red, java.awt.Color.red));
 
-        btn_afiliados.setIcon(new javax.swing.ImageIcon("H:\\Facultad\\ULP\\1º Año\\Laboratorio Programacion I\\Trabajos\\Trabajo_Practico_Final\\src\\View\\afiliado.png")); // NOI18N
         btn_afiliados.setText("Afiliados");
         btn_afiliados.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         btn_afiliados.addActionListener(new java.awt.event.ActionListener() {
@@ -55,7 +53,6 @@ public class Inicio extends javax.swing.JFrame {
             }
         });
 
-        btn_prestador.setIcon(new javax.swing.ImageIcon("H:\\Facultad\\ULP\\1º Año\\Laboratorio Programacion I\\Trabajos\\Trabajo_Practico_Final\\src\\View\\prestador.png")); // NOI18N
         btn_prestador.setText("Prestadores");
         btn_prestador.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         btn_prestador.addActionListener(new java.awt.event.ActionListener() {
@@ -64,7 +61,6 @@ public class Inicio extends javax.swing.JFrame {
             }
         });
 
-        btn_orden.setIcon(new javax.swing.ImageIcon("H:\\Facultad\\ULP\\1º Año\\Laboratorio Programacion I\\Trabajos\\Trabajo_Practico_Final\\src\\View\\orden.png")); // NOI18N
         btn_orden.setText("Ordenes");
         btn_orden.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         btn_orden.addActionListener(new java.awt.event.ActionListener() {
@@ -146,6 +142,9 @@ public class Inicio extends javax.swing.JFrame {
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(Inicio.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */

@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Controller;
+package Model.Data;
 
-import Model.Orden;
+import Model.Entities.Orden;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -151,7 +151,7 @@ public class OrdenData {
      * @param idAfiliado
      * @return un alista de ordenes
      */
-    public List<Orden> movimientos(int idAfiliado) {
+    public List<Orden> listarOrdenes(int idAfiliado) {
         List<Orden> movimientos = new ArrayList<Orden>();
         String sql = "SELECT * FROM orden WHERE idAfiliado = ?;";
         try {

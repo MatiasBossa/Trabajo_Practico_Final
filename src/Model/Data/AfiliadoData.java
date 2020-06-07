@@ -1,6 +1,6 @@
-package Controller;
+package Model.Data;
 
-import Model.Afiliado;
+import Model.Entities.Afiliado;
 import java.sql.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
