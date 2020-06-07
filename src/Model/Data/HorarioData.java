@@ -16,21 +16,11 @@ import java.sql.Time;
  *
  * @author matia
  */
-public class HorarioData {
-    
+public class HorarioData extends Conexion {
     private Connection con = null;
-    private Conexion conexion;
-    
-    
-    
-    public HorarioData(Conexion conexion) {
-        
-        try {
-            this.conexion=conexion;
-            con = conexion.getConexion();
-        } catch (SQLException ex) {
-            System.out.println("Error al abrir al obtener la conexion");
-        }
+
+    public HorarioData() {
+        this.con = getConexion();
     }
     
     public void guardarHorario(Horario horario){
@@ -82,7 +72,7 @@ public class HorarioData {
     
     public Horario buscarHorario(int id){
         String SQL_SELECT = "SELECT * FROM horario WHERE idHorario = ?";
-        PrestadorData pd = new PrestadorData(conexion);
+        PrestadorData pd = new PrestadorData();
         ResultSet rs;
         Horario horario = null;
         try{

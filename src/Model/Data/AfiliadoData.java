@@ -10,16 +10,11 @@ import java.util.logging.Logger;
  *
  * @author Matias
  */
-public class AfiliadoData {
-    private Connection con;
-    
-    public AfiliadoData(Conexion conexion) {
-        try {
-            con = conexion.getConexion();
-        } catch(SQLException ex) {
-            System.out.println("Error al abrir al obtener la conexion. " + ex.getMessage());
-        }
+public class AfiliadoData extends Conexion {
+    private Connection con = null;
 
+    public AfiliadoData() {
+        this.con = getConexion();
     }
     
     public void guardarAfiliado(Afiliado afiliado){
@@ -47,11 +42,11 @@ public class AfiliadoData {
         }
     }
     
-    public void borrarAfiliado(long dni) {  //Borramos con DNI
+    public void borrarAfiliado(int idAfiliado) {  //Borramos con DNI
         try {
-            String sql = "DELETE FROM `afiliado` WHERE dni = ?;";
+            String sql = "DELETE FROM `afiliado` WHERE idAfiliado = ?;";
             PreparedStatement ps = con.prepareStatement(sql);
-            ps.setLong(1, dni);
+            ps.setLong(1, idAfiliado);
         
             ps.executeUpdate();
             ps.close();

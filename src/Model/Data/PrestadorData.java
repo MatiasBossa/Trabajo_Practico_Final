@@ -12,23 +12,16 @@ import java.sql.*;
  *
  * @author matia
  */
-public class PrestadorData {
-    
+public class PrestadorData extends Conexion {
     private Connection con = null;
-    private Conexion conexion;
     
     private final String SQL_INSERT = "INSERT INTO prestador(nombre, apellido, dni, activo, idEspecialidad) VALUES(?, ?, ?, ?, ?)";
     private final String SQL_UPDATE = "UPDATE prestador SET nombre = ?, apellido = ?, dni = ?, activo = ?, idEspecialidad = ? WHERE idPrestador = ?";
     private final String SQL_DELETE = "DELETE FROM prestador WHERE idPrestador = ?";
     private final String SQL_SELECT = "SELECT * FROM prestador WHERE idPrestador = ?";
-    
-    public PrestadorData(Conexion conexion) {
-        try {
-            this.conexion=conexion;
-            con = conexion.getConexion();
-        } catch (SQLException ex) {
-            System.out.println("Error al abrir al obtener la conexion");
-        }
+
+    public PrestadorData() {
+        this.con = getConexion();
     }
     
     public void guardarPrestador(Prestador prestador){

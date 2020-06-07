@@ -5,6 +5,11 @@
  */
 package View;
 
+import Controller.CtrlOrden;
+import Model.Data.Conexion;
+import Model.Data.OrdenData;
+import Model.Entities.Orden;
+import java.sql.Connection;
 import javax.swing.JOptionPane;
 
 /**
@@ -114,7 +119,16 @@ public class Inicio extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_prestadorActionPerformed
 
     private void btn_ordenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_ordenActionPerformed
-        JOptionPane.showMessageDialog(this, "Aqui se editarian ordenes");
+        //JOptionPane.showMessageDialog(this, "Aqui se editarian ordenes");
+        this.setVisible(false);
+        
+        Orden modE = new Orden();
+        OrdenData modD = new OrdenData();
+        frmABMorden frm = new frmABMorden();
+        
+        CtrlOrden ctrl = new CtrlOrden(modE, modD, frm);
+        ctrl.iniciar();
+        frm.setVisible(true);
     }//GEN-LAST:event_btn_ordenActionPerformed
 
     /**

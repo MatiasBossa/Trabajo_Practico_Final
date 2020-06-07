@@ -12,21 +12,11 @@ import java.sql.*;
  *
  * @author matia
  */
-public class EspecialidadData {
-    
+public class EspecialidadData extends Conexion {
     private Connection con = null;
-    private Conexion conexion;
-    
-    
-    
-    public EspecialidadData(Conexion conexion) {
-        
-        try {
-            this.conexion=conexion;
-            con = conexion.getConexion();
-        } catch (SQLException ex) {
-            System.out.println("Error al abrir al obtener la conexion");
-        }
+
+    public EspecialidadData() {
+        this.con = getConexion();
     }
     
     public void guardarEspecialidad(Especialidad esp){

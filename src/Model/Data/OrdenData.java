@@ -21,17 +21,14 @@ import java.util.logging.Logger;
  *
  * @author HP
  */
-public class OrdenData {
-    private Connection con;
+public class OrdenData extends Conexion {
+    private Connection con = null;
 
-    public OrdenData(Conexion conexion) {
-        try {
-            this.con = conexion.getConexion();
-        } catch (SQLException ex) {
-            System.out.println("Error al abrir al obtener la conexion. " + ex.getMessage());
-        }
+    public OrdenData() {
+        this.con = getConexion();
     }
-    
+
+
     public int guardarOrden(Orden orden) {
         int id=0;
         String sql = "INSERT INTO ORDEN "
@@ -130,9 +127,9 @@ public class OrdenData {
                 orden = new Orden();
                 orden.setIdOrden(rs.getInt("idOrden"));
                 orden.setFechaEmision(rs.getDate("fechaEmision"));
-                AfiliadoData ad = new AfiliadoData((Conexion) con);
+                AfiliadoData ad = new AfiliadoData();
                 //orden.setAfiliado(ad.buscarAfiliado(rs.getInt("idAfiliado")));
-                HorarioData hd = new HorarioData((Conexion) con);
+                HorarioData hd = new HorarioData();
                 //orden.setHorario(hd.buscarHorario(rs.getInt("idHorario")));
                 orden.setFormaPago(rs.getString("formaPago"));
                 orden.setTotalPagar(rs.getDouble("totalPagar"));
@@ -159,8 +156,8 @@ public class OrdenData {
             ps.setInt(1, idAfiliado);
             
             ResultSet rs = ps.executeQuery();
-            AfiliadoData ad = new AfiliadoData((Conexion) con);
-            HorarioData hd = new HorarioData((Conexion) con);
+            AfiliadoData ad = new AfiliadoData();
+            HorarioData hd = new HorarioData();
             Orden orden = null;
             while(rs.next()) {
                 orden = new Orden();
