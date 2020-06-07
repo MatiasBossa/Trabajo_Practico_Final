@@ -14,84 +14,58 @@ import java.util.Date;
  * @author matia
  */
 
-enum formaPago{
+enum FormaPago{
     EFECTIVO,
     DEBITO;
 }
 
 public class Orden {
     
-    private int id;
-    private Date fecha;
-    private formaPago tipoPago;
-    private boolean estado;
-    private double totalPagar;
+    private int idOrden;
+    private Date fechaEmision;
     private Afiliado afiliado;
-    private Prestador prestador;
     private Horario horario;
-
-    public Orden(int id, Date fecha, formaPago tipoPago, boolean estado, double totalPagar, Afiliado afiliado, Prestador prestador, Horario horario) {
-        this.id = id;
-        this.fecha = fecha;
-        this.tipoPago = tipoPago;
-        this.estado = estado;
-        this.totalPagar = totalPagar;
-        this.afiliado = afiliado;
-        this.prestador = prestador;
-        this.horario = horario;
-    }
-
-    public Orden(Date fecha, formaPago tipoPago, boolean estado, double totalPagar, Afiliado afiliado, Prestador prestador, Horario horario) {
-        this.fecha = fecha;
-        this.tipoPago = tipoPago;
-        this.estado = estado;
-        this.totalPagar = totalPagar;
-        this.afiliado = afiliado;
-        this.prestador = prestador;
-        this.horario = horario;
-    }
+    private String formaPago;
+    private double totalPagar;
+    private boolean anulado;
 
     public Orden() {
     }
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public Date getFecha() {
-        return fecha;
-    }
-
-    public void setFecha(Date fecha) {
-        this.fecha = fecha;
-    }
-
-    public formaPago getTipoPago() {
-        return tipoPago;
-    }
-
-    public void setTipoPago(formaPago tipoPago) {
-        this.tipoPago = tipoPago;
-    }
-
-    public boolean isEstado() {
-        return estado;
-    }
-
-    public void setEstado(boolean estado) {
-        this.estado = estado;
-    }
-
-    public double getTotalPagar() {
-        return totalPagar;
-    }
-
-    public void setTotalPagar(double totalPagar) {
+    public Orden(Date fechaEmision, Afiliado afiliado, Horario horario, String formaPago, double totalPagar, boolean anulado) {
+        this.fechaEmision = fechaEmision;
+        this.afiliado = afiliado;
+        this.horario = horario;
+        this.formaPago = formaPago;
         this.totalPagar = totalPagar;
+        this.anulado = anulado;
+    }
+
+    public Orden(int idOrden, Date fechaEmision, Afiliado afiliado, Horario horario, String formaPago, double totalPagar, boolean anulado) {
+        this.idOrden = idOrden;
+        this.fechaEmision = fechaEmision;
+        this.afiliado = afiliado;
+        this.horario = horario;
+        this.formaPago = formaPago;
+        this.totalPagar = totalPagar;
+        this.anulado = anulado;
+    }
+
+
+    public int getIdOrden() {
+        return idOrden;
+    }
+
+    public void setIdOrden(int idOrden) {
+        this.idOrden = idOrden;
+    }
+
+    public Date getFechaEmision() {
+        return fechaEmision;
+    }
+
+    public void setFechaEmision(Date fechaEmision) {
+        this.fechaEmision = fechaEmision;
     }
 
     public Afiliado getAfiliado() {
@@ -102,14 +76,6 @@ public class Orden {
         this.afiliado = afiliado;
     }
 
-    public Prestador getPrestador() {
-        return prestador;
-    }
-
-    public void setPrestador(Prestador prestador) {
-        this.prestador = prestador;
-    }
-
     public Horario getHorario() {
         return horario;
     }
@@ -118,9 +84,33 @@ public class Orden {
         this.horario = horario;
     }
 
-    @Override
-    public String toString() {
-        return "Orden{" + "id=" + id + ", fecha=" + fecha + ", tipoPago=" + tipoPago + ", estado=" + estado + ", totalPagar=" + totalPagar + ", afiliado=" + afiliado + ", prestador=" + prestador + ", horario=" + horario + '}';
+    public String getFormaPago() {
+        return formaPago;
+    }
+
+    public void setFormaPago(String formaPago) {
+        this.formaPago = formaPago;
+    }
+
+    public double getTotalPagar() {
+        return totalPagar;
+    }
+
+    public void setTotalPagar(double totalPagar) {
+        this.totalPagar = totalPagar;
+    }
+
+    public boolean getAnulado() {
+        return anulado;
+    }
+
+    public void setAnulado(boolean anulado) {
+        this.anulado = anulado;
     }
     
+    @Override
+    public String toString() {
+        return "Orden{" + "idOrden=" + idOrden + ", fechaEmision=" + fechaEmision + ", tipoPago=" + formaPago + ", estado=" + anulado + ", totalPagar=" + totalPagar + ", afiliado=" + afiliado + ", horario=" + horario + '}';
+    }
+
 }
