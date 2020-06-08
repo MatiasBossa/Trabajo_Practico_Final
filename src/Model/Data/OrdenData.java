@@ -130,7 +130,7 @@ public class OrdenData extends Conexion {
                 AfiliadoData ad = new AfiliadoData();
                 //orden.setAfiliado(ad.buscarAfiliado(rs.getInt("idAfiliado")));
                 HorarioData hd = new HorarioData();
-                //orden.setHorario(hd.buscarHorario(rs.getInt("idHorario")));
+                orden.setHorario(hd.buscarHorario(rs.getInt("idHorario")));
                 orden.setFormaPago(rs.getString("formaPago"));
                 orden.setTotalPagar(rs.getDouble("totalPagar"));
                 orden.setAnulado(rs.getBoolean("anulado"));
