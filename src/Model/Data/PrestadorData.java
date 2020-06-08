@@ -108,4 +108,20 @@ public class PrestadorData extends Conexion {
         return aux;
     }
     
+    public void desactivarPrestador(int id){
+        String sql = "UPDATE prestador SET activo = ? WHERE idPrestador = ?;";
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setBoolean(1, false);
+            ps.setInt(2, id);
+            
+            ps.executeUpdate();
+            
+            ps.close();
+        } catch (SQLException ex) {
+            System.out.println("ERROR al desactivar Prestador.");
+        }
+        
+    }
+    
 }

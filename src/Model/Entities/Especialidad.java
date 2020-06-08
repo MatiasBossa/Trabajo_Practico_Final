@@ -19,6 +19,10 @@ public class Especialidad {
         this.titulo = titulo;
     }
 
+    public Especialidad(String titulo) {
+        this.titulo = titulo;
+    }
+    
     public int getIdEspecialidad() {
         return idEspecialidad;
     }

@@ -55,11 +55,7 @@ public class Prestador extends Persona {
 
     @Override
     public String toString() {
-        return "Prestador{" + super.toString() + "especialidad[" + especialidad.toString() + "], horarios=" + horarios + '}';
+        return "Prestador{" + super.toString() + " especialidad[" + especialidad.getTitulo() + "], horarios=" + horarios + '}';
     }
-    
-    
 
-    
-    
-}    
+}
