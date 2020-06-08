@@ -11,6 +11,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Time;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -97,6 +99,38 @@ public class HorarioData extends Conexion {
         }
         
         return horario;
+    }
+    
+    public List<Horario> buscarHorarios(int idPrestador){
+        String SQL_SELECT = "SELECT * FROM horario WHERE idPrestador = ?";
+        PrestadorData pd = new PrestadorData();
+        ResultSet rs;
+        List<Horario> horarios = null;
+        Horario horario = null;
+        try{
+            PreparedStatement ps = con.prepareStatement(SQL_SELECT);
+            ps.setInt(1, idPrestador);
+            
+            rs = ps.executeQuery();
+            
+            horarios = new ArrayList<>();
+            while(rs.next()){
+                horario = new Horario();
+                horario.setIdHorario(rs.getInt(1));
+                horario.setDia(rs.getString(2));
+                horario.setHorarioAtencion(rs.getTime(3).toLocalTime());
+                horario.setPrestador(pd.buscarPrestador(rs.getInt(4)));
+                horarios.add(horario);
+            }
+            
+            rs.close();
+            ps.close();
+        }catch(SQLException e){
+            System.out.println("ERROR al obtener el horario");
+            e.printStackTrace();
+        }
+        
+        return horarios;
     }
     
 }

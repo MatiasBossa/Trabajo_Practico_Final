@@ -78,6 +78,8 @@ public class PrestadorData extends Conexion {
     
     public Prestador buscarPrestador(int idPrestador){
         Prestador aux = null;
+        EspecialidadData ed = null;
+        HorarioData hd = null;
         try{
             PreparedStatement ps = con.prepareStatement(SQL_SELECT);
             ResultSet rs;
@@ -86,14 +88,16 @@ public class PrestadorData extends Conexion {
             rs = ps.executeQuery();
             
             if(rs.next()){
+                ed = new EspecialidadData();
+                hd = new HorarioData();
                 aux = new Prestador();
                 aux.setId(rs.getInt(1));
                 aux.setNombre(rs.getString(2));
                 aux.setApellido(rs.getString(3));
                 aux.setDni(rs.getLong(4));
                 aux.setActivo(rs.getBoolean(5));
-                //aux.setEspecialidad(especialidad);
-                //aux.setHorarios(horarios);
+                aux.setEspecialidad(ed.buscarEspecialidad(rs.getInt(6)));
+                aux.setHorarios(hd.buscarHorarios(idPrestador));
                 
             }
         }catch(SQLException e){
