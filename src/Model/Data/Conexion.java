@@ -26,6 +26,8 @@ public class Conexion {
     private Connection con = null;
 
     
+    
+    
     public Connection getConexion()
     {
         try{
