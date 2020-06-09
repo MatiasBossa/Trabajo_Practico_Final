@@ -101,7 +101,7 @@ public class HorarioData extends Conexion {
         return horario;
     }
     
-    public List<Horario> buscarHorarios(int idPrestador){
+    public List<Horario> listarHorarios(int idPrestador){
         String SQL_SELECT = "SELECT * FROM horario WHERE idPrestador = ?";
         PrestadorData pd = new PrestadorData();
         ResultSet rs;
@@ -119,7 +119,9 @@ public class HorarioData extends Conexion {
                 horario.setIdHorario(rs.getInt(1));
                 horario.setDia(rs.getString(2));
                 horario.setHorarioAtencion(rs.getTime(3).toLocalTime());
+                
                 horario.setPrestador(pd.buscarPrestador(rs.getInt(4)));
+                
                 horarios.add(horario);
             }
             

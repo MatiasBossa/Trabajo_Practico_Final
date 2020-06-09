@@ -97,7 +97,9 @@ public class PrestadorData extends Conexion {
                 aux.setDni(rs.getLong(4));
                 aux.setActivo(rs.getBoolean(5));
                 aux.setEspecialidad(ed.buscarEspecialidad(rs.getInt(6)));
-                aux.setHorarios(hd.buscarHorarios(idPrestador));
+                
+                
+                //aux.setHorarios(hd.listarHorarios(idPrestador));
                 
             }
         }catch(SQLException e){
@@ -114,9 +116,7 @@ public class PrestadorData extends Conexion {
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setBoolean(1, false);
             ps.setInt(2, id);
-            
             ps.executeUpdate();
-            
             ps.close();
         } catch (SQLException ex) {
             System.out.println("ERROR al desactivar Prestador.");

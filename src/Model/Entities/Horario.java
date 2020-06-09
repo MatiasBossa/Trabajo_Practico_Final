@@ -69,8 +69,7 @@ public class Horario {
 
     @Override
     public String toString() {
-        return "Horario{" + "idHorario = " + idHorario + ", dia = " + dia + ", horarioAtencion = " + horarioAtencion + ", prestador = " 
-                + prestador.getNombre() +" "+ prestador.getApellido()+"}";
+        return "Horario{" + "idHorario = " + idHorario + ", dia = " + dia + ", horarioAtencion = " + horarioAtencion + ", prestador = "+ prestador.getNombre() +" "+ prestador.getApellido()+"}";
     }
     
 }
