@@ -5,7 +5,8 @@
  */
 package View;
 
-import Controller.ctrlOrden;
+
+import Controller.ControlOrden;
 import Model.Data.Conexion;
 import Model.Data.OrdenData;
 import Model.Entities.Orden;
@@ -126,7 +127,7 @@ public class Inicio extends javax.swing.JFrame {
         OrdenData modD = new OrdenData();
         frmABMorden frm = new frmABMorden();
         
-        ctrlOrden ctrl = new ctrlOrden(modE, modD, frm);
+        ControlOrden ctrl = new ControlOrden(modE, modD, frm);
         ctrl.iniciar();
         frm.setVisible(true);
     }//GEN-LAST:event_btn_ordenActionPerformed
