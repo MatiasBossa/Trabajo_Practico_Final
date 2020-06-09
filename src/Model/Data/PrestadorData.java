@@ -76,18 +76,18 @@ public class PrestadorData extends Conexion {
         }
     }
     
-    public Prestador buscarPrestador(int idPrestador){
+    public Prestador buscarPrestador(int idPrestador) {
         Prestador aux = null;
         EspecialidadData ed = null;
         HorarioData hd = null;
-        try{
+        try {
             PreparedStatement ps = con.prepareStatement(SQL_SELECT);
             ResultSet rs;
             ps.setInt(1, idPrestador);
-            
+
             rs = ps.executeQuery();
-            
-            if(rs.next()){
+
+            if (rs.next()) {
                 ed = new EspecialidadData();
                 hd = new HorarioData();
                 aux = new Prestador();
