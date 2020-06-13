@@ -7,9 +7,12 @@ package View;
 
 
 import Controller.ControlOrden;
+import Controller.ControlPrestador;
 import Model.Data.Conexion;
 import Model.Data.OrdenData;
+import Model.Data.PrestadorData;
 import Model.Entities.Orden;
+import Model.Entities.Prestador;
 import java.sql.Connection;
 import javax.swing.JOptionPane;
 
@@ -116,7 +119,17 @@ public class Inicio extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_afiliadosActionPerformed
 
     private void btn_prestadorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_prestadorActionPerformed
-        JOptionPane.showMessageDialog(this, "Aqui se editarian prestadores");
+        //JOptionPane.showMessageDialog(this, "Aqui se editarian prestadores");
+        this.setVisible(false);
+        
+        Prestador modE = new Prestador();
+        PrestadorData modD = new PrestadorData();
+        vistaPrestador frm = new vistaPrestador();
+        
+        ControlPrestador ctrl = new ControlPrestador(modE, modD, frm);
+        ctrl.Iniciar();
+        frm.setVisible(true);
+        
     }//GEN-LAST:event_btn_prestadorActionPerformed
 
     private void btn_ordenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_ordenActionPerformed

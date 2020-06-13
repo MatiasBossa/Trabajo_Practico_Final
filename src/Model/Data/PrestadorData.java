@@ -5,6 +5,7 @@
  */
 package Model.Data;
 
+import Model.Entities.Especialidad;
 import Model.Entities.Prestador;
 import java.sql.*;
 
@@ -25,22 +26,38 @@ public class PrestadorData extends Conexion {
     }
     
     public void guardarPrestador(Prestador prestador){
+        int id=0;
         try{
             PreparedStatement ps = con.prepareStatement(SQL_INSERT);
             ps.setString(1, prestador.getNombre());
             ps.setString(2, prestador.getApellido());
             ps.setLong(3, prestador.getDni());
             ps.setBoolean(4, true);
-            ps.setInt(5, prestador.getEspecialidad().getIdEspecialidad());
+            
+            
+            Especialidad esp = new Especialidad(prestador.getEspecialidad().getTitulo());
+            EspecialidadData ed = new EspecialidadData();
+            esp=ed.buscarEspecialidad(esp.getTitulo());
+            
+            
+            
+            ps.setInt(5, esp.getIdEspecialidad());
             
             ps.executeUpdate();
-            
+            /*ResultSet rs = ps.getGeneratedKeys();
+            if (rs.next())
+                id = rs.getInt(1);
+            else
+                System.out.println("ERROR al obtener el ID generado.");
+            */
             ps.close();
         }catch(SQLException e){
             System.out.println("ERROR al guardar el prestador");
             e.printStackTrace();
-        }
-        
+        }/*finally{
+            //return id;
+        }*/
+                
     }
     
     public void modificarPrestador(Prestador prestador){
@@ -50,7 +67,14 @@ public class PrestadorData extends Conexion {
             ps.setString(2, prestador.getApellido());
             ps.setLong(3, prestador.getDni());
             ps.setBoolean(4, true);
-            ps.setInt(5, prestador.getEspecialidad().getIdEspecialidad());
+            
+            Especialidad esp = new Especialidad(prestador.getEspecialidad().getTitulo());
+            EspecialidadData ed = new EspecialidadData();
+            esp=ed.buscarEspecialidad(esp.getTitulo());
+            
+            ps.setInt(5, esp.getIdEspecialidad());
+            
+            
             ps.setInt(6, prestador.getId());
             
             ps.executeUpdate();

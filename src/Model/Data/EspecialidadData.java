@@ -26,12 +26,19 @@ public class EspecialidadData extends Conexion {
             ps.setString(1, esp.getTitulo());
             
             ps.executeUpdate();
+            ResultSet rs = ps.getGeneratedKeys();
+            if (rs.next())
+                esp.setIdEspecialidad(rs.getInt(1));
+            else
+                System.out.println("ERROR al obtener el ID generado.");
             
             ps.close();
         }catch(SQLException e){
             System.out.println("ERROR al guardar la Especialidad");
             e.printStackTrace();
-        }
+        }/*finally{
+            return esp.getIdEspecialidad();
+        }*/
     }
     
     public Especialidad buscarEspecialidad(int id){
@@ -41,6 +48,30 @@ public class EspecialidadData extends Conexion {
         try{
             PreparedStatement ps = con.prepareStatement(SQL_SELECT);
             ps.setInt(1, id);
+            
+             rs = ps.executeQuery();
+             
+             if(rs.next()){
+                 esp = new Especialidad(rs.getInt(1), rs.getString(2));
+             }
+             
+             rs.close();
+             ps.close();
+        }catch(SQLException e){
+            System.out.println("ERROR al encontrar la Especialidad");
+            
+        }
+        
+        return esp;
+    }
+    
+    public Especialidad buscarEspecialidad(String titulo){
+        String SQL_SELECT = "SELECT * FROM especialidad WHERE titulo = ?";
+        ResultSet rs;
+        Especialidad esp = null;
+        try{
+            PreparedStatement ps = con.prepareStatement(SQL_SELECT);
+            ps.setString(1, titulo);
             
              rs = ps.executeQuery();
              

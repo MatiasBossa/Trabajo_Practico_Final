@@ -5,8 +5,8 @@
  */
 package Controller;
 
-import Model.Data.OrdenData;
-import Model.Entities.Orden;
+import Model.Data.*;
+import Model.Entities.*;
 import View.frmABMorden;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -22,6 +22,8 @@ public class ControlOrden implements ActionListener {
     private Orden modE; // modelo de la clase Entidad
     private OrdenData modD; // modelo de la clase Data
     private frmABMorden frm;
+    
+  
 
     public ControlOrden(Orden modE, OrdenData modD, frmABMorden frm) {
         this.modE = modE;
@@ -35,6 +37,10 @@ public class ControlOrden implements ActionListener {
         this.frm.btnBuscar.addActionListener(this);
     }
 
+    
+    
+    
+    
     /**
      * Coloca el titulo del formario y setea la ubicacion
      */
