@@ -41,6 +41,29 @@ public class EspecialidadData extends Conexion {
         }*/
     }
     
+    public int guardarEspecialidad(String titulo) {
+        int id=0;
+        String SQL_INSERT = "INSERT INTO especialidad(titulo) VALUES(?)";
+        try {
+            PreparedStatement ps = con.prepareStatement(SQL_INSERT, Statement.RETURN_GENERATED_KEYS);
+            ps.setString(1, titulo);
+
+            ps.executeUpdate();
+            ResultSet rs = ps.getGeneratedKeys();
+            if (rs.next())
+                id = rs.getInt(1);
+            else
+                System.out.println("ERROR al obtener el ID generado.");
+
+            ps.close();
+
+        } catch (SQLException ex) {
+            System.out.println("ERROR al guardar la Especialidad");
+            ex.printStackTrace();
+        }
+        return id;
+    }
+    
     public Especialidad buscarEspecialidad(int id){
         String SQL_SELECT = "SELECT * FROM especialidad WHERE idEspecialidad = ?";
         ResultSet rs;
@@ -78,14 +101,20 @@ public class EspecialidadData extends Conexion {
              if(rs.next()){
                  esp = new Especialidad(rs.getInt(1), rs.getString(2));
              }
+             if(esp==null){//Si no encontro el titulo la 1ra vez guarda el nuevo titulo y
+                 //llama nuevamente este metodo. Tal vez seria mejor usar buscarEspecialidad que
+                 //usa eel parametro int???????
+                 
+                 guardarEspecialidad(titulo);
+                 
+                 esp=buscarEspecialidad(titulo);
+             }
              
              rs.close();
              ps.close();
         }catch(SQLException e){
             System.out.println("ERROR al encontrar la Especialidad");
-            
         }
-        
         return esp;
     }
     

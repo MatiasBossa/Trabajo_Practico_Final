@@ -72,20 +72,27 @@ public class ControlPrestador implements ActionListener{
         }
         
         if (e.getSource() == frm.btnBuscar) {
-            int idPrestador = Integer.parseInt(frm.txtId.getText());
-            modE = modD.buscarPrestador(idPrestador);
-            if (modE != null) {
-                frm.txtId.setText(String.valueOf(modE.getId()));
-                frm.txtNombre.setText(modE.getNombre());
-                frm.txtApellido.setText(modE.getApellido());
-                frm.txtDni.setText(String.valueOf(modE.getDni()));
-                frm.chkActivo.setSelected(modE.getActivo());
-                frm.txtEspecialidad.setText(modE.getEspecialidad().getTitulo());
-                //frm.txtEspecialidad.setText("falta metodo");
-            } else {
-                JOptionPane.showMessageDialog(null, "Prestador No encontrado.");
+            if(frm.txtId.getText()==""){
+                JOptionPane.showMessageDialog(null, "No se ingreso id.");
                 limpiar();
+            }else{
+                int idPrestador = Integer.parseInt(frm.txtId.getText());
+                modE = modD.buscarPrestador(idPrestador);
+                if (modE != null) {
+                    frm.txtId.setText(String.valueOf(modE.getId()));
+                    frm.txtNombre.setText(modE.getNombre());
+                    frm.txtApellido.setText(modE.getApellido());
+                    frm.txtDni.setText(String.valueOf(modE.getDni()));
+                    frm.chkActivo.setSelected(modE.getActivo());
+                    frm.txtEspecialidad.setText(modE.getEspecialidad().getTitulo());
+                    //frm.txtEspecialidad.setText("falta metodo");
+                } else {
+                    
+                    JOptionPane.showMessageDialog(null, "Prestador No encontrado. estaba"+frm.txtId.getText());
+                    limpiar();
+                }
             }
+            
             
         }
         

@@ -32,12 +32,13 @@ public class PrestadorData extends Conexion {
             ps.setString(1, prestador.getNombre());
             ps.setString(2, prestador.getApellido());
             ps.setLong(3, prestador.getDni());
-            ps.setBoolean(4, true);
+            ps.setBoolean(4, prestador.getActivo());
             
             
             Especialidad esp = new Especialidad(prestador.getEspecialidad().getTitulo());
             EspecialidadData ed = new EspecialidadData();
             esp=ed.buscarEspecialidad(esp.getTitulo());
+            
             
             
             
@@ -66,7 +67,7 @@ public class PrestadorData extends Conexion {
             ps.setString(1, prestador.getNombre());
             ps.setString(2, prestador.getApellido());
             ps.setLong(3, prestador.getDni());
-            ps.setBoolean(4, true);
+            ps.setBoolean(4, prestador.getActivo());
             
             Especialidad esp = new Especialidad(prestador.getEspecialidad().getTitulo());
             EspecialidadData ed = new EspecialidadData();
