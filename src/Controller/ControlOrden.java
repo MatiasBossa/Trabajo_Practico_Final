@@ -7,7 +7,7 @@ package Controller;
 
 import Model.Data.*;
 import Model.Entities.*;
-import View.frmABMorden;
+import View.frmOrden;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Date;
@@ -21,11 +21,11 @@ public class ControlOrden implements ActionListener {
 
     private Orden modE; // modelo de la clase Entidad
     private OrdenData modD; // modelo de la clase Data
-    private frmABMorden frm;
+    private frmOrden frm;
     
   
 
-    public ControlOrden(Orden modE, OrdenData modD, frmABMorden frm) {
+    public ControlOrden(Orden modE, OrdenData modD, frmOrden frm) {
         this.modE = modE;
         this.modD = modD;
         this.frm = frm;
