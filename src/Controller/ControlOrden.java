@@ -46,7 +46,7 @@ public class ControlOrden implements ActionListener {
      */
     public void iniciar() {
         frm.setTitle("Orden");
-        frm.setLocationRelativeTo(null);
+        //frm.setLocationRelativeTo(null);
     }
 
     /**

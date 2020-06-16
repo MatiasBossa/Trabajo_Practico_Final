@@ -5,6 +5,10 @@
  */
 package View;
 
+import Controller.ControlOrden;
+import Model.Data.OrdenData;
+import Model.Entities.Orden;
+
 /**
  *
  * @author HP
@@ -70,6 +74,11 @@ public class frmPrincipal extends javax.swing.JFrame {
         menu_afiliados.setText("Afiliados");
 
         item_afiliados.setText("Formulario de afiliados");
+        item_afiliados.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                item_afiliadosActionPerformed(evt);
+            }
+        });
         menu_afiliados.add(item_afiliados);
 
         jMenuBar1.add(menu_afiliados);
@@ -77,6 +86,11 @@ public class frmPrincipal extends javax.swing.JFrame {
         menu_especialidades.setText("Especialidades");
 
         item_especialidades.setText("Formulario de especialidades");
+        item_especialidades.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                item_especialidadesActionPerformed(evt);
+            }
+        });
         menu_especialidades.add(item_especialidades);
 
         jMenuBar1.add(menu_especialidades);
@@ -84,9 +98,19 @@ public class frmPrincipal extends javax.swing.JFrame {
         menu_prestadores.setText("Prestadores");
 
         item_prestadores.setText("Formulario de prestadores");
+        item_prestadores.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                item_prestadoresActionPerformed(evt);
+            }
+        });
         menu_prestadores.add(item_prestadores);
 
         item_horarios.setText("Formulario de horarios");
+        item_horarios.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                item_horariosActionPerformed(evt);
+            }
+        });
         menu_prestadores.add(item_horarios);
 
         jMenuBar1.add(menu_prestadores);
@@ -94,6 +118,11 @@ public class frmPrincipal extends javax.swing.JFrame {
         menu_ordenes.setText("Ordenes");
 
         item_ordenes.setText("Formulario de ordenes");
+        item_ordenes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                item_ordenesActionPerformed(evt);
+            }
+        });
         menu_ordenes.add(item_ordenes);
 
         jMenuBar1.add(menu_ordenes);
@@ -118,6 +147,37 @@ public class frmPrincipal extends javax.swing.JFrame {
         // TODO add your handling code here:
         System.exit(WIDTH);
     }//GEN-LAST:event_item_salirActionPerformed
+
+    private void item_afiliadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_item_afiliadosActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_item_afiliadosActionPerformed
+
+    private void item_especialidadesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_item_especialidadesActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_item_especialidadesActionPerformed
+
+    private void item_prestadoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_item_prestadoresActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_item_prestadoresActionPerformed
+
+    private void item_horariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_item_horariosActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_item_horariosActionPerformed
+
+    private void item_ordenesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_item_ordenesActionPerformed
+        // TODO add your handling code here:
+        escritorio.removeAll();
+        escritorio.repaint();
+
+        Orden mod = new Orden();
+        OrdenData modC = new OrdenData();
+        frmOrden frm = new frmOrden();
+        ControlOrden ctrl = new ControlOrden(mod, modC, frm);
+        frm.setVisible(true);
+
+        escritorio.add(frm);
+        escritorio.moveToFront(frm);
+    }//GEN-LAST:event_item_ordenesActionPerformed
 
     /**
      * @param args the command line arguments
