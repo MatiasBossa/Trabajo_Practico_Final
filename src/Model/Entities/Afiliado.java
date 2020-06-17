@@ -43,7 +43,8 @@ public class Afiliado extends Persona {
 
     @Override
     public String toString() {
-        return "Afiliado{ " + super.toString() + ", movimientos=" + movimientos + '}';
+        //return "Afiliado{ " + super.toString() + ", movimientos=" + movimientos + '}';
+        return this.getId() + " - " + this.getApellido() + " " + this.getNombre();
     }
 
     

@@ -55,7 +55,8 @@ public class Prestador extends Persona {
 
     @Override
     public String toString() {
-        return "Prestador{" + super.toString() + " especialidad[" + especialidad.getTitulo() + "] }";
+        //return "Prestador{" + super.toString() + " especialidad[" + especialidad.getTitulo() + "] }";
+        return this.getId() + " - " + this.getApellido() + " " + this.getNombre();
     }
 
 }

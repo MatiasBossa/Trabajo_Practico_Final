@@ -11,7 +11,9 @@ import View.frmOrden;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Date;
+import java.util.ArrayList;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -22,8 +24,15 @@ public class ControlOrden implements ActionListener {
     private Orden modE; // modelo de la clase Entidad
     private OrdenData modD; // modelo de la clase Data
     private frmOrden frm;
-    
-  
+
+    private DefaultTableModel modelo;
+    private AfiliadoData afiliadoData;
+    private PrestadorData prestadorData;
+    private OrdenData ordenData;
+    private ArrayList<Afiliado> listaAfiliados;
+    private ArrayList<Prestador> listaPrestadores;
+    private ArrayList<Orden> listaOrdenes;
+
 
     public ControlOrden(Orden modE, OrdenData modD, frmOrden frm) {
         this.modE = modE;
@@ -35,6 +44,20 @@ public class ControlOrden implements ActionListener {
         this.frm.btnAnular.addActionListener(this);
         this.frm.btnLimpiar.addActionListener(this);
         this.frm.btnBuscar.addActionListener(this);
+
+        modelo = new DefaultTableModel();
+        afiliadoData = new AfiliadoData();
+        listaAfiliados = (ArrayList)afiliadoData.listarAfiliados();
+        prestadorData = new PrestadorData();
+        listaPrestadores = (ArrayList)prestadorData.listarPrestadores();
+        ordenData = new OrdenData();
+        listaOrdenes = (ArrayList)ordenData.listarOrdenes(1);
+        
+        cargarAfiliados();
+        cargarPrestadores();
+        armarCabezeraTabla();
+        cargarDatosTabla();
+
     }
 
     
@@ -147,6 +170,50 @@ public class ControlOrden implements ActionListener {
         modE.setTotalPagar(Double.parseDouble(frm.txtTotalPagar.getText()));
         //modE.setHorario(horario);
         modE.setAnulado(frm.chkAnulado.isSelected());
+    }
+
+    private void cargarAfiliados() {
+        for (Afiliado item:listaAfiliados) {
+            frm.cbxAfiliado.addItem(item);
+        }
+    }
+
+    private void cargarPrestadores() {
+        for (Prestador item:listaPrestadores) {
+            frm.cbxPrestador.addItem(item);
+        }
+    }
+
+    private void armarCabezeraTabla() {
+        ArrayList<Object> columnas = new ArrayList<Object>();
+        columnas.add("ID");
+        columnas.add("FECHAEMISION");
+        columnas.add("PRESTADOR");
+        columnas.add("HORARIO");
+        columnas.add("FORMAPAGO");
+        columnas.add("TOTALPAGAR");
+        columnas.add("ANULADO");
+        for(Object it:columnas) {
+            modelo.addColumn(it);
+        }
+        frm.tblOrdenes.setModel(modelo);
+    }
+    
+    private void borrarFilasTabla() {
+        int f = modelo.getRowCount() - 1;
+        for (int i=f; i>=0; i--) {
+            modelo.removeRow(i);
+        }
+    }
+
+    private void cargarDatosTabla() {
+        borrarFilasTabla();
+        
+        Afiliado afiliado = (Afiliado)frm.cbxAfiliado.getSelectedItem();
+        listaOrdenes = (ArrayList)ordenData.listarOrdenes(afiliado.getId());
+        for(Orden ord:listaOrdenes) {
+            modelo.addRow(new Object[]{ord.getIdOrden(), ord.getFechaEmision(), ord.getHorario().getPrestador().getApellido()+" "+ord.getHorario().getPrestador().getNombre(), ord.getHorario().getDia()+ord.getHorario().getHorarioAtencion(), ord.getFormaPago(), ord.getTotalPagar(), ord.getAnulado()});
+        }
     }
 
 }

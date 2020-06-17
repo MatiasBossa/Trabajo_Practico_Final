@@ -164,7 +164,7 @@ public class OrdenData extends Conexion {
                 orden.setIdOrden(rs.getInt("idOrden"));
                 orden.setFechaEmision(rs.getDate("fechaEmision"));
                 //orden.setAfiliado(ad.buscarAfiliado(rs.getInt("idAfiliado")));
-                //orden.setHorario(hd.buscarHorario(rs.getInt("idHorario")));
+                orden.setHorario(hd.buscarHorario(rs.getInt("idHorario")));
                 orden.setFormaPago(rs.getString("formaPago"));
                 orden.setTotalPagar(rs.getDouble("totalPagar"));
                 orden.setAnulado(rs.getBoolean("anulado"));
@@ -175,5 +175,7 @@ public class OrdenData extends Conexion {
         }
         return movimientos;
     }
+    
+    
 
 }

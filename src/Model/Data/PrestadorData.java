@@ -8,6 +8,10 @@ package Model.Data;
 import Model.Entities.Especialidad;
 import Model.Entities.Prestador;
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -147,6 +151,31 @@ public class PrestadorData extends Conexion {
             System.out.println("ERROR al desactivar Prestador.");
         }
         
+    }
+    
+    public List<Prestador> listarPrestadores() {
+        List<Prestador> lista = new ArrayList<Prestador>();
+        String sql = "SELECT * FROM prestador ORDER BY apellido, nombre;";
+        try {
+            Prestador prestador;
+            PreparedStatement ps = con.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                 prestador = new Prestador();
+                 prestador.setId(rs.getInt("idPrestador"));
+                 prestador.setNombre(rs.getString("nombre"));
+                 prestador.setApellido(rs.getString("apellido"));
+                 prestador.setDni(rs.getInt("dni"));
+                 prestador.setActivo(rs.getBoolean("activo"));                 
+                 EspecialidadData especial = new EspecialidadData();
+                 prestador.setEspecialidad(especial.buscarEspecialidad(rs.getInt("idEspecialidad")));
+                 lista.add(prestador);
+            }
+            ps.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(PrestadorData.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return lista;
     }
     
 }
