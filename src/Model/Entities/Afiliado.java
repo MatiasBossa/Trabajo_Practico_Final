@@ -30,6 +30,9 @@ public class Afiliado extends Persona {
         this.movimientos = movimientos;
     }
 
+    public Afiliado() {
+    }
+
     public List<Orden> getMovimientos() {
         return movimientos;
     }

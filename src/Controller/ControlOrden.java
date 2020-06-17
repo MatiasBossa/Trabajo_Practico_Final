@@ -99,14 +99,14 @@ public class ControlOrden implements ActionListener {
             if (modE != null) {
                 frm.txtIdOrden.setText(String.valueOf(modE.getIdOrden()));
                 frm.txtFechaEmision.setText(modE.getFechaEmision().toString());
-                frm.txtNombreAfiliado.setText("falta metodo!!!");
-                frm.txtApellidoAfiliado.setText("falta metodo!!!");
+                //frm.txtNombreAfiliado.setText("falta metodo!!!");
+                //frm.txtApellidoAfiliado.setText("falta metodo!!!");
                 frm.txtFormaPago.setText(modE.getFormaPago());
                 frm.txtTotalPagar.setText(String.valueOf(modE.getTotalPagar()));
                 frm.txtDia.setText(modE.getHorario().getDia());
                 frm.txtHorarioAtencion.setText(modE.getHorario().getHorarioAtencion().toString());
-                frm.txtNombrePrestador.setText(modE.getHorario().getPrestador().getNombre());
-                frm.txtApellidoPrestador.setText(modE.getHorario().getPrestador().getApellido());
+                //frm.txtNombrePrestador.setText(modE.getHorario().getPrestador().getNombre());
+                //frm.txtApellidoPrestador.setText(modE.getHorario().getPrestador().getApellido());
                 frm.chkAnulado.setSelected(modE.getAnulado());
             } else {
                 JOptionPane.showMessageDialog(null, "Registro No encontrado.");
@@ -125,14 +125,14 @@ public class ControlOrden implements ActionListener {
     private void limpiar() {
         frm.txtIdOrden.setText(null);
         frm.txtFechaEmision.setText(null);
-        frm.txtNombreAfiliado.setText(null);
-        frm.txtApellidoAfiliado.setText(null);
+        //frm.txtNombreAfiliado.setText(null);
+        //frm.txtApellidoAfiliado.setText(null);
         frm.txtFormaPago.setText(null);
         frm.txtTotalPagar.setText(null);
         frm.txtDia.setText(null);
         frm.txtHorarioAtencion.setText(null);
-        frm.txtNombrePrestador.setText(null);
-        frm.txtApellidoPrestador.setText(null);
+        //frm.txtNombrePrestador.setText(null);
+        //frm.txtApellidoPrestador.setText(null);
         frm.chkAnulado.setSelected(false);
     }
 
