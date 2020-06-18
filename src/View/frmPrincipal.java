@@ -6,8 +6,11 @@
 package View;
 
 import Controller.ControlOrden;
+import Controller.ControlPrestador;
 import Model.Data.OrdenData;
+import Model.Data.PrestadorData;
 import Model.Entities.Orden;
+import Model.Entities.Prestador;
 
 /**
  *
@@ -157,7 +160,19 @@ public class frmPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_item_especialidadesActionPerformed
 
     private void item_prestadoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_item_prestadoresActionPerformed
+        // TODO add your handling code here:                                          
         // TODO add your handling code here:
+        escritorio.removeAll();
+        escritorio.repaint();
+        
+        Prestador modE = new Prestador();
+        PrestadorData modD = new PrestadorData();
+        frmPrestador frm = new frmPrestador();
+        ControlPrestador ctrl = new ControlPrestador(modE, modD, frm);
+        frm.setVisible(true);
+        
+        escritorio.add(frm);
+        escritorio.moveToFront(frm);
     }//GEN-LAST:event_item_prestadoresActionPerformed
 
     private void item_horariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_item_horariosActionPerformed

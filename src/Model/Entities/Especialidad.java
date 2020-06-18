@@ -22,6 +22,9 @@ public class Especialidad {
     public Especialidad(String titulo) {
         this.titulo = titulo;
     }
+    public Especialidad() {
+        this.titulo = titulo;
+    }
     
     public int getIdEspecialidad() {
         return idEspecialidad;
@@ -41,7 +44,9 @@ public class Especialidad {
 
     @Override
     public String toString() {
-        return "idEspecialidad=" + idEspecialidad + ", titulo=" + titulo;
+        //se va a usar con el combobox
+        return titulo;
+        //return "idEspecialidad=" + idEspecialidad + ", titulo=" + titulo;
     }
     
 }

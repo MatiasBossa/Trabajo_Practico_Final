@@ -16,26 +16,30 @@ public class Prestador extends Persona {
     private Especialidad especialidad;
     //List<Horario> horarios;
 
+    // <editor-fold defaultstate="collapsed" desc="Constructor completo"> 
     public Prestador(Especialidad especialidad, int id, String nombre, String apellido, long dni, boolean activo) {
         super(id, nombre, apellido, dni, activo);
         this.especialidad = especialidad;
        // this.horarios = horarios;
-    }
+    }// </editor-fold>  
 
+    // <editor-fold defaultstate="collapsed" desc="Constructor sin id"> 
     public Prestador(Especialidad especialidad, String nombre, String apellido, long dni, boolean activo) {
         super(nombre, apellido, dni, activo);
         this.especialidad = especialidad;
         //this.horarios = horarios;
-    }
+    }// </editor-fold>  
 
+    // <editor-fold defaultstate="collapsed" desc="Constructor solo con Especialidad"> 
     public Prestador(Especialidad especialidad) {
         this.especialidad = especialidad;
         //this.horarios = horarios;
-    }
+    }// </editor-fold>  
     
+    // <editor-fold defaultstate="collapsed" desc="Constructor vacio"> 
     public Prestador(){
         
-    }
+    }// </editor-fold>  
 
     public Especialidad getEspecialidad() {
         return especialidad;
@@ -55,7 +59,10 @@ public class Prestador extends Persona {
 
     @Override
     public String toString() {
+        
         return "Prestador{" + super.toString() + " especialidad[" + especialidad.getTitulo() + "] }";
+   
+        //return "Prestador{" + super.toString() + " especialidad[" + especialidad.getTitulo() + "] }";
     }
 
 }

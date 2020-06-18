@@ -7,6 +7,7 @@ package Model.Data;
 
 import Model.Entities.Especialidad;
 import java.sql.*;
+import javax.swing.JComboBox;
 
 /**
  *
@@ -19,6 +20,7 @@ public class EspecialidadData extends Conexion {
         this.con = getConexion();
     }
     
+    // <editor-fold defaultstate="collapsed" desc="Create"> 
     public void guardarEspecialidad(Especialidad esp){
         String SQL_INSERT = "INSERT INTO especialidad(titulo) VALUES(?)";
         try{
@@ -39,8 +41,9 @@ public class EspecialidadData extends Conexion {
         }/*finally{
             return esp.getIdEspecialidad();
         }*/
-    }
+    }// </editor-fold>  
     
+    // <editor-fold defaultstate="collapsed" desc="Create con titulo"> 
     public int guardarEspecialidad(String titulo) {
         int id=0;
         String SQL_INSERT = "INSERT INTO especialidad(titulo) VALUES(?)";
@@ -62,8 +65,9 @@ public class EspecialidadData extends Conexion {
             ex.printStackTrace();
         }
         return id;
-    }
+    }// </editor-fold>  
     
+    // <editor-fold defaultstate="collapsed" desc="Read con id"> 
     public Especialidad buscarEspecialidad(int id){
         String SQL_SELECT = "SELECT * FROM especialidad WHERE idEspecialidad = ?";
         ResultSet rs;
@@ -86,8 +90,9 @@ public class EspecialidadData extends Conexion {
         }
         
         return esp;
-    }
+    }// </editor-fold>
     
+    // <editor-fold defaultstate="collapsed" desc="Read con titulo"> 
     public Especialidad buscarEspecialidad(String titulo){
         String SQL_SELECT = "SELECT * FROM especialidad WHERE titulo = ?";
         ResultSet rs;
@@ -116,8 +121,9 @@ public class EspecialidadData extends Conexion {
             System.out.println("ERROR al encontrar la Especialidad");
         }
         return esp;
-    }
+    }// </editor-fold> 
     
+    // <editor-fold defaultstate="collapsed" desc="Create con id"> 
     public void borrarEspecialidad(int id){
         String SQL_DELETE = "DELETE FROM especialidad WHERE idEspecialidad = ?";
         try{
@@ -131,8 +137,9 @@ public class EspecialidadData extends Conexion {
             System.out.println("ERROR al eliminar la especialidad");
             e.printStackTrace();
         }
-    }
+    }// </editor-fold> 
     
+    // <editor-fold defaultstate="collapsed" desc="Update"> 
     public void modificarEspecialidad(Especialidad esp){
         String SQL_UPDATE = "UPDATE especialidad SET titulo = ? WHERE idEspecialidad = ?";
         try{
@@ -147,6 +154,27 @@ public class EspecialidadData extends Conexion {
             System.out.println("ERROR al actualizar la especialidad");
             e.printStackTrace();
         }
-    }
+    }// </editor-fold> 
     
+    
+    public void listarEspecialidades(JComboBox<String> combo){
+        String SQL_SELECT = "SELECT * FROM especialidad";
+        ResultSet rs;
+        try{
+            PreparedStatement ps = con.prepareStatement(SQL_SELECT);
+            
+             rs = ps.executeQuery();
+             
+             while(rs.next()){
+                 combo.addItem(rs.getString("titulo"));
+             }
+             
+             rs.close();
+             ps.close();
+        }catch(SQLException e){
+            System.out.println("ERROR al encontrar la Especialidad");
+            
+        }
+        
+    }
 }
