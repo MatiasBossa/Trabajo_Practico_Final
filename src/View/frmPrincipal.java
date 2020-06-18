@@ -5,6 +5,7 @@
  */
 package View;
 
+import Controller.ControlAfiliado;
 import Controller.ControlOrden;
 import Controller.ControlPrestador;
 import Model.Data.AfiliadoData;
@@ -27,6 +28,7 @@ public class frmPrincipal extends javax.swing.JFrame {
         initComponents();
         this.setTitle("Sistema Mutual. V 1.0");
         this.setSize(1024, 720);
+        this.setLocationRelativeTo(null);
     }
 
     /**
@@ -161,8 +163,8 @@ public class frmPrincipal extends javax.swing.JFrame {
 
         Afiliado mod = new Afiliado();
         AfiliadoData modC = new AfiliadoData();
-        vistaAfiliado frm = new vistaAfiliado();
-        //ControlAfiliado ctrl = new ControlAfiliado(mod, modC, frm);
+        frmAfiliado frm = new frmAfiliado();
+        ControlAfiliado ctrl = new ControlAfiliado(mod, modC, frm);
         frm.setVisible(true);
 
         escritorio.add(frm);

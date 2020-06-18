@@ -46,9 +46,9 @@ public class AfiliadoData extends Conexion {
     
     public void borrarAfiliado(int idAfiliado) {  //Borramos con DNI
         try {
-            String sql = "DELETE FROM `afiliado` WHERE idAfiliado = ?;";
+            String sql = "DELETE FROM `afiliado` WHERE idAfiliado = ?";
             PreparedStatement ps = con.prepareStatement(sql);
-            ps.setLong(1, idAfiliado);
+            ps.setInt(1, idAfiliado);
         
             ps.executeUpdate();
             ps.close();
@@ -60,13 +60,14 @@ public class AfiliadoData extends Conexion {
     
     public void modificarAfiliado(Afiliado afiliado){  
         try {
-            String sql = "UPDATE `afiliado` SET nombre`=?,"
-                    + "`apellido`=?,`activo`=? WHERE `dni`=?;";
+            String sql = "UPDATE `afiliado` SET `nombre`=?,"
+                    + "`apellido`=?,`dni`=?, `activo`=? WHERE `idAfiliado`=?;";
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setString(1, afiliado.getNombre());
             ps.setString(2, afiliado.getApellido());
-            ps.setBoolean(3, afiliado.getActivo());
-            ps.setLong(4, afiliado.getDni());
+            ps.setLong(3, afiliado.getDni());
+            ps.setBoolean(4, afiliado.getActivo());
+            ps.setInt(5, afiliado.getId());
             
             ps.executeUpdate();
             ps.close();
@@ -97,5 +98,46 @@ public class AfiliadoData extends Conexion {
         }
         return lista;
     }
+    
+    public void desactivarAfiliado(int id){
+        String sql = "UPDATE afiliado SET activo = ? WHERE idAfiliado = ?;";
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setBoolean(1, false);
+            ps.setInt(2, id);
+            ps.executeUpdate();
+            ps.close();
+        } catch (SQLException ex) {
+            System.out.println("ERROR al desactivar Prestador.");
+        }
+        
+    }
+    
+    public Afiliado buscarAfiliado(int dni) {
+        Afiliado aux = null;
+        String sql = "SELECT * FROM afiliado WHERE dni = ?";
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ResultSet rs;
+            ps.setInt(1, dni);
+
+            rs = ps.executeQuery();
+
+            if (rs.next()) {
+                aux = new Afiliado();
+                aux.setId(rs.getInt(1));
+                aux.setNombre(rs.getString(2));
+                aux.setApellido(rs.getString(3));
+                aux.setDni(rs.getLong(4));
+                aux.setActivo(rs.getBoolean(5));
+            }
+        }catch(SQLException e){
+            System.out.println("ERROR al buscar el afiliado");
+            e.printStackTrace();
+        }
+        
+        return aux;
+    }
    
 }
+
