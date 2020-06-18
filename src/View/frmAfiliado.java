@@ -57,6 +57,12 @@ public class frmAfiliado extends javax.swing.JInternalFrame {
         setTitle("formulario de prestadores");
         setPreferredSize(new java.awt.Dimension(810, 350));
 
+        txtIdAfiliado.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtIdAfiliadoActionPerformed(evt);
+            }
+        });
+
         txtDni.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtDniActionPerformed(evt);
@@ -100,7 +106,7 @@ public class frmAfiliado extends javax.swing.JInternalFrame {
                 java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.Object.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, true
+                false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -118,9 +124,13 @@ public class frmAfiliado extends javax.swing.JInternalFrame {
         });
         jScrollPane1.setViewportView(tblAfiliados);
         if (tblAfiliados.getColumnModel().getColumnCount() > 0) {
-            tblAfiliados.getColumnModel().getColumn(1).setPreferredWidth(60);
+            tblAfiliados.getColumnModel().getColumn(0).setResizable(false);
+            tblAfiliados.getColumnModel().getColumn(1).setResizable(false);
+            tblAfiliados.getColumnModel().getColumn(2).setResizable(false);
             tblAfiliados.getColumnModel().getColumn(2).setPreferredWidth(60);
+            tblAfiliados.getColumnModel().getColumn(3).setResizable(false);
             tblAfiliados.getColumnModel().getColumn(3).setPreferredWidth(40);
+            tblAfiliados.getColumnModel().getColumn(4).setResizable(false);
             tblAfiliados.getColumnModel().getColumn(4).setPreferredWidth(30);
         }
 
@@ -243,11 +253,11 @@ public class frmAfiliado extends javax.swing.JInternalFrame {
 
     private void tblAfiliadosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblAfiliadosMouseClicked
         int fila = this.tblAfiliados.getSelectedRow();
-        String sDni = String.valueOf(this.tblAfiliados.getValueAt(fila, 3));
-        Integer dni = Integer.parseInt(sDni);
+        String sId = String.valueOf(this.tblAfiliados.getValueAt(fila, 0));
+        Integer id = Integer.parseInt(sId);
         Afiliado afiliado = new Afiliado();
         AfiliadoData ad = new AfiliadoData();
-        afiliado = ad.buscarAfiliado(dni);
+        afiliado = ad.buscarAfiliado(id);
         
         this.txtIdAfiliado.setText(String.valueOf(afiliado.getId()));
         this.txtNombre.setText(afiliado.getNombre());
@@ -256,6 +266,13 @@ public class frmAfiliado extends javax.swing.JInternalFrame {
         this.chkActivo.setSelected(afiliado.getActivo());
         
     }//GEN-LAST:event_tblAfiliadosMouseClicked
+
+    
+    
+    
+    private void txtIdAfiliadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtIdAfiliadoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtIdAfiliadoActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

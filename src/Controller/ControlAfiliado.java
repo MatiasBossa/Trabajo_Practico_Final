@@ -61,7 +61,13 @@ public class ControlAfiliado implements ActionListener
         }
         if (e.getSource() == this.frm.btnBuscar) {
             
-            final DefaultTableModel tabla = new DefaultTableModel();
+            final DefaultTableModel tabla = new DefaultTableModel(){
+                
+                public boolean isCellEditable(int row, int column) {
+                //all cells false
+                return false;           
+                 }
+            };
             this.frm.tblAfiliados.setModel(tabla);
             final Afiliado a = new Afiliado();
             final AfiliadoData ad = new AfiliadoData();

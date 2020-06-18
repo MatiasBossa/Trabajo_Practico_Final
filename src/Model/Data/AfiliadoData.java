@@ -113,13 +113,13 @@ public class AfiliadoData extends Conexion {
         
     }
     
-    public Afiliado buscarAfiliado(int dni) {
+    public Afiliado buscarAfiliado(int idAfiliado) {
         Afiliado aux = null;
-        String sql = "SELECT * FROM afiliado WHERE dni = ?";
+        String sql = "SELECT * FROM afiliado WHERE idAfiliado = ?";
         try {
             PreparedStatement ps = con.prepareStatement(sql);
             ResultSet rs;
-            ps.setInt(1, dni);
+            ps.setInt(1, idAfiliado);
 
             rs = ps.executeQuery();
 
