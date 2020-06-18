@@ -7,8 +7,10 @@ package View;
 
 import Controller.ControlOrden;
 import Controller.ControlPrestador;
+import Model.Data.AfiliadoData;
 import Model.Data.OrdenData;
 import Model.Data.PrestadorData;
+import Model.Entities.Afiliado;
 import Model.Entities.Orden;
 import Model.Entities.Prestador;
 
@@ -23,6 +25,7 @@ public class frmPrincipal extends javax.swing.JFrame {
      */
     public frmPrincipal() {
         initComponents();
+        this.setTitle("Sistema Mutual. V 1.0");
         this.setSize(1024, 720);
     }
 
@@ -153,6 +156,17 @@ public class frmPrincipal extends javax.swing.JFrame {
 
     private void item_afiliadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_item_afiliadosActionPerformed
         // TODO add your handling code here:
+        escritorio.removeAll();
+        escritorio.repaint();
+
+        Afiliado mod = new Afiliado();
+        AfiliadoData modC = new AfiliadoData();
+        vistaAfiliado frm = new vistaAfiliado();
+        //ControlAfiliado ctrl = new ControlAfiliado(mod, modC, frm);
+        frm.setVisible(true);
+
+        escritorio.add(frm);
+        escritorio.moveToFront(frm);
     }//GEN-LAST:event_item_afiliadosActionPerformed
 
     private void item_especialidadesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_item_especialidadesActionPerformed

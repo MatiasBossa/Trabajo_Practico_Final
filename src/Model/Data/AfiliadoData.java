@@ -2,6 +2,8 @@ package Model.Data;
 
 import Model.Entities.Afiliado;
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -72,6 +74,28 @@ public class AfiliadoData extends Conexion {
         } catch (SQLException ex){
             Logger.getLogger(AfiliadoData.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+    
+    public List<Afiliado> listarAfiliados() {
+        List<Afiliado> lista = new ArrayList<Afiliado>();
+        String sql = "SELECT * FROM afiliado ORDER BY apellido, nombre;";
+        try {
+            Afiliado afiliado;
+            PreparedStatement ps = con.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                 afiliado = new Afiliado();
+                 afiliado.setId(rs.getInt("idAfiliado"));
+                 afiliado.setNombre(rs.getString("nombre"));
+                 afiliado.setApellido(rs.getString("apellido"));
+                 afiliado.setDni(rs.getInt("dni"));
+                 afiliado.setActivo(rs.getBoolean("activo"));
+                 lista.add(afiliado);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(AfiliadoData.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return lista;
     }
    
 }

@@ -30,6 +30,9 @@ public class Afiliado extends Persona {
         this.movimientos = movimientos;
     }
 
+    public Afiliado() {
+    }
+
     public List<Orden> getMovimientos() {
         return movimientos;
     }
@@ -40,7 +43,8 @@ public class Afiliado extends Persona {
 
     @Override
     public String toString() {
-        return "Afiliado{ " + super.toString() + ", movimientos=" + movimientos + '}';
+        //return "Afiliado{ " + super.toString() + ", movimientos=" + movimientos + '}';
+        return this.getId() + " - " + this.getApellido() + " " + this.getNombre();
     }
 
     
