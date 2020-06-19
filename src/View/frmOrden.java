@@ -7,6 +7,7 @@ package View;
 
 import Model.Entities.Afiliado;
 import Model.Entities.Prestador;
+import java.awt.event.KeyEvent;
 
 /**
  *
@@ -66,6 +67,11 @@ public class frmOrden extends javax.swing.JInternalFrame {
         btnAnular.setText("Anular");
 
         txtIdOrden.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        txtIdOrden.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtIdOrdenKeyTyped(evt);
+            }
+        });
 
         btnLimpiar.setText("Limpiar");
 
@@ -80,8 +86,18 @@ public class frmOrden extends javax.swing.JInternalFrame {
         jLabel3.setText("Afiliado");
 
         txtFormaPago.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        txtFormaPago.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtFormaPagoKeyTyped(evt);
+            }
+        });
 
         txtTotalPagar.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        txtTotalPagar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtTotalPagarKeyTyped(evt);
+            }
+        });
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel4.setText("Total a pagar");
@@ -241,6 +257,36 @@ public class frmOrden extends javax.swing.JInternalFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void txtIdOrdenKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtIdOrdenKeyTyped
+      char caracter = evt.getKeyChar();
+
+      // Verificar si la tecla pulsada no es un digito
+      if(((caracter < '0') || (caracter > '9')) && (caracter != KeyEvent.VK_BACK_SPACE) )
+      {
+         evt.consume();  // ignorar el evento de teclado
+      }
+    }//GEN-LAST:event_txtIdOrdenKeyTyped
+
+    private void txtFormaPagoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtFormaPagoKeyTyped
+      char caracter = evt.getKeyChar();
+
+      // Verificar si la tecla pulsada no es un digito
+      if( ((caracter < 'A') || (caracter > 'Z')) && ((caracter < 'a') || (caracter > 'z')) )
+      {
+         evt.consume();  // ignorar el evento de teclado
+      }
+    }//GEN-LAST:event_txtFormaPagoKeyTyped
+
+    private void txtTotalPagarKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTotalPagarKeyTyped
+      char caracter = evt.getKeyChar();
+
+      // Verificar si la tecla pulsada no es un digito
+      if(((caracter < '0') || (caracter > '9')) && (caracter != KeyEvent.VK_BACK_SPACE) && (caracter == '.') )
+      {
+         evt.consume();  // ignorar el evento de teclado
+      }
+    }//GEN-LAST:event_txtTotalPagarKeyTyped
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

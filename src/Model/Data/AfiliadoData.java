@@ -53,8 +53,8 @@ public class AfiliadoData extends Conexion {
             ps.executeUpdate();
             ps.close();
             
-        } catch (SQLException ex){
-            Logger.getLogger(AfiliadoData.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException e){
+            System.out.println("ERROR BORRAR");
         }        
     }
     

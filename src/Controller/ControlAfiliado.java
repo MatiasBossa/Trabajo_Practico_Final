@@ -34,6 +34,7 @@ public class ControlAfiliado implements ActionListener
     
     @Override
     public void actionPerformed(final ActionEvent e) {
+        
         if (e.getSource() == this.frm.btnGuardar) {
             this.txtAEntidad();
             this.modD.guardarAfiliado(this.modE);
@@ -41,24 +42,34 @@ public class ControlAfiliado implements ActionListener
             this.txtATabla();
             this.limpiar();
         }
+        
+        
         if (e.getSource() == this.frm.btnModificar) {
             this.txtAEntidad();
             this.modD.modificarAfiliado(this.modE);
             JOptionPane.showMessageDialog(null, "Afiliado modificado.");
             this.limpiar();
         }
+        
+        
+
         if (e.getSource() == this.frm.btnBorrar) {
             final int idAfiliado = Integer.parseInt(this.frm.txtIdAfiliado.getText());
             this.modD.borrarAfiliado(idAfiliado);
             JOptionPane.showMessageDialog(null, "Afiliado borrado.");
             this.limpiar();
+            
         }
+        
+        
         if (e.getSource() == this.frm.btnAnular) {
             final int idAfiliado = Integer.parseInt(this.frm.txtIdAfiliado.getText());
             this.modD.desactivarAfiliado(idAfiliado);
             JOptionPane.showMessageDialog(null, "Afiliado anulado.");
             this.limpiar();
         }
+        
+        
         if (e.getSource() == this.frm.btnBuscar) {
             
             final DefaultTableModel tabla = new DefaultTableModel(){
