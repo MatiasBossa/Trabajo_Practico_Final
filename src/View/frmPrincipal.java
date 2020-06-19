@@ -14,6 +14,7 @@ import Model.Data.PrestadorData;
 import Model.Entities.Afiliado;
 import Model.Entities.Orden;
 import Model.Entities.Prestador;
+import java.awt.Dimension;
 
 /**
  *
@@ -168,6 +169,10 @@ public class frmPrincipal extends javax.swing.JFrame {
         frm.setVisible(true);
 
         escritorio.add(frm);
+        Dimension desktopSize = escritorio.getSize();
+        Dimension FrameSize = frm.getSize();
+        frm.setLocation((desktopSize.width - FrameSize.width)/2, (desktopSize.height- FrameSize.height)/2);
+        frm.show();
         escritorio.moveToFront(frm);
     }//GEN-LAST:event_item_afiliadosActionPerformed
 
@@ -188,6 +193,10 @@ public class frmPrincipal extends javax.swing.JFrame {
         frm.setVisible(true);
         
         escritorio.add(frm);
+        Dimension desktopSize = escritorio.getSize();
+        Dimension FrameSize = frm.getSize();
+        frm.setLocation((desktopSize.width - FrameSize.width)/2, (desktopSize.height- FrameSize.height)/2);
+        frm.show();
         escritorio.moveToFront(frm);
     }//GEN-LAST:event_item_prestadoresActionPerformed
 
@@ -207,6 +216,10 @@ public class frmPrincipal extends javax.swing.JFrame {
         frm.setVisible(true);
 
         escritorio.add(frm);
+        Dimension desktopSize = escritorio.getSize();
+        Dimension FrameSize = frm.getSize();
+        frm.setLocation((desktopSize.width - FrameSize.width)/2, (desktopSize.height- FrameSize.height)/2);
+        frm.show();
         escritorio.moveToFront(frm);
     }//GEN-LAST:event_item_ordenesActionPerformed
 
