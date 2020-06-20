@@ -8,6 +8,12 @@ package View;
 import Model.Entities.Afiliado;
 import Model.Entities.Prestador;
 import java.awt.event.KeyEvent;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -65,8 +71,11 @@ public class frmOrden extends javax.swing.JInternalFrame {
         jLabel1.setText("idOrden");
 
         btnAnular.setText("Anular");
+        btnAnular.setEnabled(false);
 
+        txtIdOrden.setEditable(false);
         txtIdOrden.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        txtIdOrden.setEnabled(false);
         txtIdOrden.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 txtIdOrdenKeyTyped(evt);
@@ -123,8 +132,10 @@ public class frmOrden extends javax.swing.JInternalFrame {
         btnGuardar.setText("Guardar");
 
         btnModificar.setText("Modificar");
+        btnModificar.setEnabled(false);
 
         btnBorrar.setText("Borrar");
+        btnBorrar.setEnabled(false);
 
         tblOrdenes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -137,9 +148,17 @@ public class frmOrden extends javax.swing.JInternalFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        tblOrdenes.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblOrdenesMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tblOrdenes);
 
         jLabel9.setText("Afiliado");
+
+        txtAfiliado.setEditable(false);
+        txtAfiliado.setEnabled(false);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -287,6 +306,22 @@ public class frmOrden extends javax.swing.JInternalFrame {
          evt.consume();  // ignorar el evento de teclado
       }
     }//GEN-LAST:event_txtTotalPagarKeyTyped
+
+    private void tblOrdenesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblOrdenesMouseClicked
+        // TODO add your handling code here:
+        int fila = tblOrdenes.getSelectedRow();
+        if (fila != -1) {
+            this.txtIdOrden.setText(this.tblOrdenes.getValueAt(fila, 0).toString());
+            //Date fecha1 = new SimpleDateFormat("yyyyy/MM/dd").parse((String) this.tblOrdenes.getValueAt(fila, 1));
+            //this.txtFechaEmision.setText( fecha1.toString());
+            Afiliado afiliado = (Afiliado)this.cbxAfiliado.getSelectedItem();
+
+            this.txtAfiliado.setText(afiliado.getApellido() + " " + afiliado.getNombre());
+            this.btnModificar.setEnabled(true);
+            this.btnBorrar.setEnabled(true);
+            this.btnAnular.setEnabled(true);
+        }
+    }//GEN-LAST:event_tblOrdenesMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

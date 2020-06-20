@@ -10,6 +10,8 @@ import Model.Entities.*;
 import View.frmOrden;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.sql.Date;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
@@ -19,7 +21,7 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author HP
  */
-public class ControlOrden implements ActionListener {
+public class ControlOrden implements ActionListener, ItemListener {
 
     private Orden modE; // modelo de la clase Entidad
     private OrdenData modD; // modelo de la clase Data
@@ -44,6 +46,9 @@ public class ControlOrden implements ActionListener {
         this.frm.btnAnular.addActionListener(this);
         this.frm.btnLimpiar.addActionListener(this);
         this.frm.btnBuscar.addActionListener(this);
+
+        this.frm.cbxAfiliado.addActionListener(this);
+
 
         modelo = new DefaultTableModel();
         afiliadoData = new AfiliadoData();
@@ -77,6 +82,11 @@ public class ControlOrden implements ActionListener {
      */
     @Override
     public void actionPerformed(ActionEvent e) {
+        
+        if (e.getSource() == frm.cbxAfiliado) {
+            limpiar();
+            cargarDatosTabla();
+        }
 
         if (e.getSource() == frm.btnGuardar) {
             txt_A_entidad();
@@ -157,6 +167,9 @@ public class ControlOrden implements ActionListener {
         //frm.txtNombrePrestador.setText(null);
         //frm.txtApellidoPrestador.setText(null);
         frm.chkAnulado.setSelected(false);
+        frm.btnModificar.setEnabled(false);
+        frm.btnBorrar.setEnabled(false);
+        frm.btnAnular.setEnabled(false);
     }
 
     /**
@@ -213,6 +226,18 @@ public class ControlOrden implements ActionListener {
         listaOrdenes = (ArrayList)ordenData.listarOrdenes(afiliado.getId());
         for(Orden ord:listaOrdenes) {
             modelo.addRow(new Object[]{ord.getIdOrden(), ord.getFechaEmision(), ord.getHorario().getPrestador().getApellido()+" "+ord.getHorario().getPrestador().getNombre(), ord.getHorario().getDia()+ord.getHorario().getHorarioAtencion(), ord.getFormaPago(), ord.getTotalPagar(), ord.getAnulado()});
+        }
+    }
+
+    @Override
+    public void itemStateChanged(ItemEvent ie) {
+        
+        if (ie.getSource() == frm.cbxAfiliado) {
+            JOptionPane.showMessageDialog(null, "Hiazo clic en el COMBOBOX.");
+        }        
+        
+        if (ie.getSource() == frm.tblOrdenes) {
+            JOptionPane.showMessageDialog(null, "Hiazo clic en la tabla.");
         }
     }
 
