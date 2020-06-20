@@ -9,9 +9,11 @@ import Controller.ControlAfiliado;
 import Controller.ControlOrden;
 import Controller.ControlPrestador;
 import Model.Data.AfiliadoData;
+import Model.Data.EspecialidadData;
 import Model.Data.OrdenData;
 import Model.Data.PrestadorData;
 import Model.Entities.Afiliado;
+import Model.Entities.Especialidad;
 import Model.Entities.Orden;
 import Model.Entities.Prestador;
 import java.awt.Dimension;
@@ -177,7 +179,20 @@ public class frmPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_item_afiliadosActionPerformed
 
     private void item_especialidadesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_item_especialidadesActionPerformed
-        // TODO add your handling code here:
+        escritorio.removeAll();
+        escritorio.repaint();
+
+        Especialidad mod = new Especialidad();
+        EspecialidadData modC = new EspecialidadData();
+        frmEspecialidades frm = new frmEspecialidades();
+        frm.setVisible(true);
+
+        escritorio.add(frm);
+        Dimension desktopSize = escritorio.getSize();
+        Dimension FrameSize = frm.getSize();
+        frm.setLocation((desktopSize.width - FrameSize.width)/2, (desktopSize.height- FrameSize.height)/2);
+        frm.show();
+        escritorio.moveToFront(frm);
     }//GEN-LAST:event_item_especialidadesActionPerformed
 
     private void item_prestadoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_item_prestadoresActionPerformed

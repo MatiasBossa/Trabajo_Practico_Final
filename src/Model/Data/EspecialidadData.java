@@ -7,6 +7,8 @@ package Model.Data;
 
 import Model.Entities.Especialidad;
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JComboBox;
 
 /**
@@ -176,5 +178,28 @@ public class EspecialidadData extends Conexion {
             
         }
         
+    }
+    
+   public ArrayList<Especialidad> listarEspecialidades(){
+        ArrayList<Especialidad> especialidades = new ArrayList<Especialidad>();
+        String SQL_SELECT = "SELECT * FROM especialidad";
+        
+        try{
+            PreparedStatement ps = con.prepareStatement(SQL_SELECT);
+            ResultSet rs = ps.executeQuery();
+            Especialidad especialidad;
+            
+            while(rs.next()){
+                 especialidad = new Especialidad();
+                 especialidad.setIdEspecialidad(rs.getInt("idEspecialidad"));
+                 especialidad.setTitulo(rs.getString("titulo"));
+                 especialidades.add(especialidad);                                
+             }
+             rs.close();
+             ps.close();
+        }catch(SQLException e){
+            System.out.println("ERROR al encontrar la Especialidad");            
+        }
+        return especialidades;
     }
 }
