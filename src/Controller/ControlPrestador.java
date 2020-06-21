@@ -8,18 +8,19 @@ import View.frmPrestador;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
+import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 //@author Nicolas
 public class ControlPrestador implements ActionListener{
-    private Prestador modE;
-    private PrestadorData modD;
+    private Prestador preE;
+    private PrestadorData preD;
     private frmPrestador frm;
 
-    public ControlPrestador(Prestador modE, PrestadorData modD,frmPrestador frm) {
-        this.modE = modE;
-        this.modD = modD;
+    public ControlPrestador(Prestador preE, PrestadorData preD,frmPrestador frm) {
+        this.preE = preE;
+        this.preD = preD;
         this.frm = frm;
         this.frm.btnBuscar.addActionListener(this);
         this.frm.btnGuardar.addActionListener(this);
@@ -43,45 +44,89 @@ public class ControlPrestador implements ActionListener{
         
         // <editor-fold defaultstate="collapsed" desc="Boton Guardar">
         if (e.getSource() == frm.btnGuardar) {
-            txtAEntidad();
-            modD.guardarPrestador(modE);
-            /*int id = modD.guardarPrestador(modE);
-            if (id != 0) {
-                JOptionPane.showMessageDialog(null, "Registro guardado. idPrestador = " + id);
+            //aca se asegura de no guardar nada si alguno los txtField estan vacios
+            System.out.println("Lo q hay " + txtAEntidad());
+            switch (txtAEntidad()) {
+                //case 0:
+                //JOptionPane.showMessageDialog(null, "Ingrese los datos para guardar un Prestador");
+                //break;
+                case 1:
+                    JOptionPane.showMessageDialog(null, "No se ingreso un Nombre");
+                    break;
+                case 2:
+                    JOptionPane.showMessageDialog(null, "No se ingreso un Apellido");
+                    break;
+                case 3:;
+                    JOptionPane.showMessageDialog(null, "El Dni tiene que tener 8 numeros");
+                    break;
+                case 4:
+                    JOptionPane.showMessageDialog(null, "No se ingreso una Especialidad");
+                    break;
+                default:
+                    if (!frm.txtId.getText().trim().isEmpty() && !frm.txtNombre.getText().trim().isEmpty() && !frm.txtApellido.getText().trim().isEmpty() && !frm.txtDni.getText().trim().isEmpty() && !frm.txtEspecialidad.getText().trim().isEmpty()) {
+
+                        preD.guardarPrestador(preE);
+                        JOptionPane.showMessageDialog(null, "Prestador guardado.");
+                        limpiar();
+                        break;
+                    }
+            }
+            /*
+            if (!frm.txtId.getText().trim().isEmpty() && !frm.txtNombre.getText().trim().isEmpty() && !frm.txtApellido.getText().trim().isEmpty() && !frm.txtDni.getText().trim().isEmpty() && !frm.txtEspecialidad.getText().trim().isEmpty()) {
+                preD.guardarPrestador(preE);
+                JOptionPane.showMessageDialog(null, "Prestador guardado.");
+                limpiar();
             } else {
-                JOptionPane.showMessageDialog(null, "Error en el guardado del idPrestador");
+                JOptionPane.showMessageDialog(null, "Faltan datos para poder guardar.");
             }*/
-            JOptionPane.showMessageDialog(null, "Prestador guardado.");
-            //txtATabla();
-            limpiar();
         }// </editor-fold> 
         
         
         // <editor-fold defaultstate="collapsed" desc="Boton Modificar">
         if (e.getSource() == frm.btnModificar) {
-            txtAEntidad();
-            modD.modificarPrestador(modE);
-            JOptionPane.showMessageDialog(null, "Prestador modificado.");
-            //txtATabla();
-
-            limpiar();
+            switch (txtAEntidad()) {
+                case 0:
+                    JOptionPane.showMessageDialog(null, "Para modificar un Prestador tiene que seleccionar uno de la lista");
+                    break;
+                case 1:
+                    JOptionPane.showMessageDialog(null, "No se ingreso un Nombre");
+                    break;
+                case 2:
+                    JOptionPane.showMessageDialog(null, "No se ingreso un Apellido");
+                    break;
+                case 3:
+                    JOptionPane.showMessageDialog(null, "El Dni tiene que tener 8 numeros");
+                    break;
+                case 4:
+                    JOptionPane.showMessageDialog(null, "No se ingreso una Especialidad");
+                    break;
+                default:
+                    preD.guardarPrestador(preE);
+                    JOptionPane.showMessageDialog(null, "Prestador guardado.");
+                    limpiar();
+                    break;
+            }
         }// </editor-fold> 
-        
+
         
         // <editor-fold defaultstate="collapsed" desc="Boton Borrar">
         if (e.getSource() == frm.btnBorrar) {
-            
-            int idPrestador = Integer.parseInt(frm.txtId.getText());
-            modD.borrarPrestador(idPrestador);
-            JOptionPane.showMessageDialog(null, "Prestador borrado.");
-            limpiar();
+            //aca se asegura de no borrar nada si alguno de los txtField estan vacios
+            if (!frm.txtId.getText().trim().isEmpty() && !frm.txtNombre.getText().trim().isEmpty() && !frm.txtApellido.getText().trim().isEmpty() && !frm.txtDni.getText().trim().isEmpty() && !frm.txtEspecialidad.getText().trim().isEmpty()) {
+                int idPrestador = Integer.parseInt(frm.txtId.getText());
+                preD.borrarPrestador(idPrestador);
+                JOptionPane.showMessageDialog(null, "Prestador borrado.");
+                limpiar();
+            } else {
+                JOptionPane.showMessageDialog(null, "Faltan datos para poder borrar.");
+            }
         }// </editor-fold> 
 
         
         // <editor-fold defaultstate="collapsed" desc="Boton Anular">
         if (e.getSource() == frm.btnAnular) {
             int idPrestador = Integer.parseInt(frm.txtId.getText());
-            modD.desactivarPrestador(idPrestador);
+            preD.desactivarPrestador(idPrestador);
             JOptionPane.showMessageDialog(null, "Prestador anulado.");
             limpiar();
         }// </editor-fold> 
@@ -89,62 +134,79 @@ public class ControlPrestador implements ActionListener{
         
         // <editor-fold defaultstate="collapsed" desc="Boton Buscar">
         if (e.getSource() == frm.btnBuscar) {
-
-            DefaultTableModel tabla = new DefaultTableModel();
+            DefaultTableModel tabla = new DefaultTableModel() {
+                public boolean isCellEditable(int row, int column) {
+                    return false;
+                }
+            };
             frm.jTPrestador.setModel(tabla);
 
-            Prestador p = new Prestador();
-            PrestadorData pd = new PrestadorData();
-            
-            Especialidad esp = new Especialidad((String) frm.jComboBoxBuscar.getSelectedItem());
-            
-            EspecialidadData ed = new EspecialidadData();
-            esp=ed.buscarEspecialidad(esp.getTitulo());
-            
-            System.out.println("item seleccionado "+esp.getTitulo());
-            System.out.println("ESPECIALIDAD "+esp);
-            
-            p.setActivo(frm.chkActivoBuscar.isSelected());
-            p.setEspecialidad(esp);
-
+            tabla.addColumn("Id");
             tabla.addColumn("Nombre");
             tabla.addColumn("Apellido");
             tabla.addColumn("Dni");
             tabla.addColumn("Especialidad");
             tabla.addColumn("Activo");
 
-            int anchos[] = {60, 60, 40, 80, 30};
+            int anchos[] = {0, 95, 95, 70, 120, 70};
 
-            for (int i = 0; i < 5; i++) {
-                frm.jTPrestador.getColumnModel().getColumn(i).setPreferredWidth(anchos[i]);
+            for (int i = 0; i < 6; i++) {
+                frm.jTPrestador.getColumnModel().getColumn(i).setWidth(anchos[i]);
+                frm.jTPrestador.getColumnModel().getColumn(i).setMinWidth(anchos[i]);
+                frm.jTPrestador.getColumnModel().getColumn(i).setMaxWidth(anchos[i]);
             }
+            List<Prestador> listado = (List<Prestador>) preD.listarPrestador();
+            //System.out.println("indice seleccionado " + frm.jComboBoxBuscar.getSelectedIndex());
+            //System.out.println("item seleccionado " + frm.jComboBoxBuscar.getItemAt(frm.jComboBoxBuscar.getSelectedIndex()));
 
-            tabla = pd.listarPrestador(p, tabla);
+            for (int i = 0; i < listado.size(); ++i) {
+                Object[] ob = {listado.get(i).getId(),listado.get(i).getNombre(), listado.get(i).getApellido(), listado.get(i).getDni(), listado.get(i).getEspecialidad().getTitulo(), listado.get(i).getActivo()};
 
-            //limpiar();
-            /*
-            if(frm.txtId.getText()==""){
-                JOptionPane.showMessageDialog(null, "No se ingreso id.");
-                limpiar();
-            }else{
-                int idPrestador = Integer.parseInt(frm.txtId.getText());
-                modE = modD.buscarPrestador(idPrestador);
-                if (modE != null) {
-                    frm.txtId.setText(String.valueOf(modE.getId()));
-                    frm.txtNombre.setText(modE.getNombre());
-                    frm.txtApellido.setText(modE.getApellido());
-                    frm.txtDni.setText(String.valueOf(modE.getDni()));
-                    frm.chkActivo.setSelected(modE.getActivo());
-                    frm.txtEspecialidad.setText(modE.getEspecialidad().getTitulo());
-                    //frm.txtEspecialidad.setText("falta metodo");
+                if (frm.chkActivoBuscar.isSelected() == true && frm.jComboBoxBuscar.getSelectedIndex() == 0) {
+                    if (listado.get(i).getActivo() == true) {
+                        //System.out.println("lista solo si esta activo");
+                        tabla.addRow(ob);
+                    }
+                } else if (frm.jComboBoxBuscar.getSelectedIndex() != 0) {
+                    if (String.valueOf(frm.jComboBoxBuscar.getItemAt(frm.jComboBoxBuscar.getSelectedIndex())).equals(listado.get(i).getEspecialidad().getTitulo())) {
+                        //System.out.println("lista solo por especialidad");
+                        if (frm.chkActivoBuscar.isSelected() == true) {
+                            if (listado.get(i).getActivo() == true) {
+                                //System.out.println("solo si esta activo");
+                                tabla.addRow(ob);
+                            }
+                        } else {
+                            //System.out.println("solo si esta inactivo");
+                            tabla.addRow(ob);
+                        }
+                    }
                 } else {
-                    
-                    JOptionPane.showMessageDialog(null, "Prestador No encontrado. estaba"+frm.txtId.getText());
-                    limpiar();
+                    tabla.addRow(ob);
                 }
-            }*/
-            
-            
+                /*
+                if (frm.chkActivoBuscar.isSelected() == false && frm.jComboBoxBuscar.getSelectedIndex() != 0) {
+                    if (String.valueOf(frm.jComboBoxBuscar.getItemAt(frm.jComboBoxBuscar.getSelectedIndex())) == listado.get(i).getEspecialidad().getTitulo()) {
+                        tabla.addRow(ob);
+                    }
+                }
+                if (frm.chkActivoBuscar.isSelected() == true && frm.jComboBoxBuscar.getSelectedIndex() == 0) {
+                    tabla.addRow(ob);
+                }
+                if (frm.chkActivoBuscar.isSelected() == true && frm.jComboBoxBuscar.getSelectedIndex() != 0) {
+                    if (String.valueOf(frm.jComboBoxBuscar.getItemAt(frm.jComboBoxBuscar.getSelectedIndex())) == listado.get(i).getEspecialidad().getTitulo()) {
+                        tabla.addRow(ob);
+                    }
+                }
+                if (frm.chkActivoBuscar.isSelected() == false && frm.jComboBoxBuscar.getSelectedIndex() != 0) {
+                    if (String.valueOf(frm.jComboBoxBuscar.getItemAt(frm.jComboBoxBuscar.getSelectedIndex())) == listado.get(i).getEspecialidad().getTitulo()) {
+                        System.out.println("item seleccionado " + frm.jComboBoxBuscar.getItemAt(frm.jComboBoxBuscar.getSelectedIndex()));
+                        System.out.println("especialidad "+listado.get(i).getEspecialidad().getTitulo());
+                        tabla.addRow(ob);
+                    }
+                }*/
+                
+                ob = null;
+            }
         }// </editor-fold> 
         
         
@@ -152,14 +214,9 @@ public class ControlPrestador implements ActionListener{
         if (e.getSource() == frm.btnLimpiar) {
             limpiar();
         }// </editor-fold> 
+        
+        
     }
-    
-    /*public void jComboBoxBuscarItemStateChanged(java.awt.event.ItemEvent evt){
-        if(evt.getStateChange()==ItemEvent.SELECTED){
-            Especialidad esp = (Especialidad) frm.jComboBoxBuscar.getSelectedItem();
-            
-        }
-    }*/
     
     private void limpiar() {
         frm.txtId.setText(null);
@@ -170,14 +227,40 @@ public class ControlPrestador implements ActionListener{
         frm.txtEspecialidad.setText(null);
     }
     
-    private void txtAEntidad() {
-        modE.setId(Integer.parseInt(frm.txtId.getText()));
-        modE.setNombre(frm.txtNombre.getText());
-        modE.setApellido(frm.txtApellido.getText());
-        modE.setDni(Integer.parseInt(frm.txtDni.getText()));
-        modE.setActivo(frm.chkActivo.isSelected());
-        //esto deberia servir 
-        modE.setEspecialidad(new Especialidad(frm.txtEspecialidad.getText()));
+    private int txtAEntidad() {
+        //aca se asegura de que si el txtField esta vacio no setee nada
+        System.out.println("Lo q hay en id " + frm.txtId.getText());
+        if (frm.txtId.getText().trim().isEmpty()) {
+            //return 0;
+        }
+
+        System.out.println("Lo q hay en nombre " + frm.txtNombre.getText());
+        if (frm.txtNombre.getText().trim().isEmpty()) {
+            return 1;
+        }
+
+        System.out.println("Lo q hay en apellido " + frm.txtApellido.getText());
+        if (frm.txtApellido.getText().trim().isEmpty()) {
+            return 2;
+        }
+
+        System.out.println("Lo q hay en dni " + frm.txtDni.getText());
+        if (frm.txtDni.getText().length() !=8) {
+            return 3;
+        }
+
+        preE.setActivo(frm.chkActivo.isSelected());
+
+        System.out.println("Lo q hay en especialidad " + frm.txtEspecialidad.getText());
+        if (frm.txtEspecialidad.getText().trim().isEmpty()) {
+            return 4;
+        }
+            preE.setId(Integer.parseInt(frm.txtId.getText()));
+            preE.setNombre(frm.txtNombre.getText());
+            preE.setApellido(frm.txtApellido.getText());
+            preE.setDni(Integer.parseInt(frm.txtDni.getText()));
+            preE.setEspecialidad(new Especialidad(frm.txtEspecialidad.getText()));
+        return 10;
     }
     
     private void txtATabla(){//provoca inestabilidad debido a un problema logico

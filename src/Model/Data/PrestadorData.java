@@ -134,66 +134,35 @@ public class PrestadorData extends Conexion {
         return aux;
     }// </editor-fold> 
     
-    public DefaultTableModel listarPrestador(Prestador prestador,DefaultTableModel tabla){
-        // <editor-fold defaultstate="collapsed" desc="condiciones para el statement">
-        String SQL = "SELECT nombre , apellido, dni, idEspecialidad, activo FROM prestador";
-        
-        System.out.println("activo por DEFAULT es "+prestador.getActivo());
-        System.out.println("idEspecialidad por DEFAULT es "+prestador.getEspecialidad());
-        /*if (prestador.getEspecialidad().getIdEspecialidad() != 0) {
-            SQL = SQL + " WHERE idPrestador = ?";
-
-            if (prestador.getActivo() == true) {
-                SQL = SQL + " AND activo = ?";
-            }
-        } else*/ if (prestador.getActivo() == true) {
-
-            SQL = SQL + " WHERE activo = ?";
-        }
-        SQL = SQL + ";";
-        System.out.println("ESTATEMENT "+SQL);
-        System.out.println("PRESTADOR "+prestador);
-        // </editor-fold> 
-        
-        EspecialidadData ed = null;
-        try{
-            PreparedStatement ps = con.prepareStatement(SQL);
-            /*if (prestador.getEspecialidad().getIdEspecialidad() != 0) {
-                ps.setInt(1, prestador.getEspecialidad().getIdEspecialidad());
-                if (prestador.getActivo() == true) {
-                    ps.setInt(2, 1);
-                }
-            } else*/ if (prestador.getActivo() == true) {
-                ps.setInt(1, 1);
-            }
-
+   // <editor-fold defaultstate="collapsed" desc="Listar"> 
+    public List<Prestador> listarPrestador() {
+        List<Prestador> lista = new ArrayList<Prestador>();
+        String sql = "SELECT * FROM prestador;";
+        try {
+            Prestador pre;
+            EspecialidadData ed;
+            PreparedStatement ps = con.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
-            ResultSetMetaData rsMd = rs.getMetaData();
-            int columnas = rsMd.getColumnCount();
-            System.out.println("CANTIDAD DE COLUMNAS " + columnas);
             while (rs.next()) {
-                Object[] filas = new Object[columnas];
-                
-                for (int i = 0; i < columnas; i++) {
-                    if (i + 1 == 4) {
-                        ed = new EspecialidadData();
-                        prestador.setEspecialidad(ed.buscarEspecialidad(rs.getInt(4)));
-                        filas[i] = prestador.getEspecialidad().getTitulo();
-                    } else {
-                        filas[i] = rs.getObject(i + 1);
-                    }
-                    System.out.print(filas[i]+" ");
-                }
-                    System.out.println();
-                tabla.addRow(filas);
-                
+                pre = new Prestador();
+                ed=new EspecialidadData();
+                pre.setId(rs.getInt("idPrestador"));
+                pre.setNombre(rs.getString("nombre"));
+                pre.setApellido(rs.getString("apellido"));
+                pre.setDni(rs.getLong("dni"));
+                pre.setActivo(rs.getBoolean("activo"));
+                pre.setEspecialidad(ed.buscarEspecialidad(rs.getInt("idEspecialidad")));
+                //System.out.println("titulo "+pre);
+                lista.add(pre);
             }
         } catch (SQLException ex) {
             Logger.getLogger(PrestadorData.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return tabla;
-    }
-
+        return lista;
+    }// </editor-fold> 
+    
+    
+    
     // <editor-fold defaultstate="collapsed" desc="Update"> 
     public void modificarPrestador(Prestador prestador) {
         try {
