@@ -79,6 +79,7 @@ public class Persona {
     @Override
     public String toString() {
         return "id=" + id + ", nombre=" + nombre + ", apellido=" + apellido + ", dni=" + dni + ", activo=" + activo;
+        //return nombre=" + nombre + ", apellido=" + apellido;
     }
     
 }
