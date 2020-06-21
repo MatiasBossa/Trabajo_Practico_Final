@@ -138,6 +138,32 @@ public class AfiliadoData extends Conexion {
         
         return aux;
     }
+    
+    public Afiliado buscarAfiliadoDni(int dni) {
+        Afiliado aux = null;
+        String sql = "SELECT * FROM afiliado WHERE dni = ?";
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ResultSet rs;
+            ps.setInt(1, dni);
+
+            rs = ps.executeQuery();
+
+            if (rs.next()) {
+                aux = new Afiliado();
+                aux.setId(rs.getInt(1));
+                aux.setNombre(rs.getString(2));
+                aux.setApellido(rs.getString(3));
+                aux.setDni(rs.getLong(4));
+                aux.setActivo(rs.getBoolean(5));
+            }
+        }catch(SQLException e){
+            System.out.println("ERROR al buscar el afiliado");
+            e.printStackTrace();
+        }
+        
+        return aux;
+    }
    
 }
 
