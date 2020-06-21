@@ -44,8 +44,11 @@ public class Afiliado extends Persona {
     @Override
     public String toString() {
         //return "Afiliado{ " + super.toString() + ", movimientos=" + movimientos + '}';
-        return this.getId() + " - " + this.getApellido() + " " + this.getNombre();
+        return this.getApellido() + " " + this.getNombre();
     }
 
-    
+    @Override
+    public boolean equals(Object obj) {
+        return getId() == ((Afiliado) obj).getId();
+    }    
 }

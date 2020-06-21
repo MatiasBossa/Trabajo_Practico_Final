@@ -60,9 +60,14 @@ public class Prestador extends Persona {
     @Override
     public String toString() {
         
-        return "Prestador{" + super.toString() + " especialidad[" + especialidad.getTitulo() + "] }";
-   
+        return this.getApellido() + " " + this.getNombre();
+
         //return "Prestador{" + super.toString() + " especialidad[" + especialidad.getTitulo() + "] }";
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return getId() == ((Prestador) obj).getId();
     }
 
 }

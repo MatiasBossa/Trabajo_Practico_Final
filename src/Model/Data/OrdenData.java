@@ -61,7 +61,7 @@ public class OrdenData extends Conexion {
     
     public void modificarOrden(Orden orden) {
         String sql = "UPDATE orden SET fechaEmision = ? , idAfiliado = ? , idHorario = ? ,"
-                + " formaPago = ? , totalPagar = ? , anulada = ?;";
+                + " formaPago = ? , totalPagar = ? , anulado = ?;";
         try {
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setDate(1, (Date)orden.getFechaEmision());
@@ -99,7 +99,7 @@ public class OrdenData extends Conexion {
         String sql = "UPDATE orden SET anulado = ? WHERE idOrden = ?;";
         try {
             PreparedStatement ps = con.prepareStatement(sql);
-            ps.setBoolean(1, false);
+            ps.setBoolean(1, true);
             ps.setInt(2, idOrden);
             
             ps.executeUpdate();
@@ -163,7 +163,7 @@ public class OrdenData extends Conexion {
                 orden = new Orden();
                 orden.setIdOrden(rs.getInt("idOrden"));
                 orden.setFechaEmision(rs.getDate("fechaEmision"));
-                //orden.setAfiliado(ad.buscarAfiliado(rs.getInt("idAfiliado")));
+                orden.setAfiliado(ad.buscarAfiliado(rs.getInt("idAfiliado")));
                 orden.setHorario(hd.buscarHorario(rs.getInt("idHorario")));
                 orden.setFormaPago(rs.getString("formaPago"));
                 orden.setTotalPagar(rs.getDouble("totalPagar"));

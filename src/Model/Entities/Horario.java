@@ -69,7 +69,14 @@ public class Horario {
 
     @Override
     public String toString() {
-        return "Horario{" + "idHorario = " + idHorario + ", dia = " + dia + ", horarioAtencion = " + horarioAtencion + ", prestador = "+ prestador.getNombre() +" "+ prestador.getApellido()+"}";
+        return dia + " - " + horarioAtencion ;
     }
-    
+
+
+/*
+    @Override
+    public boolean equals(Object obj) {
+        return getIdHorario() == ((Horario) obj).getIdHorario();
+    } 
+*/
 }
