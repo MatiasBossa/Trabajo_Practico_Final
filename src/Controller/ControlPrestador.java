@@ -45,8 +45,8 @@ public class ControlPrestador implements ActionListener{
         // <editor-fold defaultstate="collapsed" desc="Boton Guardar">
         if (e.getSource() == frm.btnGuardar) {
             //aca se asegura de no guardar nada si alguno los txtField estan vacios
-            System.out.println("Lo q hay " + txtAEntidad());
-            switch (txtAEntidad()) {
+            System.out.println("Lo q hay " + txtAEntidadC());
+            switch (txtAEntidadC()) {
                 //case 0:
                 //JOptionPane.showMessageDialog(null, "Ingrese los datos para guardar un Prestador");
                 //break;
@@ -63,7 +63,7 @@ public class ControlPrestador implements ActionListener{
                     JOptionPane.showMessageDialog(null, "No se ingreso una Especialidad");
                     break;
                 default:
-                    if (!frm.txtId.getText().trim().isEmpty() && !frm.txtNombre.getText().trim().isEmpty() && !frm.txtApellido.getText().trim().isEmpty() && !frm.txtDni.getText().trim().isEmpty() && !frm.txtEspecialidad.getText().trim().isEmpty()) {
+                    if (!frm.txtNombre.getText().trim().isEmpty() && !frm.txtApellido.getText().trim().isEmpty() && !frm.txtDni.getText().trim().isEmpty() && !frm.txtEspecialidad.getText().trim().isEmpty()) {
 
                         preD.guardarPrestador(preE);
                         JOptionPane.showMessageDialog(null, "Prestador guardado.");
@@ -84,7 +84,7 @@ public class ControlPrestador implements ActionListener{
         
         // <editor-fold defaultstate="collapsed" desc="Boton Modificar">
         if (e.getSource() == frm.btnModificar) {
-            switch (txtAEntidad()) {
+            switch (txtAEntidadU()) {
                 case 0:
                     JOptionPane.showMessageDialog(null, "Para modificar un Prestador tiene que seleccionar uno de la lista");
                     break;
@@ -101,7 +101,7 @@ public class ControlPrestador implements ActionListener{
                     JOptionPane.showMessageDialog(null, "No se ingreso una Especialidad");
                     break;
                 default:
-                    preD.guardarPrestador(preE);
+                    preD.modificarPrestador(preE);
                     JOptionPane.showMessageDialog(null, "Prestador guardado.");
                     limpiar();
                     break;
@@ -118,7 +118,7 @@ public class ControlPrestador implements ActionListener{
                 JOptionPane.showMessageDialog(null, "Prestador borrado.");
                 limpiar();
             } else {
-                JOptionPane.showMessageDialog(null, "Faltan datos para poder borrar.");
+                JOptionPane.showMessageDialog(null, "Seleccione un Prestador de lista para borrar.");
             }
         }// </editor-fold> 
 
@@ -227,11 +227,47 @@ public class ControlPrestador implements ActionListener{
         frm.txtEspecialidad.setText(null);
     }
     
-    private int txtAEntidad() {
+    private int txtAEntidadC() {
         //aca se asegura de que si el txtField esta vacio no setee nada
         System.out.println("Lo q hay en id " + frm.txtId.getText());
         if (frm.txtId.getText().trim().isEmpty()) {
             //return 0;
+        }
+
+        System.out.println("Lo q hay en nombre " + frm.txtNombre.getText());
+        if (frm.txtNombre.getText().trim().isEmpty()) {
+            return 1;
+        }
+
+        System.out.println("Lo q hay en apellido " + frm.txtApellido.getText());
+        if (frm.txtApellido.getText().trim().isEmpty()) {
+            return 2;
+        }
+
+        System.out.println("Lo q hay en dni " + frm.txtDni.getText());
+        if (frm.txtDni.getText().length() !=8) {
+            return 3;
+        }
+
+        preE.setActivo(frm.chkActivo.isSelected());
+
+        System.out.println("Lo q hay en especialidad " + frm.txtEspecialidad.getText());
+        if (frm.txtEspecialidad.getText().trim().isEmpty()) {
+            return 4;
+        }
+            //preE.setId(Integer.parseInt(frm.txtId.getText()));
+            preE.setNombre(frm.txtNombre.getText());
+            preE.setApellido(frm.txtApellido.getText());
+            preE.setDni(Integer.parseInt(frm.txtDni.getText()));
+            preE.setEspecialidad(new Especialidad(frm.txtEspecialidad.getText()));
+        return 10;
+    }
+    
+    private int txtAEntidadU() {
+        //aca se asegura de que si el txtField esta vacio no setee nada
+        System.out.println("Lo q hay en id " + frm.txtId.getText());
+        if (frm.txtId.getText().trim().isEmpty()) {
+            return 0;
         }
 
         System.out.println("Lo q hay en nombre " + frm.txtNombre.getText());
