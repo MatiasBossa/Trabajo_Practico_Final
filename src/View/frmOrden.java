@@ -14,7 +14,7 @@ public class frmOrden extends javax.swing.JInternalFrame {
     public frmOrden() {
         initComponents();
         this.setSize(800, 500);
-        //this.txtIdOrden.setVisible(false);
+        this.txtIdOrden.setVisible(false);
         
         // https://linuxgx.blogspot.com/2014/07/obtener-fecha-del-sistema-y-colocarlo.html
         Calendar fechaHoy = new GregorianCalendar();
@@ -256,7 +256,7 @@ public class frmOrden extends javax.swing.JInternalFrame {
                     .addComponent(btnAnular)
                     .addComponent(btnLimpiar)
                     .addComponent(btnSalir))
-                .addContainerGap(29, Short.MAX_VALUE))
+                .addContainerGap(44, Short.MAX_VALUE))
         );
 
         pack();
@@ -301,6 +301,11 @@ public class frmOrden extends javax.swing.JInternalFrame {
             //this.txtDia.setText( ((Horario)this.tblOrdenes.getValueAt(fila, 5)).getDia() );
             //this.txtHorarioAtencion.setText( ((Horario)this.tblOrdenes.getValueAt(fila, 5)).getHorarioAtencion().toString() );
             this.chkAnulado.setSelected( (boolean)this.tblOrdenes.getValueAt(fila, 6) );
+
+            //this.cbxFormaPago.setEnabled(true);
+            //this.txtTotalPagar.setEnabled(true);
+            //this.cbxPrestador.setEnabled(true);
+            //this.cbxHorario.setEnabled(true);
 
             this.btnModificar.setEnabled(true);
             this.btnBorrar.setEnabled(true);

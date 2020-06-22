@@ -176,6 +176,27 @@ public class OrdenData extends Conexion {
         return movimientos;
     }
     
-    
+    /**
+     * Esta función se utiliza para saber si el idPrestador esta asociado a alguna orden, a partir
+     * del idPrestador pasado por parámetro.
+     * @param idPrestador
+     * @return 
+     */
+    public boolean existePrestador(int idPrestador) {
+        String sql = "SELECT idPrestador FROM orden WHERE idPrestador = ?;";
+        boolean encontrado = false;
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, idPrestador);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                encontrado = true;
+            }
+            con.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(OrdenData.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return encontrado;
+    }
 
 }

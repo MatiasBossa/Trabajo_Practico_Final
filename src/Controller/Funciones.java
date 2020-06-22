@@ -12,6 +12,7 @@ import java.awt.event.KeyListener;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
 /**
@@ -98,12 +99,12 @@ public class Funciones {
 
             @Override
             public void keyPressed(KeyEvent ke) {
-                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+                //JOptionPane.showMessageDialog(null, "keyPressed");                
             }
 
             @Override
             public void keyReleased(KeyEvent ke) {
-                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+                //JOptionPane.showMessageDialog(null, "keyReleased");
             }
         }
         );        

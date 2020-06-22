@@ -10,8 +10,6 @@ import Model.Entities.*;
 import View.frmOrden;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
 import java.sql.Date;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
@@ -21,7 +19,7 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author HP
  */
-public class ControlOrden implements ActionListener, ItemListener {
+public class ControlOrden implements ActionListener {
 
     private Orden modE; // modelo de la clase Entidad
     private OrdenData modD; // modelo de la clase Data
@@ -48,6 +46,7 @@ public class ControlOrden implements ActionListener, ItemListener {
         this.frm.btnAnular.addActionListener(this);
         this.frm.btnLimpiar.addActionListener(this);
         this.frm.btnBuscar.addActionListener(this);
+        this.frm.btnSalir.addActionListener(this);
 
         this.frm.cbxAfiliado.addActionListener(this);
         this.frm.cbxPrestador.addActionListener(this);
@@ -72,6 +71,7 @@ public class ControlOrden implements ActionListener, ItemListener {
 
         Funciones.SNumero(frm.txtDNI);
         Funciones.SNumero(frm.txtTotalPagar);
+        frm.btnGuardar.setVisible(false);
 
     }
 
@@ -147,27 +147,28 @@ public class ControlOrden implements ActionListener, ItemListener {
         }
 
         if (e.getSource() == frm.btnBuscar) {
-            int idOrden = Integer.parseInt(frm.txtIdOrden.getText());
-
-            modE = modD.buscarOrden(idOrden);
-
-            if (modE != null) {
-                frm.txtIdOrden.setText(String.valueOf(modE.getIdOrden()));
-                //frm.jdcFechaEmision.setText(modE.getFechaEmision().toString());
-                //frm.txtFormaPago.setText(modE.getFormaPago());
-                frm.txtTotalPagar.setText(String.valueOf(modE.getTotalPagar()));                
-                //frm.txtDia.setText(modE.getHorario().getDia());
-                //frm.txtHorarioAtencion.setText(modE.getHorario().getHorarioAtencion().toString());
-                frm.cbxPrestador.setSelectedItem(modE.getHorario().getPrestador());
-                frm.chkAnulado.setSelected(modE.getAnulado());
-            } else {
-                JOptionPane.showMessageDialog(null, "Registro No encontrado.");
-                limpiar(); // Despues de buscar hay que limpiar los campos del forumarlio.
+            boolean encontrado = false;
+            int dni = Integer.parseInt(frm.txtDNI.getText());
+            for (Afiliado afiliado : listaAfiliados) {
+                if (afiliado.getDni() == dni) {
+                    frm.cbxAfiliado.setSelectedItem(afiliado);
+                    cargarDatosTabla();
+                    encontrado = true;
+                    break;
+                }
             }
+            if (!encontrado) {
+                JOptionPane.showMessageDialog(null, "Afiliado No encontrado.");
+            }
+            limpiar();        
         }
 
         if (e.getSource() == frm.btnLimpiar) {
             limpiar();
+        }
+    
+        if (e.getSource() == frm.btnSalir) {
+            frm.dispose();
         }
     }
 
@@ -177,14 +178,17 @@ public class ControlOrden implements ActionListener, ItemListener {
     private void limpiar() {
         frm.txtDNI.setText(null);
         frm.txtIdOrden.setText("-1");
-        Funciones funciones = new Funciones();
-        //frm.jdcFechaEmision.setDate(null);
-        //frm.cbxFormaPago.setSelectedItem(null);
         frm.txtTotalPagar.setText(null);
+        
+        //frm.cbxFormaPago.setSelectedItem(null);
+        //frm.cbxFormaPago.setEnabled(false);
+        //frm.txtTotalPagar.setEnabled(false);
         //frm.cbxPrestador.setSelectedItem(null);
+        //frm.cbxPrestador.setEnabled(false);
         //frm.cbxHorario.setSelectedItem(null);
+        //frm.cbxHorario.setEnabled(false);
 
-        frm.chkAnulado.setSelected(false);
+        //frm.btnGuardar.setVisible(false);
         frm.btnModificar.setEnabled(false);
         frm.btnBorrar.setEnabled(false);
         frm.btnAnular.setEnabled(false);
@@ -253,18 +257,6 @@ public class ControlOrden implements ActionListener, ItemListener {
         listaOrdenes = (ArrayList)ordenData.listarOrdenes(afiliado.getId());
         for(Orden ord:listaOrdenes) {
             modelo.addRow(new Object[]{ord.getIdOrden(), ord.getFechaEmision(), ord.getHorario().getPrestador(), ord.getHorario(), ord.getFormaPago(), ord.getTotalPagar(), ord.getAnulado()});
-        }
-    }
-
-    @Override
-    public void itemStateChanged(ItemEvent ie) {
-        
-        if (ie.getSource() == frm.cbxAfiliado) {
-            JOptionPane.showMessageDialog(null, "Hiazo clic en el COMBOBOX.");
-        }        
-        
-        if (ie.getSource() == frm.tblOrdenes) {
-            JOptionPane.showMessageDialog(null, "Hiazo clic en la tabla.");
         }
     }
 
