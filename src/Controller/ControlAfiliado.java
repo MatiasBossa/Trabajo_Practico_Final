@@ -30,6 +30,7 @@ public class ControlAfiliado implements ActionListener
     
     public void Iniciar() {
         this.frm.setTitle("Afiliado");
+        
     }
     
     @Override
@@ -79,18 +80,18 @@ public class ControlAfiliado implements ActionListener
                 return false;           
                  }
             };
+            
             this.frm.tblAfiliados.setModel(tabla);
             final Afiliado a = new Afiliado();
             final AfiliadoData ad = new AfiliadoData();
-            final List<Afiliado> listado = (List<Afiliado>)ad.listarAfiliados();
+            final Afiliado listado = ad.buscarAfiliadoDni(Integer.parseInt(this.frm.buscarId.getText()));
             
-            tabla.addColumn("ID");
             tabla.addColumn("Nombre");
             tabla.addColumn("Apellido");
             tabla.addColumn("DNI");
             tabla.addColumn("Activo");
-            for (int i = 0; i < listado.size(); ++i) {
-                Object[] ob = { listado.get(i).getId(), listado.get(i).getNombre(), listado.get(i).getApellido(), listado.get(i).getDni(), listado.get(i).getActivo() };
+            for (int i = 0; i < 1; ++i) {
+                Object[] ob = { listado.getNombre(), listado.getApellido(), listado.getDni(), listado.getActivo() };
                 tabla.addRow(ob);
                 ob = null;
             }

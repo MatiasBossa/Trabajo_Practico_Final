@@ -8,6 +8,8 @@ package View;
 import Model.Data.AfiliadoData;
 import Model.Entities.Afiliado;
 import java.awt.event.KeyEvent;
+import java.util.List;
+import javax.swing.table.DefaultTableModel;
 
 
 
@@ -22,6 +24,27 @@ public class frmAfiliado extends javax.swing.JInternalFrame {
      */
     public frmAfiliado() {
         initComponents();
+        final DefaultTableModel tabla = new DefaultTableModel(){
+                
+                public boolean isCellEditable(int row, int column) {
+                //all cells false
+                return false;           
+                 }
+            };
+            this.tblAfiliados.setModel(tabla);
+            final Afiliado a = new Afiliado();
+            final AfiliadoData ad = new AfiliadoData();
+            final List<Afiliado> listado = (List<Afiliado>)ad.listarAfiliados();
+            
+            tabla.addColumn("Nombre");
+            tabla.addColumn("Apellido");
+            tabla.addColumn("DNI");
+            tabla.addColumn("Activo");
+            for (int i = 0; i < listado.size(); ++i) {
+                Object[] ob = { listado.get(i).getNombre(), listado.get(i).getApellido(), listado.get(i).getDni(), listado.get(i).getActivo() };
+                tabla.addRow(ob);
+                ob = null;
+            }
     }
 
     /**
@@ -37,22 +60,23 @@ public class frmAfiliado extends javax.swing.JInternalFrame {
         txtNombre = new javax.swing.JTextField();
         txtApellido = new javax.swing.JTextField();
         txtDni = new javax.swing.JTextField();
+        buscarId = new javax.swing.JTextField();
         btnLimpiar = new javax.swing.JButton();
         chkActivo = new javax.swing.JCheckBox();
         btnBorrar = new javax.swing.JButton();
         btnModificar = new javax.swing.JButton();
         btnGuardar = new javax.swing.JButton();
-        jLabel5 = new javax.swing.JLabel();
         btnAnular = new javax.swing.JButton();
         btnBuscar = new javax.swing.JButton();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblAfiliados = new javax.swing.JTable();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
 
         setClosable(true);
         setTitle("formulario de prestadores");
@@ -92,6 +116,8 @@ public class frmAfiliado extends javax.swing.JInternalFrame {
             }
         });
 
+        buscarId.setText("Ingrese un DNI");
+
         btnLimpiar.setText("Limpiar");
 
         btnBorrar.setText("Borrar");
@@ -100,36 +126,31 @@ public class frmAfiliado extends javax.swing.JInternalFrame {
 
         btnGuardar.setText("Guardar");
 
-        jLabel5.setText("Activo");
-
         btnAnular.setText("Anular");
 
         btnBuscar.setText("Buscar");
-
-        jLabel4.setText("Dni");
-
-        jLabel3.setText("Apellido");
-
-        jLabel2.setText("Nombre");
-
-        jLabel1.setText("idAfiliado");
+        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarActionPerformed(evt);
+            }
+        });
 
         tblAfiliados.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
             },
             new String [] {
-                "ID", "Nombre", "Apellido", "DNI", "Activo"
+                "Nombre", "Apellido", "DNI", "Activo"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.Object.class
+                java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.Object.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false
+                false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -149,12 +170,11 @@ public class frmAfiliado extends javax.swing.JInternalFrame {
         if (tblAfiliados.getColumnModel().getColumnCount() > 0) {
             tblAfiliados.getColumnModel().getColumn(0).setResizable(false);
             tblAfiliados.getColumnModel().getColumn(1).setResizable(false);
+            tblAfiliados.getColumnModel().getColumn(1).setPreferredWidth(60);
             tblAfiliados.getColumnModel().getColumn(2).setResizable(false);
-            tblAfiliados.getColumnModel().getColumn(2).setPreferredWidth(60);
+            tblAfiliados.getColumnModel().getColumn(2).setPreferredWidth(40);
             tblAfiliados.getColumnModel().getColumn(3).setResizable(false);
-            tblAfiliados.getColumnModel().getColumn(3).setPreferredWidth(40);
-            tblAfiliados.getColumnModel().getColumn(4).setResizable(false);
-            tblAfiliados.getColumnModel().getColumn(4).setPreferredWidth(30);
+            tblAfiliados.getColumnModel().getColumn(3).setPreferredWidth(30);
         }
 
         jLabel6.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
@@ -163,14 +183,26 @@ public class frmAfiliado extends javax.swing.JInternalFrame {
         jLabel7.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel7.setText("Datos del Afiliado");
 
+        jLabel5.setText("Activo");
+
+        jLabel4.setText("Dni");
+
+        jLabel3.setText("Apellido");
+
+        jLabel2.setText("Nombre");
+
+        jLabel1.setText("idAfiliado");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(buscarId, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnBuscar)
-                .addGap(165, 165, 165)
+                .addGap(129, 129, 129)
                 .addComponent(jLabel7)
                 .addGap(116, 116, 116))
             .addGroup(layout.createSequentialGroup()
@@ -260,9 +292,11 @@ public class frmAfiliado extends javax.swing.JInternalFrame {
                             .addComponent(btnBorrar)))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel6)
-                        .addGap(10, 10, 10)
-                        .addComponent(btnBuscar)
-                        .addGap(10, 10, 10)
+                        .addGap(9, 9, 9)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnBuscar)
+                            .addComponent(buscarId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(35, 35, 35))
         );
@@ -276,11 +310,11 @@ public class frmAfiliado extends javax.swing.JInternalFrame {
 
     private void tblAfiliadosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblAfiliadosMouseClicked
         int fila = this.tblAfiliados.getSelectedRow();
-        String sId = String.valueOf(this.tblAfiliados.getValueAt(fila, 0));
+        String sId = String.valueOf(this.tblAfiliados.getValueAt(fila, 2));
         Integer id = Integer.parseInt(sId);
         Afiliado afiliado = new Afiliado();
         AfiliadoData ad = new AfiliadoData();
-        afiliado = ad.buscarAfiliado(id);
+        afiliado = ad.buscarAfiliadoDni(id);
         
         this.txtIdAfiliado.setText(String.valueOf(afiliado.getId()));
         this.txtNombre.setText(afiliado.getNombre());
@@ -337,6 +371,10 @@ public class frmAfiliado extends javax.swing.JInternalFrame {
       }
     }//GEN-LAST:event_txtApellidoKeyTyped
 
+    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
+
+    }//GEN-LAST:event_btnBuscarActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public javax.swing.JButton btnAnular;
@@ -345,6 +383,7 @@ public class frmAfiliado extends javax.swing.JInternalFrame {
     public javax.swing.JButton btnGuardar;
     public javax.swing.JButton btnLimpiar;
     public javax.swing.JButton btnModificar;
+    public javax.swing.JTextField buscarId;
     public javax.swing.JCheckBox chkActivo;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
