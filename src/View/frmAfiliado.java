@@ -7,6 +7,7 @@ package View;
 
 import Model.Data.AfiliadoData;
 import Model.Entities.Afiliado;
+import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
@@ -27,7 +28,7 @@ public class frmAfiliado extends javax.swing.JInternalFrame {
         final DefaultTableModel tabla = new DefaultTableModel(){
                 
                 public boolean isCellEditable(int row, int column) {
-                //all cells false
+                
                 return false;           
                  }
             };
@@ -77,6 +78,7 @@ public class frmAfiliado extends javax.swing.JInternalFrame {
         jLabel3 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
 
         setClosable(true);
         setTitle("formulario de prestadores");
@@ -116,7 +118,11 @@ public class frmAfiliado extends javax.swing.JInternalFrame {
             }
         });
 
-        buscarId.setText("Ingrese un DNI");
+        buscarId.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                buscarIdKeyTyped(evt);
+            }
+        });
 
         btnLimpiar.setText("Limpiar");
 
@@ -193,12 +199,16 @@ public class frmAfiliado extends javax.swing.JInternalFrame {
 
         jLabel1.setText("idAfiliado");
 
+        jLabel8.setText("Ingrese un DNI");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel8)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(buscarId, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnBuscar)
@@ -295,7 +305,8 @@ public class frmAfiliado extends javax.swing.JInternalFrame {
                         .addGap(9, 9, 9)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(btnBuscar)
-                            .addComponent(buscarId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(buscarId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel8))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(35, 35, 35))
@@ -315,6 +326,7 @@ public class frmAfiliado extends javax.swing.JInternalFrame {
         Afiliado afiliado = new Afiliado();
         AfiliadoData ad = new AfiliadoData();
         afiliado = ad.buscarAfiliadoDni(id);
+        
         
         this.txtIdAfiliado.setText(String.valueOf(afiliado.getId()));
         this.txtNombre.setText(afiliado.getNombre());
@@ -337,6 +349,7 @@ public class frmAfiliado extends javax.swing.JInternalFrame {
       // Verificar si la tecla pulsada no es un digito
       if(((caracter < '0') || (caracter > '9')) && (caracter != KeyEvent.VK_BACK_SPACE) )
       {
+         Toolkit.getDefaultToolkit().beep();
          evt.consume();  // ignorar el evento de teclado
       }
     }//GEN-LAST:event_txtIdAfiliadoKeyTyped
@@ -347,6 +360,7 @@ public class frmAfiliado extends javax.swing.JInternalFrame {
       // Verificar si la tecla pulsada no es un digito
       if(((caracter < '0') || (caracter > '9')) && (caracter != KeyEvent.VK_BACK_SPACE) )
       {
+         Toolkit.getDefaultToolkit().beep();
          evt.consume();  // ignorar el evento de teclado
       }
     }//GEN-LAST:event_txtDniKeyTyped
@@ -357,6 +371,7 @@ public class frmAfiliado extends javax.swing.JInternalFrame {
       // Verificar si la tecla pulsada no es un digito
       if( ((caracter < 'A') || (caracter > 'Z')) && ((caracter < 'a') || (caracter > 'z')) )
       {
+         Toolkit.getDefaultToolkit().beep();
          evt.consume();  // ignorar el evento de teclado
       }
     }//GEN-LAST:event_txtNombreKeyTyped
@@ -367,6 +382,7 @@ public class frmAfiliado extends javax.swing.JInternalFrame {
       // Verificar si la tecla pulsada no es un digito
       if( ((caracter < 'A') || (caracter > 'Z')) && ((caracter < 'a') || (caracter > 'z')) )
       {
+         Toolkit.getDefaultToolkit().beep();
          evt.consume();  // ignorar el evento de teclado
       }
     }//GEN-LAST:event_txtApellidoKeyTyped
@@ -374,6 +390,18 @@ public class frmAfiliado extends javax.swing.JInternalFrame {
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
 
     }//GEN-LAST:event_btnBuscarActionPerformed
+
+    private void buscarIdKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_buscarIdKeyTyped
+        char caracter = evt.getKeyChar();
+
+        // Verificar si la tecla pulsada no es un digito
+        if(((caracter < '0') || (caracter > '9')) && (caracter != KeyEvent.VK_BACK_SPACE) )
+        {
+           Toolkit.getDefaultToolkit().beep();
+           evt.consume();  // ignorar el evento de teclado
+          
+        }
+    }//GEN-LAST:event_buscarIdKeyTyped
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -392,6 +420,7 @@ public class frmAfiliado extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JScrollPane jScrollPane1;
     public javax.swing.JTable tblAfiliados;
     public javax.swing.JTextField txtApellido;

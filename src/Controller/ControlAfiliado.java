@@ -1,6 +1,5 @@
 package Controller;
 
-import java.util.List;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.JOptionPane;
 import java.awt.event.ActionEvent;
@@ -32,6 +31,7 @@ public class ControlAfiliado implements ActionListener
         this.frm.setTitle("Afiliado");
         
     }
+    
     
     @Override
     public void actionPerformed(final ActionEvent e) {
@@ -80,22 +80,27 @@ public class ControlAfiliado implements ActionListener
                 return false;           
                  }
             };
+           try{
+                this.frm.tblAfiliados.setModel(tabla);
+                final Afiliado a = new Afiliado();
+                final AfiliadoData ad = new AfiliadoData();
+                final Afiliado listado = ad.buscarAfiliadoDni(Integer.parseInt(this.frm.buscarId.getText()));
+
+                tabla.addColumn("Nombre");
+                tabla.addColumn("Apellido");
+                tabla.addColumn("DNI");
+                tabla.addColumn("Activo");
+                for (int i = 0; i < 1; ++i) {
+                    Object[] ob = { listado.getNombre(), listado.getApellido(), listado.getDni(), listado.getActivo() };
+                    tabla.addRow(ob);
+                    ob = null;
+                }
+           }catch(Exception ee){
+               JOptionPane.showMessageDialog(frm, "ERROR AL ENCONTRAR EL AFILIADO", "Error", JOptionPane.ERROR_MESSAGE);
+           } 
             
-            this.frm.tblAfiliados.setModel(tabla);
-            final Afiliado a = new Afiliado();
-            final AfiliadoData ad = new AfiliadoData();
-            final Afiliado listado = ad.buscarAfiliadoDni(Integer.parseInt(this.frm.buscarId.getText()));
-            
-            tabla.addColumn("Nombre");
-            tabla.addColumn("Apellido");
-            tabla.addColumn("DNI");
-            tabla.addColumn("Activo");
-            for (int i = 0; i < 1; ++i) {
-                Object[] ob = { listado.getNombre(), listado.getApellido(), listado.getDni(), listado.getActivo() };
-                tabla.addRow(ob);
-                ob = null;
-            }
         }
+        
         if (e.getSource() == this.frm.btnLimpiar) {
             this.limpiar();
         }
