@@ -13,6 +13,8 @@ import java.sql.SQLException;
 import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -135,4 +137,26 @@ public class HorarioData extends Conexion {
         return horarios;
     }
     
+    /**
+     * Esta función se utiliza para saber si el idPrestador esta asociado a algun horario, a partir
+     * del idPrestador pasado por parámetro.
+     * @param idPrestador
+     * @return 
+     */
+    public boolean existePrestador(int idPrestador) {
+        String sql = "SELECT idPrestador FROM horario WHERE idPrestador = ?;";
+        boolean encontrado = false;
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, idPrestador);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                encontrado = true;
+            }
+            con.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(Horario.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return encontrado;
+    }
 }

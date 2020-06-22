@@ -134,7 +134,7 @@ public class PrestadorData extends Conexion {
         return aux;
     }// </editor-fold> 
     
-   // <editor-fold defaultstate="collapsed" desc="Listar"> 
+    // <editor-fold defaultstate="collapsed" desc="Listar"> 
     public List<Prestador> listarPrestador() {
         List<Prestador> lista = new ArrayList<Prestador>();
         String sql = "SELECT * FROM prestador;";

@@ -43,7 +43,7 @@ public class frmPrestador extends javax.swing.JInternalFrame {
             jTPrestador.getColumnModel().getColumn(i).setMaxWidth(anchos[i]);
         }
 
-        jComboBoxBuscar.addItem(new Especialidad(""));
+        jComboBoxBuscar.addItem(new Especialidad("Todos"));
         //jComboBoxBuscar.
         EspecialidadData espD = new EspecialidadData();
         List<Especialidad> listado = (List<Especialidad>) espD.listarEspecialidades();

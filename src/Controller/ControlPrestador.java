@@ -1,6 +1,7 @@
 package Controller;
 
 import Model.Data.EspecialidadData;
+import Model.Data.HorarioData;
 import Model.Data.PrestadorData;
 import Model.Entities.Especialidad;
 import Model.Entities.Prestador;
@@ -112,11 +113,17 @@ public class ControlPrestador implements ActionListener{
         // <editor-fold defaultstate="collapsed" desc="Boton Borrar">
         if (e.getSource() == frm.btnBorrar) {
             //aca se asegura de no borrar nada si alguno de los txtField estan vacios
-            if (!frm.txtId.getText().trim().isEmpty() && !frm.txtNombre.getText().trim().isEmpty() && !frm.txtApellido.getText().trim().isEmpty() && !frm.txtDni.getText().trim().isEmpty() && !frm.txtEspecialidad.getText().trim().isEmpty()) {
-                int idPrestador = Integer.parseInt(frm.txtId.getText());
-                preD.borrarPrestador(idPrestador);
-                JOptionPane.showMessageDialog(null, "Prestador borrado.");
-                limpiar();
+            if (!frm.txtId.getText().trim().isEmpty()) {
+                HorarioData hd = new HorarioData();
+                if ( !hd.existePrestador(Integer.parseInt(frm.txtId.getText()))) {
+                    int idPrestador = Integer.parseInt(frm.txtId.getText());
+                    preD.borrarPrestador(idPrestador);
+                    JOptionPane.showMessageDialog(null, "Prestador borrado.");
+                    limpiar();
+                }else{
+                    JOptionPane.showMessageDialog(null, "no se puede borrar el Prestador por que tiene un horario.");
+                }
+
             } else {
                 JOptionPane.showMessageDialog(null, "Seleccione un Prestador de lista para borrar.");
             }
