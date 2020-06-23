@@ -20,36 +20,16 @@ import javax.swing.table.DefaultTableModel;
  * @author Nicolas
  */
 public class frmPrestador extends javax.swing.JInternalFrame {
+    private DefaultTableModel modelo;
 
     /**
      * Creates new form vistaPrestador
      */
     public frmPrestador() {
         initComponents();
-        
-        DefaultTableModel tabla = new DefaultTableModel();
-        jTPrestador.setModel(tabla);
-        tabla.addColumn("Id");
-        tabla.addColumn("Nombre");
-        tabla.addColumn("Apellido");
-        tabla.addColumn("Dni");
-        tabla.addColumn("Especialidad");
-        tabla.addColumn("Activo");
-        int anchos[] = {0, 95, 95, 70, 120, 70};
+        cargarDatosTabla();
+        cargarDatosComboBox();
 
-        for (int i = 0; i < 6; i++) {
-            jTPrestador.getColumnModel().getColumn(i).setWidth(anchos[i]);
-            jTPrestador.getColumnModel().getColumn(i).setMinWidth(anchos[i]);
-            jTPrestador.getColumnModel().getColumn(i).setMaxWidth(anchos[i]);
-        }
-
-        jComboBoxBuscar.addItem(new Especialidad("Todos"));
-        //jComboBoxBuscar.
-        EspecialidadData espD = new EspecialidadData();
-        List<Especialidad> listado = (List<Especialidad>) espD.listarEspecialidades();
-        for (Especialidad espE: listado) {
-            jComboBoxBuscar.addItem(espE);
-        }
     }
 
     /**
@@ -65,7 +45,6 @@ public class frmPrestador extends javax.swing.JInternalFrame {
         txtNombre = new javax.swing.JTextField();
         txtApellido = new javax.swing.JTextField();
         txtDni = new javax.swing.JTextField();
-        txtEspecialidad = new javax.swing.JTextField();
         btnLimpiar = new javax.swing.JButton();
         chkActivo = new javax.swing.JCheckBox();
         btnBorrar = new javax.swing.JButton();
@@ -73,7 +52,6 @@ public class frmPrestador extends javax.swing.JInternalFrame {
         btnGuardar = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        btnAnular = new javax.swing.JButton();
         btnBuscar = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -85,6 +63,7 @@ public class frmPrestador extends javax.swing.JInternalFrame {
         chkActivoBuscar = new javax.swing.JCheckBox();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
+        jComboBoxEspecialidad = new javax.swing.JComboBox<>();
 
         setClosable(true);
         setTitle("formulario de prestadores");
@@ -127,12 +106,6 @@ public class frmPrestador extends javax.swing.JInternalFrame {
             }
         });
 
-        txtEspecialidad.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                txtEspecialidadKeyTyped(evt);
-            }
-        });
-
         btnLimpiar.setText("Limpiar");
 
         btnBorrar.setText("Borrar");
@@ -144,8 +117,6 @@ public class frmPrestador extends javax.swing.JInternalFrame {
         jLabel5.setText("Activo");
 
         jLabel6.setText("Especialidad");
-
-        btnAnular.setText("Anular");
 
         btnBuscar.setText("Buscar");
 
@@ -169,7 +140,7 @@ public class frmPrestador extends javax.swing.JInternalFrame {
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.String.class, java.lang.Object.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.Object.class, java.lang.Object.class
             };
             boolean[] canEdit = new boolean [] {
                 false, false, false, false, false, false
@@ -220,6 +191,8 @@ public class frmPrestador extends javax.swing.JInternalFrame {
             }
         });
 
+        chkActivoBuscar.setText("Solo activos");
+
         jLabel7.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel7.setText("Listado de Prestadores");
@@ -232,27 +205,15 @@ public class frmPrestador extends javax.swing.JInternalFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addGroup(layout.createSequentialGroup()
-                            .addContainerGap()
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(btnAnular))
-                        .addGroup(layout.createSequentialGroup()
-                            .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jComboBoxBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(28, 28, 28)
-                            .addComponent(chkActivoBuscar)
-                            .addGap(33, 33, 33)
-                            .addComponent(btnBuscar)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 452, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 452, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 500, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 45, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
+                        .addGap(10, 10, 10)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -261,17 +222,16 @@ public class frmPrestador extends javax.swing.JInternalFrame {
                             .addComponent(jLabel6)
                             .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(25, 25, 25)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addComponent(chkActivo)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(btnLimpiar))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(txtEspecialidad, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(txtDni, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(txtApellido, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, 0, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(txtDni)
+                            .addComponent(txtApellido)
+                            .addComponent(txtNombre)
+                            .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, 0, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jComboBoxEspecialidad, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(btnGuardar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -280,6 +240,14 @@ public class frmPrestador extends javax.swing.JInternalFrame {
                         .addComponent(btnBorrar, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addGap(193, 193, 193)
+                .addComponent(btnBuscar)
+                .addGap(26, 26, 26)
+                .addComponent(jComboBoxBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(chkActivoBuscar)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -288,7 +256,7 @@ public class frmPrestador extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 17, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 69, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel1))
@@ -306,8 +274,8 @@ public class frmPrestador extends javax.swing.JInternalFrame {
                             .addComponent(jLabel4))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txtEspecialidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel6))
+                            .addComponent(jLabel6)
+                            .addComponent(jComboBoxEspecialidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(btnLimpiar)
@@ -320,18 +288,13 @@ public class frmPrestador extends javax.swing.JInternalFrame {
                             .addComponent(btnGuardar)))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(26, 26, 26)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(btnBuscar)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(btnAnular))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jComboBoxBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(chkActivoBuscar))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(chkActivoBuscar)
+                            .addComponent(jComboBoxBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnBuscar))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 282, Short.MAX_VALUE)))
                 .addContainerGap())
         );
 
@@ -346,13 +309,32 @@ public class frmPrestador extends javax.swing.JInternalFrame {
     private void jTPrestadorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTPrestadorMouseClicked
                       
         int fila = jTPrestador.getSelectedRow();
-        Integer id = (Integer) jTPrestador.getValueAt(fila, 0);
+        //Integer id = (Integer) jTPrestador.getValueAt(fila, 0);
         //System.out.println("todo bien hasta aca ya q "+prestador);
         txtId.setText(String.valueOf(jTPrestador.getValueAt(fila, 0)));
         txtNombre.setText((String) jTPrestador.getValueAt(fila, 1));
         txtApellido.setText((String) jTPrestador.getValueAt(fila, 2));
         txtDni.setText(String.valueOf(jTPrestador.getValueAt(fila, 3)));
-        txtEspecialidad.setText((String) jTPrestador.getValueAt(fila, 4));
+        //txtEspecialidad.setText((String) jTPrestador.getValueAt(fila, 4));
+        //jComboBoxEspecialidad.getModel().setSelectedItem(new Especialidad(1, "Kinesiologo"));
+        //jComboBoxEspecialidad.setSelectedItem(id);
+        //System.out.println("tamaño del comboboxbuscar " + jComboBoxBuscar.getModel().getSize());
+        //System.out.println("id de comboboxespecialidad "+jComboBoxEspecialidad.getModel().getElementAt(1).getIdEspecialidad());
+        //System.out.println("titulo de comboboxespecialidad "+jComboBoxEspecialidad.getModel().getElementAt(1).getTitulo());
+        //System.out.println("especialidad en la tabla " + (String) jTPrestador.getValueAt(fila, 4));
+        //System.out.println("View.frmPrestador.jTPrestadorMouseClicked()");
+        for (int i = 0; i < +jComboBoxEspecialidad.getModel().getSize(); i++) {
+            Especialidad esp = new Especialidad(jComboBoxEspecialidad.getModel().getElementAt(i).getIdEspecialidad(),jComboBoxEspecialidad.getModel().getElementAt(i).getTitulo());
+            //System.out.println("contenido del ComboBoxEspecialidad " + jComboBoxEspecialidad.getModel().getElementAt(i));
+            if (esp.getTitulo().equals(jTPrestador.getValueAt(fila, 4))) {
+                System.out.println("la especialidad en la tabla y en el comboc son iguales");
+                jComboBoxEspecialidad.setSelectedIndex(i);
+                break;
+            }
+        }
+        jComboBoxEspecialidad.setSelectedItem(new Especialidad(String.valueOf(jTPrestador.getValueAt(fila, 4))));
+
+        //jComboBoxEspecialidad.getModel().setSelectedItem(new Especialidad(String.valueOf(jTPrestador.getValueAt(fila, 4))));
         chkActivo.setSelected((boolean) jTPrestador.getValueAt(fila, 5));
         
     }//GEN-LAST:event_jTPrestadorMouseClicked
@@ -418,16 +400,6 @@ public class frmPrestador extends javax.swing.JInternalFrame {
       }
     }//GEN-LAST:event_txtApellidoKeyTyped
 
-    private void txtEspecialidadKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtEspecialidadKeyTyped
-      char caracter = evt.getKeyChar();
-
-      // Verificar si la tecla pulsada no es un digito
-      if( ((caracter < 'A') || (caracter > 'Z')) && ((caracter < 'a') || (caracter > 'z')) )
-      {
-         evt.consume();  // ignorar el evento de teclado
-      }
-    }//GEN-LAST:event_txtEspecialidadKeyTyped
-
     private void jComboBoxBuscarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jComboBoxBuscarMouseClicked
         // TODO add your handling code here:
         //este seria el caso cuando se clickea en cualquier parte de combobox exepto en este tipo de flecha hacia abajo
@@ -444,7 +416,6 @@ public class frmPrestador extends javax.swing.JInternalFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    public javax.swing.JButton btnAnular;
     public javax.swing.JButton btnBorrar;
     public javax.swing.JButton btnBuscar;
     public javax.swing.JButton btnGuardar;
@@ -453,6 +424,7 @@ public class frmPrestador extends javax.swing.JInternalFrame {
     public javax.swing.JCheckBox chkActivo;
     public javax.swing.JCheckBox chkActivoBuscar;
     public javax.swing.JComboBox<Especialidad> jComboBoxBuscar;
+    public javax.swing.JComboBox<Especialidad> jComboBoxEspecialidad;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -465,8 +437,77 @@ public class frmPrestador extends javax.swing.JInternalFrame {
     public javax.swing.JTable jTPrestador;
     public javax.swing.JTextField txtApellido;
     public javax.swing.JTextField txtDni;
-    public javax.swing.JTextField txtEspecialidad;
     public javax.swing.JTextField txtId;
     public javax.swing.JTextField txtNombre;
     // End of variables declaration//GEN-END:variables
+    /*public void borrarFilasTabla() {
+
+        int f = modelo.getRowCount()-1;
+        for(int i=f; i>=0; i--) {
+            modelo.removeRow(i);
+        }
+    }*/
+    
+    public void cargarDatosTabla() {
+        //borrarFilasTabla();
+        modelo = new DefaultTableModel() {
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
+        jTPrestador.setModel(modelo);
+        modelo.addColumn("Id");
+        modelo.addColumn("Nombre");
+        modelo.addColumn("Apellido");
+        modelo.addColumn("Dni");
+        modelo.addColumn("Especialidad");
+        modelo.addColumn("Activo");
+        int anchos[] = {0, 100, 100, 80, 120, 100};
+
+        for (int i = 0; i < 6; i++) {
+            jTPrestador.getColumnModel().getColumn(i).setWidth(anchos[i]);
+            jTPrestador.getColumnModel().getColumn(i).setMinWidth(anchos[i]);
+            jTPrestador.getColumnModel().getColumn(i).setMaxWidth(anchos[i]);
+        }
+        
+        PrestadorData preD=new PrestadorData();
+        List<Prestador> listado = (List<Prestador>) preD.listarPrestador();
+        for (int i = 0; i < listado.size(); ++i) {
+            Object[] ob = {listado.get(i).getId(), listado.get(i).getNombre(), listado.get(i).getApellido(), listado.get(i).getDni(), listado.get(i).getEspecialidad().getTitulo(), listado.get(i).getActivo()};
+            modelo.addRow(ob);
+            ob = null;
+        }
+        
+    }
+    
+    public void cargarDatosComboBox(){
+        
+        jComboBoxBuscar.addItem(new Especialidad("Todos"));
+        //jComboBoxBuscar.
+        EspecialidadData espD = new EspecialidadData();
+        List<Especialidad> listado = (List<Especialidad>) espD.listarEspecialidades();
+        for (Especialidad espE: listado) {
+            jComboBoxBuscar.addItem(espE);
+            jComboBoxEspecialidad.addItem(espE);
+        }
+    }
+    
+    
+    /*@Override
+    public boolean equals(Object obj) {
+        Especialidad esp=jComboBoxBuscar.n
+        return jComboBoxBuscar.gett() == ((Prestador) obj).get;
+    }*/
+
+    
+
+
+
+
+
+
+
+
 }
+
+

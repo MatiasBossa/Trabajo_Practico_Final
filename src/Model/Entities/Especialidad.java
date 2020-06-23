@@ -48,5 +48,9 @@ public class Especialidad {
         return titulo;
         //return "idEspecialidad=" + idEspecialidad + ", titulo=" + titulo;
     }
-    
+    @Override
+    public boolean equals(Object obj) {
+        return this.titulo == obj.toString();
+    }
+
 }

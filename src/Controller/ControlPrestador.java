@@ -18,6 +18,7 @@ public class ControlPrestador implements ActionListener{
     private Prestador preE;
     private PrestadorData preD;
     private frmPrestador frm;
+    private DefaultTableModel modelo;
 
     public ControlPrestador(Prestador preE, PrestadorData preD,frmPrestador frm) {
         this.preE = preE;
@@ -27,11 +28,12 @@ public class ControlPrestador implements ActionListener{
         this.frm.btnGuardar.addActionListener(this);
         this.frm.btnModificar.addActionListener(this);
         this.frm.btnBorrar.addActionListener(this);
-        this.frm.btnAnular.addActionListener(this);
         this.frm.btnLimpiar.addActionListener(this);
         this.frm.chkActivo.addActionListener(this);
         this.frm.chkActivoBuscar.addActionListener(this);
-
+        this.frm.jComboBoxEspecialidad.addActionListener(this);
+        this.frm.jComboBoxBuscar.addActionListener(this);
+        this.frm.jTPrestador.addMouseListener(new java.awt.event.MouseAdapter(){});
     }
 
     public void Iniciar() {
@@ -42,11 +44,12 @@ public class ControlPrestador implements ActionListener{
     
     @Override
     public void actionPerformed(ActionEvent e) {
+        //System.out.println("evento "+e);
         
         // <editor-fold defaultstate="collapsed" desc="Boton Guardar">
         if (e.getSource() == frm.btnGuardar) {
             //aca se asegura de no guardar nada si alguno los txtField estan vacios
-            System.out.println("Lo q hay " + txtAEntidadC());
+            //System.out.println("Lo q hay " + txtAEntidadC());
             switch (txtAEntidadC()) {
                 //case 0:
                 //JOptionPane.showMessageDialog(null, "Ingrese los datos para guardar un Prestador");
@@ -64,7 +67,7 @@ public class ControlPrestador implements ActionListener{
                     JOptionPane.showMessageDialog(null, "No se ingreso una Especialidad");
                     break;
                 default:
-                    if (!frm.txtNombre.getText().trim().isEmpty() && !frm.txtApellido.getText().trim().isEmpty() && !frm.txtDni.getText().trim().isEmpty() && !frm.txtEspecialidad.getText().trim().isEmpty()) {
+                    if (!frm.txtNombre.getText().trim().isEmpty() && !frm.txtApellido.getText().trim().isEmpty() && !frm.txtDni.getText().trim().isEmpty()) {
 
                         preD.guardarPrestador(preE);
                         JOptionPane.showMessageDialog(null, "Prestador guardado.");
@@ -130,13 +133,18 @@ public class ControlPrestador implements ActionListener{
         }// </editor-fold> 
 
         
-        // <editor-fold defaultstate="collapsed" desc="Boton Anular">
-        if (e.getSource() == frm.btnAnular) {
-            int idPrestador = Integer.parseInt(frm.txtId.getText());
-            preD.desactivarPrestador(idPrestador);
-            JOptionPane.showMessageDialog(null, "Prestador anulado.");
-            limpiar();
-        }// </editor-fold> 
+        // <editor-fold defaultstate="collapsed" desc="Cambio el checkBox del listado">
+        if(e.getSource() == frm.chkActivoBuscar)
+            //System.out.println("Evento en el checkBox del listado");
+            cargarDatosTabla();
+        // </editor-fold> 
+        
+        
+        // <editor-fold defaultstate="collapsed" desc="Cambio el ComboBoxBuscar del listado">
+        if(e.getSource() == frm.jComboBoxBuscar)
+            //System.out.println("Evento en el comboBox del listado");
+            cargarDatosTabla();
+        // </editor-fold> 
         
         
         // <editor-fold defaultstate="collapsed" desc="Boton Buscar">
@@ -155,7 +163,7 @@ public class ControlPrestador implements ActionListener{
             tabla.addColumn("Especialidad");
             tabla.addColumn("Activo");
 
-            int anchos[] = {0, 95, 95, 70, 120, 70};
+            int anchos[] = {0, 100, 100, 80, 120, 100};
 
             for (int i = 0; i < 6; i++) {
                 frm.jTPrestador.getColumnModel().getColumn(i).setWidth(anchos[i]);
@@ -190,28 +198,6 @@ public class ControlPrestador implements ActionListener{
                 } else {
                     tabla.addRow(ob);
                 }
-                /*
-                if (frm.chkActivoBuscar.isSelected() == false && frm.jComboBoxBuscar.getSelectedIndex() != 0) {
-                    if (String.valueOf(frm.jComboBoxBuscar.getItemAt(frm.jComboBoxBuscar.getSelectedIndex())) == listado.get(i).getEspecialidad().getTitulo()) {
-                        tabla.addRow(ob);
-                    }
-                }
-                if (frm.chkActivoBuscar.isSelected() == true && frm.jComboBoxBuscar.getSelectedIndex() == 0) {
-                    tabla.addRow(ob);
-                }
-                if (frm.chkActivoBuscar.isSelected() == true && frm.jComboBoxBuscar.getSelectedIndex() != 0) {
-                    if (String.valueOf(frm.jComboBoxBuscar.getItemAt(frm.jComboBoxBuscar.getSelectedIndex())) == listado.get(i).getEspecialidad().getTitulo()) {
-                        tabla.addRow(ob);
-                    }
-                }
-                if (frm.chkActivoBuscar.isSelected() == false && frm.jComboBoxBuscar.getSelectedIndex() != 0) {
-                    if (String.valueOf(frm.jComboBoxBuscar.getItemAt(frm.jComboBoxBuscar.getSelectedIndex())) == listado.get(i).getEspecialidad().getTitulo()) {
-                        System.out.println("item seleccionado " + frm.jComboBoxBuscar.getItemAt(frm.jComboBoxBuscar.getSelectedIndex()));
-                        System.out.println("especialidad "+listado.get(i).getEspecialidad().getTitulo());
-                        tabla.addRow(ob);
-                    }
-                }*/
-                
                 ob = null;
             }
         }// </editor-fold> 
@@ -231,7 +217,7 @@ public class ControlPrestador implements ActionListener{
         frm.txtApellido.setText(null);
         frm.txtDni.setText(null);
         frm.chkActivo.setSelected(false);
-        frm.txtEspecialidad.setText(null);
+        
     }
     
     private int txtAEntidadC() {
@@ -258,15 +244,15 @@ public class ControlPrestador implements ActionListener{
 
         preE.setActivo(frm.chkActivo.isSelected());
 
-        System.out.println("Lo q hay en especialidad " + frm.txtEspecialidad.getText());
+        /*System.out.println("Lo q hay en especialidad " + frm.txtEspecialidad.getText());
         if (frm.txtEspecialidad.getText().trim().isEmpty()) {
-            return 4;
-        }
+            //return 4;
+        }*/
             //preE.setId(Integer.parseInt(frm.txtId.getText()));
             preE.setNombre(frm.txtNombre.getText());
             preE.setApellido(frm.txtApellido.getText());
             preE.setDni(Integer.parseInt(frm.txtDni.getText()));
-            preE.setEspecialidad(new Especialidad(frm.txtEspecialidad.getText()));
+            preE.setEspecialidad((Especialidad) frm.jComboBoxEspecialidad.getSelectedItem());
         return 10;
     }
     
@@ -294,15 +280,16 @@ public class ControlPrestador implements ActionListener{
 
         preE.setActivo(frm.chkActivo.isSelected());
 
-        System.out.println("Lo q hay en especialidad " + frm.txtEspecialidad.getText());
+        /*System.out.println("Lo q hay en especialidad " + frm.txtEspecialidad.getText());
         if (frm.txtEspecialidad.getText().trim().isEmpty()) {
-            return 4;
-        }
+          return 4;
+        }*/
             preE.setId(Integer.parseInt(frm.txtId.getText()));
             preE.setNombre(frm.txtNombre.getText());
             preE.setApellido(frm.txtApellido.getText());
             preE.setDni(Integer.parseInt(frm.txtDni.getText()));
-            preE.setEspecialidad(new Especialidad(frm.txtEspecialidad.getText()));
+            preE.setEspecialidad(frm.jComboBoxEspecialidad.getItemAt(frm.jComboBoxEspecialidad.getSelectedIndex()));
+            //preE.setEspecialidad(new Especialidad(frm.txtEspecialidad.getText()));
         return 10;
     }
     
@@ -311,7 +298,7 @@ public class ControlPrestador implements ActionListener{
         fila[0]=frm.txtNombre.getText();
         fila[1]=frm.txtApellido.getText();
         fila[2]=frm.txtDni.getText();
-        fila[3]=frm.txtEspecialidad.getText();
+        //fila[3]=frm.txtEspecialidad.getText();
         fila[4]=frm.chkActivo.isSelected();
         
         DefaultTableModel tabla = new DefaultTableModel();
@@ -321,4 +308,55 @@ public class ControlPrestador implements ActionListener{
         
     }
     
+    private void cargarDatosTabla() {
+        //borrarFilasTabla();
+        modelo = new DefaultTableModel() {
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
+        frm.jTPrestador.setModel(modelo);
+        modelo.addColumn("Id");
+        modelo.addColumn("Nombre");
+        modelo.addColumn("Apellido");
+        modelo.addColumn("Dni");
+        modelo.addColumn("Especialidad");
+        modelo.addColumn("Activo");
+        int anchos[] = {0, 100, 100, 80, 120, 100};
+
+        for (int i = 0; i < 6; i++) {
+            frm.jTPrestador.getColumnModel().getColumn(i).setWidth(anchos[i]);
+            frm.jTPrestador.getColumnModel().getColumn(i).setMinWidth(anchos[i]);
+            frm.jTPrestador.getColumnModel().getColumn(i).setMaxWidth(anchos[i]);
+        }
+        
+        PrestadorData preD=new PrestadorData();
+        List<Prestador> listado = (List<Prestador>) preD.listarPrestador();
+        for (int i = 0; i < listado.size(); ++i) {
+            Object[] ob = {listado.get(i).getId(), listado.get(i).getNombre(), listado.get(i).getApellido(), listado.get(i).getDni(), listado.get(i).getEspecialidad().getTitulo(), listado.get(i).getActivo()};
+            if (frm.chkActivoBuscar.isSelected() == true && frm.jComboBoxBuscar.getSelectedIndex() == 0) {
+                    if (listado.get(i).getActivo() == true) {
+                        //System.out.println("lista solo si esta activo");
+                        modelo.addRow(ob);
+                    }
+                } else if (frm.jComboBoxBuscar.getSelectedIndex() != 0) {
+                    if (String.valueOf(frm.jComboBoxBuscar.getItemAt(frm.jComboBoxBuscar.getSelectedIndex())).equals(listado.get(i).getEspecialidad().getTitulo())) {
+                        //System.out.println("lista solo por especialidad");
+                        if (frm.chkActivoBuscar.isSelected() == true) {
+                            if (listado.get(i).getActivo() == true) {
+                                //System.out.println("solo si esta activo");
+                                modelo.addRow(ob);
+                            }
+                        } else {
+                            //System.out.println("solo si esta inactivo");
+                            modelo.addRow(ob);
+                        }
+                    }
+                } else {
+                    modelo.addRow(ob);
+                }
+            ob = null;
+        }
+        
+    }
 }
