@@ -223,7 +223,7 @@ public class PrestadorData extends Conexion {
     }
     
     public List<Prestador> listarPrestadores() {
-        List<Prestador> lista = new ArrayList<Prestador>();
+        List<Prestador> lista = new ArrayList<>();
         String sql = "SELECT * FROM prestador ORDER BY apellido, nombre;";
         try {
             Prestador prestador;
