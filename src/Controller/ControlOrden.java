@@ -26,6 +26,7 @@ public class ControlOrden implements ActionListener {
     private frmOrden frm;
 
     private DefaultTableModel modelo;
+
     private AfiliadoData afiliadoData;
     private PrestadorData prestadorData;
     private HorarioData horarioData;
@@ -52,8 +53,16 @@ public class ControlOrden implements ActionListener {
         this.frm.cbxPrestador.addActionListener(this);
         this.frm.tblOrdenes.addMouseListener(new java.awt.event.MouseAdapter() {});
 
-
-        modelo = new DefaultTableModel();
+        // Para hacer las celdas NO editables
+        // https://www.youtube.com/watch?v=zcDAl0lSGhw
+        modelo = new DefaultTableModel() {
+            @Override
+            public boolean isCellEditable(int filas, int columnas) {
+                //if (columnas==1) return true; // Este indica que desde la columna 1 hacia la izquierda No seran editables
+                //else return false;
+                return false;
+            }            
+        };
         afiliadoData = new AfiliadoData();
         listaAfiliados = (ArrayList)afiliadoData.listarAfiliados();
         prestadorData = new PrestadorData();
@@ -71,7 +80,7 @@ public class ControlOrden implements ActionListener {
 
         Funciones.SNumero(frm.txtDNI);
         Funciones.SNumero(frm.txtTotalPagar);
-        frm.btnGuardar.setVisible(false);
+        //frm.btnGuardar.setVisible(false);
 
     }
 
@@ -103,13 +112,23 @@ public class ControlOrden implements ActionListener {
         }
 
         if (e.getSource() == frm.btnGuardar) {
-            frm.txtIdOrden.setText("-1");
-            txt_A_entidad();
-
-            int idOrden = modD.guardarOrden(modE);
-
-            JOptionPane.showMessageDialog(null, "Registro guardado. idOrden = " + idOrden);
-            limpiar(); // Despues de guardar hay que limpiar los campos del forumarlio.
+            if (frm.btnGuardar.getText() == "Nuevo") {
+                limpiar();
+                frm.cbxFormaPago.setEnabled(true);
+                frm.txtTotalPagar.setEnabled(true);
+                frm.cbxPrestador.setEnabled(true);
+                frm.cbxHorario.setEnabled(true);
+                frm.btnGuardar.setText("Guardar");
+                frm.btnModificar.setEnabled(false);
+                frm.btnBorrar.setEnabled(false);
+                frm.btnAnular.setEnabled(false);
+            } else {
+                frm.txtIdOrden.setText("-1");
+                txt_A_entidad();
+                int idOrden = modD.guardarOrden(modE);
+                JOptionPane.showMessageDialog(null, "Registro guardado. idOrden = " + idOrden);
+                limpiar(); // Despues de guardar hay que limpiar los campos del forumarlio.
+            }
         }
 
         if (e.getSource() == frm.btnModificar) {
@@ -179,16 +198,13 @@ public class ControlOrden implements ActionListener {
         frm.txtDNI.setText(null);
         frm.txtIdOrden.setText("-1");
         frm.txtTotalPagar.setText(null);
+                
+        frm.cbxFormaPago.setEnabled(false);
+        frm.txtTotalPagar.setEnabled(false);
+        frm.cbxPrestador.setEnabled(false);
+        frm.cbxHorario.setEnabled(false);
         
-        //frm.cbxFormaPago.setSelectedItem(null);
-        //frm.cbxFormaPago.setEnabled(false);
-        //frm.txtTotalPagar.setEnabled(false);
-        //frm.cbxPrestador.setSelectedItem(null);
-        //frm.cbxPrestador.setEnabled(false);
-        //frm.cbxHorario.setSelectedItem(null);
-        //frm.cbxHorario.setEnabled(false);
-
-        //frm.btnGuardar.setVisible(false);
+        frm.btnGuardar.setText("Nuevo");
         frm.btnModificar.setEnabled(false);
         frm.btnBorrar.setEnabled(false);
         frm.btnAnular.setEnabled(false);
@@ -203,7 +219,11 @@ public class ControlOrden implements ActionListener {
         modE.setFechaEmision( Date.valueOf(funciones.getFecha(frm.jdcFechaEmision)) );
         modE.setAfiliado((Afiliado)frm.cbxAfiliado.getSelectedItem());
         modE.setFormaPago(frm.cbxFormaPago.getSelectedItem().toString());
-        modE.setTotalPagar(Double.parseDouble(frm.txtTotalPagar.getText()));
+        if ( frm.txtTotalPagar.getText() != null && frm.txtTotalPagar.getText() != "") {
+            modE.setTotalPagar(Double.parseDouble(frm.txtTotalPagar.getText()));
+        } else {
+            modE.setTotalPagar(0);
+        }
         modE.setHorario((Horario)frm.cbxHorario.getSelectedItem());
         modE.setAnulado(frm.chkAnulado.isSelected());
     }
@@ -241,6 +261,10 @@ public class ControlOrden implements ActionListener {
             modelo.addColumn(it);
         }
         frm.tblOrdenes.setModel(modelo);
+        // Para agregar JCheckBox a la tabla
+        // https://www.youtube.com/watch?v=h7PvI9GZl90
+        frm.tblOrdenes.getColumnModel().getColumn(6).setCellEditor(new Clase_CellEditor());
+        frm.tblOrdenes.getColumnModel().getColumn(6).setCellRenderer(new Clase_CellRender());
     }
     
     private void borrarFilasTabla() {

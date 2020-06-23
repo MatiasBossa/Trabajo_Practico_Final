@@ -31,8 +31,8 @@ public class OrdenData extends Conexion {
 
     public int guardarOrden(Orden orden) {
         int id=0;
-        String sql = "INSERT INTO ORDEN "
-                + "(fechaEmision, idAfiliado, idHorario, formaPago, totalPagar, anulada) "
+        String sql = "INSERT INTO orden "
+                + "(fechaEmision, idAfiliado, idHorario, formaPago, totalPagar, anulado) "
                 + "VALUES (?, ?, ?, ?, ?, ?);";
         try {
             PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
@@ -41,7 +41,7 @@ public class OrdenData extends Conexion {
             ps.setInt(3, orden.getHorario().getIdHorario());
             ps.setString(4, orden.getFormaPago());
             ps.setDouble(5, orden.getTotalPagar());
-            ps.setBoolean(6, orden.getAnulado());
+            ps.setBoolean(6, false);
             
             ps.executeUpdate();
             ResultSet rs = ps.getGeneratedKeys();
@@ -61,7 +61,7 @@ public class OrdenData extends Conexion {
     
     public void modificarOrden(Orden orden) {
         String sql = "UPDATE orden SET fechaEmision = ? , idAfiliado = ? , idHorario = ? ,"
-                + " formaPago = ? , totalPagar = ? , anulado = ?;";
+                + " formaPago = ? , totalPagar = ? , anulado = ? WHERE idOrden = ?;";
         try {
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setDate(1, (Date)orden.getFechaEmision());
@@ -70,6 +70,7 @@ public class OrdenData extends Conexion {
             ps.setString(4, orden.getFormaPago());
             ps.setDouble(5, orden.getTotalPagar());
             ps.setBoolean(6, orden.getAnulado());
+            ps.setInt(7, orden.getIdOrden());
             
             ps.executeUpdate();
             
@@ -81,7 +82,7 @@ public class OrdenData extends Conexion {
     }
     
     public void borrarOrden(int idOrden) {
-        String sql = "DELETE FROM orden WEHRE idOrden =  ?;";
+        String sql = "DELETE FROM orden WHERE idOrden =  ?;";
         try {
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setInt(1, idOrden);

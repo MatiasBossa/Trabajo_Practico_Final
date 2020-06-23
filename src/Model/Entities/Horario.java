@@ -72,11 +72,10 @@ public class Horario {
         return dia + " - " + horarioAtencion ;
     }
 
-
 /*
     @Override
     public boolean equals(Object obj) {
         return getIdHorario() == ((Horario) obj).getIdHorario();
-    } 
+    }
 */
 }

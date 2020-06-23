@@ -14,7 +14,7 @@ public class frmOrden extends javax.swing.JInternalFrame {
     public frmOrden() {
         initComponents();
         this.setSize(800, 500);
-        this.txtIdOrden.setVisible(false);
+        //this.txtIdOrden.setVisible(false);
         
         // https://linuxgx.blogspot.com/2014/07/obtener-fecha-del-sistema-y-colocarlo.html
         Calendar fechaHoy = new GregorianCalendar();
@@ -106,7 +106,7 @@ public class frmOrden extends javax.swing.JInternalFrame {
         chkAnulado.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         chkAnulado.setEnabled(false);
 
-        btnGuardar.setText("Guardar");
+        btnGuardar.setText("Nuevo");
 
         btnModificar.setText("Modificar");
         btnModificar.setEnabled(false);
@@ -298,18 +298,37 @@ public class frmOrden extends javax.swing.JInternalFrame {
             this.cbxFormaPago.setSelectedItem(this.tblOrdenes.getValueAt(fila, 4).toString() );
             this.txtTotalPagar.setText(this.tblOrdenes.getValueAt(fila, 5).toString());
             this.cbxPrestador.setSelectedItem((Prestador)this.tblOrdenes.getValueAt(fila, 2));
-            //this.txtDia.setText( ((Horario)this.tblOrdenes.getValueAt(fila, 5)).getDia() );
-            //this.txtHorarioAtencion.setText( ((Horario)this.tblOrdenes.getValueAt(fila, 5)).getHorarioAtencion().toString() );
+
+            Horario item = new Horario();
+            item = (Horario)this.tblOrdenes.getValueAt(fila, 3);
+            boolean exists = false; int index;
+            for (index = 0; index < this.cbxHorario.getItemCount() && !exists; index++) {
+              if (item.equals(this.cbxHorario.getItemAt(index))) {
+                exists = true;
+              }
+            }
+            this.cbxHorario.setSelectedIndex(index-1);
+
             this.chkAnulado.setSelected( (boolean)this.tblOrdenes.getValueAt(fila, 6) );
-
-            //this.cbxFormaPago.setEnabled(true);
-            //this.txtTotalPagar.setEnabled(true);
-            //this.cbxPrestador.setEnabled(true);
-            //this.cbxHorario.setEnabled(true);
-
-            this.btnModificar.setEnabled(true);
-            this.btnBorrar.setEnabled(true);
-            this.btnAnular.setEnabled(true);
+            
+            this.btnGuardar.setText("Nuevo");
+            if ( !(boolean)this.tblOrdenes.getValueAt(fila, 6) ){
+                this.cbxFormaPago.setEnabled(true);
+                this.txtTotalPagar.setEnabled(true);
+                this.cbxPrestador.setEnabled(true);
+                this.cbxHorario.setEnabled(true);
+                this.btnModificar.setEnabled(true);
+                this.btnBorrar.setEnabled(true);
+                this.btnAnular.setEnabled(true);
+            } else {
+                this.cbxFormaPago.setEnabled(false);
+                this.txtTotalPagar.setEnabled(false);
+                this.cbxPrestador.setEnabled(false);
+                this.cbxHorario.setEnabled(false);
+                this.btnModificar.setEnabled(false);
+                this.btnBorrar.setEnabled(false);
+                this.btnAnular.setEnabled(false);
+            }
         }
     }//GEN-LAST:event_tblOrdenesMouseClicked
 
