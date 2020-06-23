@@ -80,7 +80,7 @@ public class ControlOrden implements ActionListener {
 
         Funciones.SNumero(frm.txtDNI);
         Funciones.SNumero(frm.txtTotalPagar);
-        //frm.btnGuardar.setVisible(false);
+        iniciar();
 
     }
 
@@ -93,6 +93,7 @@ public class ControlOrden implements ActionListener {
      */
     public void iniciar() {
         frm.setTitle("Orden");
+        frm.txtDNI.requestFocus();
         //frm.setLocationRelativeTo(null);
         
     }
@@ -122,23 +123,28 @@ public class ControlOrden implements ActionListener {
                 frm.btnModificar.setEnabled(false);
                 frm.btnBorrar.setEnabled(false);
                 frm.btnAnular.setEnabled(false);
+                frm.txtTotalPagar.requestFocus();
             } else {
-                frm.txtIdOrden.setText("-1");
-                txt_A_entidad();
-                int idOrden = modD.guardarOrden(modE);
-                JOptionPane.showMessageDialog(null, "Registro guardado. idOrden = " + idOrden);
-                limpiar(); // Despues de guardar hay que limpiar los campos del forumarlio.
+                if ( validarCampos() ) {
+                    frm.txtIdOrden.setText("-1");
+                    txt_A_entidad();
+                    int idOrden = modD.guardarOrden(modE);
+                    JOptionPane.showMessageDialog(null, "Registro guardado.");
+                    limpiar(); // Despues de guardar hay que limpiar los campos del forumarlio.
+                }
             }
         }
 
         if (e.getSource() == frm.btnModificar) {
-            txt_A_entidad();
+            if ( validarCampos() ) {
+                txt_A_entidad();
 
-            modD.modificarOrden(modE);
-            cargarDatosTabla();
+                modD.modificarOrden(modE);
+                cargarDatosTabla();
 
-            JOptionPane.showMessageDialog(null, "Registro modificado.");
-            limpiar(); // Despues de modificar hay que limpiar los campos del forumarlio.
+                JOptionPane.showMessageDialog(null, "Registro modificado.");
+                limpiar(); // Despues de modificar hay que limpiar los campos del forumarlio.
+            }
         }
 
         if (e.getSource() == frm.btnBorrar) {
@@ -219,11 +225,7 @@ public class ControlOrden implements ActionListener {
         modE.setFechaEmision( Date.valueOf(funciones.getFecha(frm.jdcFechaEmision)) );
         modE.setAfiliado((Afiliado)frm.cbxAfiliado.getSelectedItem());
         modE.setFormaPago(frm.cbxFormaPago.getSelectedItem().toString());
-        if ( frm.txtTotalPagar.getText() != null && frm.txtTotalPagar.getText() != "") {
-            modE.setTotalPagar(Double.parseDouble(frm.txtTotalPagar.getText()));
-        } else {
-            modE.setTotalPagar(0);
-        }
+        modE.setTotalPagar(Double.parseDouble(frm.txtTotalPagar.getText()));
         modE.setHorario((Horario)frm.cbxHorario.getSelectedItem());
         modE.setAnulado(frm.chkAnulado.isSelected());
     }
@@ -240,8 +242,7 @@ public class ControlOrden implements ActionListener {
         cargarHorarios();
     }
     private void cargarHorarios() {
-        frm.cbxHorario.removeAllItems();
-        
+        frm.cbxHorario.removeAllItems();        
         listaHorarios = (ArrayList)horarioData.listarHorarios( ((Prestador)frm.cbxPrestador.getSelectedItem()).getId() );
         for (Horario item : listaHorarios) {
             frm.cbxHorario.addItem(item);
@@ -250,7 +251,7 @@ public class ControlOrden implements ActionListener {
 
     private void armarCabezeraTabla() {
         ArrayList<Object> columnas = new ArrayList<Object>();
-        columnas.add("ID");
+        columnas.add("_");
         columnas.add("FECHAEMISION");
         columnas.add("PRESTADOR");
         columnas.add("HORARIO");
@@ -265,7 +266,11 @@ public class ControlOrden implements ActionListener {
         // https://www.youtube.com/watch?v=h7PvI9GZl90
         frm.tblOrdenes.getColumnModel().getColumn(6).setCellEditor(new Clase_CellEditor());
         frm.tblOrdenes.getColumnModel().getColumn(6).setCellRenderer(new Clase_CellRender());
+        
+        frm.tblOrdenes.getColumnModel().getColumn(0).setPreferredWidth(5);
+        frm.tblOrdenes.getColumnModel().getColumn(6).setPreferredWidth(30);
     }
+    
     
     private void borrarFilasTabla() {
         int f = modelo.getRowCount() - 1;
@@ -284,4 +289,21 @@ public class ControlOrden implements ActionListener {
         }
     }
 
+    public boolean validarCampos() {
+        boolean valido = true;
+
+        try {
+            if ( frm.txtTotalPagar.getText() == null || frm.txtTotalPagar.getText() == "" ) {
+                JOptionPane.showMessageDialog(null, "ERROR. Debe ingresar un importe en el campo Total a pagar.");
+                valido = false;
+            } else if ( Float.parseFloat( frm.txtTotalPagar.getText() ) < 0 ) {
+                JOptionPane.showMessageDialog(null, "ERROR. El importe ingresado en el campo Total a pagar es negativo.");
+                valido = false;
+            }
+        } catch (java.lang.NumberFormatException e) {
+            JOptionPane.showMessageDialog(null, "ERROR. El campo importe NO es válido.");
+        } 
+        
+        return valido;
+    }
 }
