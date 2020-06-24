@@ -33,9 +33,11 @@ public class ControlPrestador implements ActionListener, KeyListener, MouseListe
         this.frm.btnLimpiar.addActionListener(this);
         this.frm.chkActivo.addActionListener(this);
         this.frm.chkActivoBuscar.addActionListener(this);
+        //creo q los actionlistener para los combobox no son necesarios
         this.frm.jComboBoxEspecialidad.addActionListener(this);
         this.frm.jComboBoxBuscar.addActionListener(this);
         this.frm.jTPrestador.addMouseListener(this);
+        
         this.frm.txtDni.addKeyListener( this);
         this.frm.txtApellido.addKeyListener( this);
         this.frm.txtNombre.addKeyListener( this);
@@ -59,12 +61,16 @@ public class ControlPrestador implements ActionListener, KeyListener, MouseListe
         // <editor-fold defaultstate="collapsed" desc="Boton Guardar">
         if (e.getSource() == this.frm.btnGuardar) {
             //aca se asegura de no guardar nada si alguno los txtField estan vacios
-            if(txtAEntidad() && comprobarDni()){
-                this.preD.guardarPrestador(this.preE);//guarda el Prestador en la base de datos
-                this.listado.add(this.preE);//guarda el Prestador en el ArrayList
-                JOptionPane.showMessageDialog(null, "Prestador guardado.");
-                cargarDatosTabla();
-                limpiar();
+            
+            if(txtAEntidad() /*&& comprobarDni()*/){
+                this.preE.setId(-1);
+                if(comprobarDni()) {
+                    this.preD.guardarPrestador(this.preE);//guarda el Prestador en la base de datos
+                    this.listado.add(this.preE);//guarda el Prestador en el ArrayList
+                    JOptionPane.showMessageDialog(null, "Prestador guardado.");
+                    cargarDatosTabla();
+                    limpiar();
+                }
             }
         }// </editor-fold> 
         
@@ -74,7 +80,7 @@ public class ControlPrestador implements ActionListener, KeyListener, MouseListe
             if (this.frm.txtId.getText().trim().isEmpty()) {
                 JOptionPane.showMessageDialog(null, "Para modificar un Prestador tiene que seleccionar uno de la lista");
             }
-            else if(txtAEntidad()){
+            else if(txtAEntidad()&& comprobarDni()){
                 
                 
                 this.preD.modificarPrestador(this.preE);//modifica el Prestador en la base de datos
@@ -210,27 +216,27 @@ public class ControlPrestador implements ActionListener, KeyListener, MouseListe
      */
     // <editor-fold defaultstate="collapsed" desc="txtAEntidad()">
     private boolean txtAEntidad() {
-        System.out.println("Lo q hay en nombre " + frm.txtNombre.getText());
-        if (frm.txtNombre.getText().trim().isEmpty()) {
+        System.out.println("Lo q hay en nombre " + this.frm.txtNombre.getText());
+        if (this.frm.txtNombre.getText().trim().isEmpty()) {
             JOptionPane.showMessageDialog(null, "No se ingreso un Nombre");
             return false;
         }
-        System.out.println("Lo q hay en apellido " + frm.txtApellido.getText());
-        if (frm.txtApellido.getText().trim().isEmpty()) {
+        System.out.println("Lo q hay en apellido " + this.frm.txtApellido.getText());
+        if (this.frm.txtApellido.getText().trim().isEmpty()) {
             JOptionPane.showMessageDialog(null, "No se ingreso un Apellido");
             return false;
         }
-        System.out.println("Lo q hay en dni " + frm.txtDni.getText());
-        if (frm.txtDni.getText().length() != 8) {
+        System.out.println("Lo q hay en dni " + this.frm.txtDni.getText());
+        if (this.frm.txtDni.getText().length() != 8) {
             JOptionPane.showMessageDialog(null, "El Dni tiene que tener 8 numeros");
             return false;
         }
-        preE.setId(Integer.parseInt(frm.txtId.getText()));
-        preE.setNombre(frm.txtNombre.getText());
-        preE.setApellido(frm.txtApellido.getText());
-        preE.setDni(Integer.parseInt(frm.txtDni.getText()));
-        preE.setEspecialidad(frm.jComboBoxEspecialidad.getItemAt(frm.jComboBoxEspecialidad.getSelectedIndex()));
-        preE.setActivo(frm.chkActivo.isSelected());
+        this.preE.setId(Integer.parseInt(this.frm.txtId.getText()));
+        this.preE.setNombre(this.frm.txtNombre.getText());
+        this.preE.setApellido(this.frm.txtApellido.getText());
+        this.preE.setDni(Integer.parseInt(frm.txtDni.getText()));
+        this.preE.setEspecialidad(this.frm.jComboBoxEspecialidad.getItemAt(this.frm.jComboBoxEspecialidad.getSelectedIndex()));
+        this.preE.setActivo(this.frm.chkActivo.isSelected());
         return true;
     }// </editor-fold>
  
@@ -304,9 +310,11 @@ public class ControlPrestador implements ActionListener, KeyListener, MouseListe
     // <editor-fold defaultstate="collapsed" desc="comprueba si el Dni ya se guardo anteriormente">
     private boolean comprobarDni(){
         for(int i = 0; i < listado.size(); i++) {
-            if (preE.getDni() == listado.get(i).getDni()) {
-                JOptionPane.showMessageDialog(null, "ya hay un Prestador con ese Dni.");
-                return false;
+            if (preE.getDni() == listado.get(i).getDni()&&!preE.equals(listado.get(i))) {
+                //if(!preE.equals(listado.get(i))) {
+                    JOptionPane.showMessageDialog(null, "ya hay un Prestador con ese Dni.");
+                    return false;
+                //}
             }
         }
         return true;
