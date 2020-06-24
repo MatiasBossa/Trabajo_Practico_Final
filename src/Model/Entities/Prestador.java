@@ -67,7 +67,7 @@ public class Prestador extends Persona {
 
     @Override
     public boolean equals(Object obj) {
-        return getId() == ((Prestador) obj).getId();
+        return (getId() == ((Prestador) obj).getId()) /*&& getDni()==((Prestador) obj).getDni()*/;
     }
 
 }
