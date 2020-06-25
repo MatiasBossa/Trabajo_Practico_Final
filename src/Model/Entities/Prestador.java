@@ -60,7 +60,7 @@ public class Prestador extends Persona {
     @Override
     public String toString() {
         
-        return this.getApellido() + " " + this.getNombre();
+        return this.getApellido() + " " + this.getNombre() + " - " + this.getEspecialidad().getTitulo();
 
         //return "Prestador{" + super.toString() + " especialidad[" + especialidad.getTitulo() + "] }";
     }
