@@ -33,9 +33,8 @@ public class PrestadorData extends Conexion {
     
     // <editor-fold defaultstate="collapsed" desc="Create"> 
     public void guardarPrestador(Prestador prestador){
-        int id=0;
         try{
-            PreparedStatement ps = con.prepareStatement(SQL_INSERT);
+            PreparedStatement ps = con.prepareStatement(SQL_INSERT,PreparedStatement.RETURN_GENERATED_KEYS);
             ps.setString(1, prestador.getNombre());
             ps.setString(2, prestador.getApellido());
             ps.setLong(3, prestador.getDni());
@@ -52,12 +51,12 @@ public class PrestadorData extends Conexion {
             ps.setInt(5, esp.getIdEspecialidad());
             
             ps.executeUpdate();
-            /*ResultSet rs = ps.getGeneratedKeys();
+            ResultSet rs = ps.getGeneratedKeys();
             if (rs.next())
-                id = rs.getInt(1);
+                prestador.setId(rs.getInt(1));
             else
                 System.out.println("ERROR al obtener el ID generado.");
-            */
+            
             ps.close();
         }catch(SQLException e){
             System.out.println("ERROR al guardar el prestador");

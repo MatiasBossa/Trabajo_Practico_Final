@@ -5,36 +5,16 @@
  */
 package View;
 
-import Model.Data.EspecialidadData;
-import Model.Data.PrestadorData;
 import Model.Entities.Especialidad;
-import Model.Entities.Prestador;
-import java.awt.Component;
-import java.awt.event.ItemEvent;
-import java.util.List;
-import javax.swing.JComboBox;
-import javax.swing.table.DefaultTableModel;
 
-/**
- *
- * @author Nicolas
- */
+//@author Nicolas
 public class frmPrestador extends javax.swing.JInternalFrame {
-    private DefaultTableModel modelo;
-    private DefaultTableModel prestador;
-    private List<Prestador> listado;
 
-    /**
-     * Creates new form vistaPrestador
-     */
     public frmPrestador() {
-        
         initComponents();
-        cargarDatosComboBox();
-        cargarDatosTabla();
 
     }
-
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -55,7 +35,6 @@ public class frmPrestador extends javax.swing.JInternalFrame {
         btnGuardar = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        btnBuscar = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -67,8 +46,6 @@ public class frmPrestador extends javax.swing.JInternalFrame {
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         jComboBoxEspecialidad = new javax.swing.JComboBox<>();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        jTablePrestador = new javax.swing.JTable();
 
         setClosable(true);
         setTitle("formulario de prestadores");
@@ -88,29 +65,6 @@ public class frmPrestador extends javax.swing.JInternalFrame {
             }
         });
 
-        txtNombre.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                txtNombreKeyTyped(evt);
-            }
-        });
-
-        txtApellido.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                txtApellidoKeyTyped(evt);
-            }
-        });
-
-        txtDni.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtDniActionPerformed(evt);
-            }
-        });
-        txtDni.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                txtDniKeyTyped(evt);
-            }
-        });
-
         btnLimpiar.setText("Limpiar");
 
         btnBorrar.setText("Borrar");
@@ -122,8 +76,6 @@ public class frmPrestador extends javax.swing.JInternalFrame {
         jLabel5.setText("Activo");
 
         jLabel6.setText("Especialidad");
-
-        btnBuscar.setText("Buscar");
 
         jLabel4.setText("Dni");
 
@@ -159,11 +111,6 @@ public class frmPrestador extends javax.swing.JInternalFrame {
                 return canEdit [columnIndex];
             }
         });
-        jTPrestador.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jTPrestadorMouseClicked(evt);
-            }
-        });
         jScrollPane1.setViewportView(jTPrestador);
         if (jTPrestador.getColumnModel().getColumnCount() > 0) {
             jTPrestador.getColumnModel().getColumn(0).setResizable(false);
@@ -180,21 +127,6 @@ public class frmPrestador extends javax.swing.JInternalFrame {
         }
 
         jComboBoxBuscar.setAutoscrolls(true);
-        jComboBoxBuscar.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                jComboBoxBuscarItemStateChanged(evt);
-            }
-        });
-        jComboBoxBuscar.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jComboBoxBuscarMouseClicked(evt);
-            }
-        });
-        jComboBoxBuscar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBoxBuscarActionPerformed(evt);
-            }
-        });
 
         chkActivoBuscar.setText("Solo activos");
 
@@ -205,19 +137,6 @@ public class frmPrestador extends javax.swing.JInternalFrame {
         jLabel8.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel8.setText("Datos de Prestador");
-
-        jTablePrestador.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null},
-                {null},
-                {null},
-                {null}
-            },
-            new String [] {
-                "Prestador"
-            }
-        ));
-        jScrollPane2.setViewportView(jTablePrestador);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -265,10 +184,7 @@ public class frmPrestador extends javax.swing.JInternalFrame {
                                         .addComponent(btnBorrar, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE))))
                             .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(83, 83, 83)
-                        .addComponent(btnBuscar)
-                        .addGap(26, 26, 26)
+                        .addGap(277, 277, 277)
                         .addComponent(jComboBoxBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(chkActivoBuscar)
@@ -283,16 +199,14 @@ public class frmPrestador extends javax.swing.JInternalFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(10, 10, 10)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(chkActivoBuscar)
-                                .addComponent(jComboBoxBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(btnBuscar))))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(chkActivoBuscar)
+                            .addComponent(jComboBoxBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(4, 4, 4)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 6, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -331,124 +245,21 @@ public class frmPrestador extends javax.swing.JInternalFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void txtDniActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDniActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtDniActionPerformed
     
-    // <editor-fold defaultstate="collapsed" desc="Para pasar la info de la tabla al formulario">
-    private void jTPrestadorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTPrestadorMouseClicked
-                      
-        int fila = jTPrestador.getSelectedRow();
-        //Integer id = (Integer) jTPrestador.getValueAt(fila, 0);
-        //System.out.println("todo bien hasta aca ya q "+prestador);
-        txtId.setText(String.valueOf(jTPrestador.getValueAt(fila, 0)));
-        txtNombre.setText((String) jTPrestador.getValueAt(fila, 1));
-        txtApellido.setText((String) jTPrestador.getValueAt(fila, 2));
-        txtDni.setText(String.valueOf(jTPrestador.getValueAt(fila, 3)));
-        //txtEspecialidad.setText((String) jTPrestador.getValueAt(fila, 4));
-        //jComboBoxEspecialidad.getModel().setSelectedItem(new Especialidad(1, "Kinesiologo"));
-        //jComboBoxEspecialidad.setSelectedItem(id);
-        //System.out.println("tamaño del comboboxbuscar " + jComboBoxBuscar.getModel().getSize());
-        //System.out.println("id de comboboxespecialidad "+jComboBoxEspecialidad.getModel().getElementAt(1).getIdEspecialidad());
-        //System.out.println("titulo de comboboxespecialidad "+jComboBoxEspecialidad.getModel().getElementAt(1).getTitulo());
-        //System.out.println("especialidad en la tabla " + (String) jTPrestador.getValueAt(fila, 4));
-        //System.out.println("View.frmPrestador.jTPrestadorMouseClicked()");
-        for (int i = 0; i < +jComboBoxEspecialidad.getModel().getSize(); i++) {
-            Especialidad esp = new Especialidad(jComboBoxEspecialidad.getModel().getElementAt(i).getIdEspecialidad(),jComboBoxEspecialidad.getModel().getElementAt(i).getTitulo());
-            //System.out.println("contenido del ComboBoxEspecialidad " + jComboBoxEspecialidad.getModel().getElementAt(i));
-            if (esp.getTitulo().equals(jTPrestador.getValueAt(fila, 4))) {
-                System.out.println("la especialidad en la tabla y en el comboc son iguales");
-                jComboBoxEspecialidad.setSelectedIndex(i);
-                break;
-            }
-        }
-        jComboBoxEspecialidad.setSelectedItem(new Especialidad(String.valueOf(jTPrestador.getValueAt(fila, 4))));
-
-        //jComboBoxEspecialidad.getModel().setSelectedItem(new Especialidad(String.valueOf(jTPrestador.getValueAt(fila, 4))));
-        chkActivo.setSelected((boolean) jTPrestador.getValueAt(fila, 5));
-        
-    }//GEN-LAST:event_jTPrestadorMouseClicked
-    // </editor-fold> 
+   // </editor-fold> 
     
     
-    private void jComboBoxBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxBuscarActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jComboBoxBuscarActionPerformed
-
-    private void jComboBoxBuscarItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBoxBuscarItemStateChanged
-        
-        /*
-        if(evt.getStateChange()==ItemEvent.SELECTED){
-            Especialidad esp = (Especialidad) jComboBoxBuscar.getSelectedItem();
-            
-        }*/
-        
-        
-    }//GEN-LAST:event_jComboBoxBuscarItemStateChanged
-
     private void txtIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtIdActionPerformed
         
     }//GEN-LAST:event_txtIdActionPerformed
 
     private void txtIdKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtIdKeyTyped
-      char caracter = evt.getKeyChar();
-
-      // Verificar si la tecla pulsada no es un digito
-      if(((caracter < '0') || (caracter > '9')) && (caracter != '\b' /*corresponde a BACK_SPACE*/))
-      {
-         evt.consume();  // ignorar el evento de teclado
-      }
+     
     }//GEN-LAST:event_txtIdKeyTyped
 
-    private void txtDniKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDniKeyTyped
-      char caracter = evt.getKeyChar();
-      
-      // Verificar si la tecla pulsada no es un digito
-      if(((caracter < '0') || (caracter > '9')) && (caracter != '\b' /*corresponde a BACK_SPACE*/))
-      {
-         evt.consume();  // ignorar el evento de teclado
-      }
-    }//GEN-LAST:event_txtDniKeyTyped
-
-    private void txtNombreKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombreKeyTyped
-      char caracter = evt.getKeyChar();
-
-      // Verificar si la tecla pulsada no es un digito
-      if( ((caracter < 'A') || (caracter > 'Z')) && ((caracter < 'a') || (caracter > 'z')) )
-      {
-         evt.consume();  // ignorar el evento de teclado
-      }
-    }//GEN-LAST:event_txtNombreKeyTyped
-
-    private void txtApellidoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtApellidoKeyTyped
-      char caracter = evt.getKeyChar();
-
-      // Verificar si la tecla pulsada no es un digito
-      if( ((caracter < 'A') || (caracter > 'Z')) && ((caracter < 'a') || (caracter > 'z')) )
-      {
-         evt.consume();  // ignorar el evento de teclado
-      }
-    }//GEN-LAST:event_txtApellidoKeyTyped
-
-    private void jComboBoxBuscarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jComboBoxBuscarMouseClicked
-        // TODO add your handling code here:
-        //este seria el caso cuando se clickea en cualquier parte de combobox exepto en este tipo de flecha hacia abajo
-        /*EspecialidadData espD = new EspecialidadData();
-        PrestadorData preD = new PrestadorData();
-        List<Especialidad> listado = (List<Especialidad>) espD.listarEspecialidades();
-        for (Especialidad espE: listado) {
-            jComboBoxBuscar.addItem(espE);
-        }*/
-
-
-        
-    }//GEN-LAST:event_jComboBoxBuscarMouseClicked
-
-
+    // <editor-fold defaultstate="collapsed" desc="Variables declaradas">
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public javax.swing.JButton btnBorrar;
-    public javax.swing.JButton btnBuscar;
     public javax.swing.JButton btnGuardar;
     public javax.swing.JButton btnLimpiar;
     public javax.swing.JButton btnModificar;
@@ -465,103 +276,14 @@ public class frmPrestador extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
     public javax.swing.JTable jTPrestador;
-    public javax.swing.JTable jTablePrestador;
     public javax.swing.JTextField txtApellido;
     public javax.swing.JTextField txtDni;
     public javax.swing.JTextField txtId;
     public javax.swing.JTextField txtNombre;
     // End of variables declaration//GEN-END:variables
-    /*public void borrarFilasTabla() {
-
-        int f = modelo.getRowCount()-1;
-        for(int i=f; i>=0; i--) {
-            modelo.removeRow(i);
-        }
-    }*/
+    // </editor-fold> 
     
-    public void cargarDatosTabla() {
-        //borrarFilasTabla();
-        modelo = new DefaultTableModel() {
-            public boolean isCellEditable(int row, int column) {
-                return false;
-            }
-        };
-        jTPrestador.setModel(modelo);
-        
-        modelo.addColumn("Id");
-        modelo.addColumn("Nombre");
-        modelo.addColumn("Apellido");
-        modelo.addColumn("Dni");
-        modelo.addColumn("Especialidad");
-        modelo.addColumn("Activo");
-        int anchos[] = {0, 100, 100, 80, 120, 100};
-        
-        for (int i = 0; i < 6; i++) {
-            jTPrestador.getColumnModel().getColumn(i).setWidth(anchos[i]);
-            jTPrestador.getColumnModel().getColumn(i).setMinWidth(anchos[i]);
-            jTPrestador.getColumnModel().getColumn(i).setMaxWidth(anchos[i]);
-        }
-        
-        prestador = new DefaultTableModel() {
-            public boolean isCellEditable(int row, int column) {
-                return false;
-            }
-        };
-        jTablePrestador.setModel(prestador);
-        prestador.addColumn("Prestador");
-        jTablePrestador.getColumnModel().getColumn(0).setWidth(0);
-        jTablePrestador.getColumnModel().getColumn(0).setMinWidth(0);
-        jTablePrestador.getColumnModel().getColumn(0).setMaxWidth(0);
-        
-        
-        PrestadorData preD=new PrestadorData();
-        List<Prestador> listado = preD.listarPrestador();
-        System.out.println("en listado "+listado.get(0).getId()+" "+listado.get(0).getNombre());
-        for (int i = 0; i < listado.size(); i++) {
-            Object[] ob = {listado.get(i).getId(), listado.get(i).getNombre(), listado.get(i).getApellido(), listado.get(i).getDni(), listado.get(i).getEspecialidad().getTitulo(), listado.get(i).getActivo()};
-            Object[] ob0 ={listado.get(i)};
-            modelo.addRow(ob);
-            prestador.addRow(ob0);
-            ob = null;
-            ob0 = null;
-        }
-        System.out.println("tabla prestador "+jTablePrestador.getModel().getValueAt(0, 0));
-        System.out.println("tabla jTPrestador "+jTPrestador.getModel().getValueAt(0, 1));
-        
-    }
-    
-    private void cargarDatosComboBox(){
-        
-        jComboBoxBuscar.addItem(new Especialidad("Todos"));
-        //jComboBoxBuscar.
-        EspecialidadData espD = new EspecialidadData();
-        List<Especialidad> listado = (List<Especialidad>) espD.listarEspecialidades();
-        for (Especialidad espE: listado) {
-            jComboBoxBuscar.addItem(espE);
-            jComboBoxEspecialidad.addItem(espE);
-        }
-    }
-    
-    public List<Prestador> getListado(){
-        return listado;
-    }
-    /*@Override
-    public boolean equals(Object obj) {
-        Especialidad esp=jComboBoxBuscar.n
-        return jComboBoxBuscar.gett() == ((Prestador) obj).get;
-    }*/
-
-    
-
-
-
-
-
-
-
-
 }
 
 
