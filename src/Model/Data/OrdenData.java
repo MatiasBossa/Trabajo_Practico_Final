@@ -176,8 +176,22 @@ public class OrdenData extends Conexion {
         }
         return movimientos;
     }
-    
-   
-    
+
+    public boolean existeHorario(int idHorario) {
+        String sql = "SELECT idHorario FROM orden WHERE idHorario = ?;";
+        boolean encontrado = false;
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, idHorario);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                encontrado = true;
+            }
+            con.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(Orden.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return encontrado;
+    }
 
 }

@@ -9,8 +9,6 @@ import Model.Data.AfiliadoData;
 import Model.Entities.Afiliado;
 import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
-import java.util.List;
-import javax.swing.table.DefaultTableModel;
 
 
 
@@ -25,27 +23,7 @@ public class frmAfiliado extends javax.swing.JInternalFrame {
      */
     public frmAfiliado() {
         initComponents();
-        final DefaultTableModel tabla = new DefaultTableModel(){
-                
-                public boolean isCellEditable(int row, int column) {
-                
-                return false;           
-                 }
-            };
-            this.tblAfiliados.setModel(tabla);
-            final Afiliado a = new Afiliado();
-            final AfiliadoData ad = new AfiliadoData();
-            final List<Afiliado> listado = (List<Afiliado>)ad.listarAfiliados();
-            
-            tabla.addColumn("Nombre");
-            tabla.addColumn("Apellido");
-            tabla.addColumn("DNI");
-            tabla.addColumn("Activo");
-            for (int i = 0; i < listado.size(); ++i) {
-                Object[] ob = { listado.get(i).getNombre(), listado.get(i).getApellido(), listado.get(i).getDni(), listado.get(i).getActivo() };
-                tabla.addRow(ob);
-                ob = null;
-            }
+        
     }
 
     /**
@@ -81,7 +59,7 @@ public class frmAfiliado extends javax.swing.JInternalFrame {
         jLabel8 = new javax.swing.JLabel();
 
         setClosable(true);
-        setTitle("formulario de prestadores");
+        setTitle("Formulario de Afiliados");
         setPreferredSize(new java.awt.Dimension(810, 350));
 
         txtIdAfiliado.addActionListener(new java.awt.event.ActionListener() {
@@ -320,71 +298,27 @@ public class frmAfiliado extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_txtDniActionPerformed
 
     private void tblAfiliadosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblAfiliadosMouseClicked
-        int fila = this.tblAfiliados.getSelectedRow();
-        String sId = String.valueOf(this.tblAfiliados.getValueAt(fila, 2));
-        Integer id = Integer.parseInt(sId);
-        Afiliado afiliado = new Afiliado();
-        AfiliadoData ad = new AfiliadoData();
-        afiliado = ad.buscarAfiliadoDni(id);
-        
-        
-        this.txtIdAfiliado.setText(String.valueOf(afiliado.getId()));
-        this.txtNombre.setText(afiliado.getNombre());
-        this.txtApellido.setText(afiliado.getApellido());
-        this.txtDni.setText(String.valueOf(afiliado.getDni()));
-        this.chkActivo.setSelected(afiliado.getActivo());
-        
+
     }//GEN-LAST:event_tblAfiliadosMouseClicked
 
-    
-    
-    
     private void txtIdAfiliadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtIdAfiliadoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtIdAfiliadoActionPerformed
 
     private void txtIdAfiliadoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtIdAfiliadoKeyTyped
-      char caracter = evt.getKeyChar();
 
-      // Verificar si la tecla pulsada no es un digito
-      if(((caracter < '0') || (caracter > '9')) && (caracter != KeyEvent.VK_BACK_SPACE) )
-      {
-         Toolkit.getDefaultToolkit().beep();
-         evt.consume();  // ignorar el evento de teclado
-      }
     }//GEN-LAST:event_txtIdAfiliadoKeyTyped
 
     private void txtDniKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDniKeyTyped
-      char caracter = evt.getKeyChar();
 
-      // Verificar si la tecla pulsada no es un digito
-      if(((caracter < '0') || (caracter > '9')) && (caracter != KeyEvent.VK_BACK_SPACE) )
-      {
-         Toolkit.getDefaultToolkit().beep();
-         evt.consume();  // ignorar el evento de teclado
-      }
     }//GEN-LAST:event_txtDniKeyTyped
 
     private void txtNombreKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombreKeyTyped
-      char caracter = evt.getKeyChar();
 
-      // Verificar si la tecla pulsada no es un digito
-      if( ((caracter < 'A') || (caracter > 'Z')) && ((caracter < 'a') || (caracter > 'z')) )
-      {
-         Toolkit.getDefaultToolkit().beep();
-         evt.consume();  // ignorar el evento de teclado
-      }
     }//GEN-LAST:event_txtNombreKeyTyped
 
     private void txtApellidoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtApellidoKeyTyped
-      char caracter = evt.getKeyChar();
 
-      // Verificar si la tecla pulsada no es un digito
-      if( ((caracter < 'A') || (caracter > 'Z')) && ((caracter < 'a') || (caracter > 'z')) )
-      {
-         Toolkit.getDefaultToolkit().beep();
-         evt.consume();  // ignorar el evento de teclado
-      }
     }//GEN-LAST:event_txtApellidoKeyTyped
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
@@ -392,15 +326,7 @@ public class frmAfiliado extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     private void buscarIdKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_buscarIdKeyTyped
-        char caracter = evt.getKeyChar();
 
-        // Verificar si la tecla pulsada no es un digito
-        if(((caracter < '0') || (caracter > '9')) && (caracter != KeyEvent.VK_BACK_SPACE) )
-        {
-           Toolkit.getDefaultToolkit().beep();
-           evt.consume();  // ignorar el evento de teclado
-          
-        }
     }//GEN-LAST:event_buscarIdKeyTyped
 
 

@@ -13,6 +13,8 @@ import java.awt.event.ActionListener;
 import java.sql.Date;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -51,7 +53,61 @@ public class ControlOrden implements ActionListener {
 
         this.frm.cbxAfiliado.addActionListener(this);
         this.frm.cbxPrestador.addActionListener(this);
-        this.frm.tblOrdenes.addMouseListener(new java.awt.event.MouseAdapter() {});
+        this.frm.tblOrdenes.getSelectionModel().addListSelectionListener(new ListSelectionListener(){
+            @Override
+            public void valueChanged(ListSelectionEvent lse) {
+
+
+                int fila = frm.tblOrdenes.getSelectedRow();
+                if (fila != -1) {
+                    frm.txtIdOrden.setText(frm.tblOrdenes.getValueAt(fila, 0).toString());
+                    // TUTORIAL: instalar JDateChooser
+                    // https://www.youtube.com/watch?v=7_2bQq38PYU
+                    // TUTORIAL: manejar JDateChoose
+                    // https://www.youtube.com/watch?v=Q14DUMz9waU
+
+                    Funciones funciones = new Funciones();
+                    frm.jdcFechaEmision.setDate( funciones.StringAFecha(frm.tblOrdenes.getValueAt(fila, 1).toString()) );
+
+                    frm.cbxFormaPago.setSelectedItem(frm.tblOrdenes.getValueAt(fila, 4).toString() );
+                    frm.txtTotalPagar.setText(frm.tblOrdenes.getValueAt(fila, 5).toString());
+                    frm.cbxPrestador.setSelectedItem((Prestador)frm.tblOrdenes.getValueAt(fila, 2));
+
+                    Horario item = new Horario();
+                    item = (Horario)frm.tblOrdenes.getValueAt(fila, 3);
+                    boolean exists = false; int index;
+                    for (index = 0; index < frm.cbxHorario.getItemCount() && !exists; index++) {
+                      if (item.equals(frm.cbxHorario.getItemAt(index))) {
+                        exists = true;
+                      }
+                    }
+                    frm.cbxHorario.setSelectedIndex(index-1);
+
+                    frm.chkAnulado.setSelected( (boolean)frm.tblOrdenes.getValueAt(fila, 6) );
+
+                    frm.btnGuardar.setText("Nuevo");
+                    if ( !(boolean)frm.tblOrdenes.getValueAt(fila, 6) ){
+                        frm.cbxFormaPago.setEnabled(true);
+                        frm.txtTotalPagar.setEnabled(true);
+                        frm.cbxPrestador.setEnabled(true);
+                        frm.cbxHorario.setEnabled(true);
+                        frm.btnModificar.setEnabled(true);
+                        frm.btnBorrar.setEnabled(true);
+                        frm.btnAnular.setEnabled(true);
+                    } else {
+                        frm.cbxFormaPago.setEnabled(false);
+                        frm.txtTotalPagar.setEnabled(false);
+                        frm.cbxPrestador.setEnabled(false);
+                        frm.cbxHorario.setEnabled(false);
+                        frm.btnModificar.setEnabled(false);
+                        frm.btnBorrar.setEnabled(false);
+                        frm.btnAnular.setEnabled(false);
+                    }
+                }
+
+
+            }
+        });
 
         // Para hacer las celdas NO editables
         // https://www.youtube.com/watch?v=zcDAl0lSGhw
@@ -97,6 +153,8 @@ public class ControlOrden implements ActionListener {
         //frm.setLocationRelativeTo(null);
         
     }
+
+
 
     /**
      * Sobreescribimos el métod que escucha los click a los botones
@@ -251,7 +309,7 @@ public class ControlOrden implements ActionListener {
 
     private void armarCabezeraTabla() {
         ArrayList<Object> columnas = new ArrayList<Object>();
-        columnas.add("_");
+        columnas.add("ID");
         columnas.add("FECHAEMISION");
         columnas.add("PRESTADOR");
         columnas.add("HORARIO");
@@ -267,8 +325,12 @@ public class ControlOrden implements ActionListener {
         frm.tblOrdenes.getColumnModel().getColumn(6).setCellEditor(new Clase_CellEditor());
         frm.tblOrdenes.getColumnModel().getColumn(6).setCellRenderer(new Clase_CellRender());
         
-        frm.tblOrdenes.getColumnModel().getColumn(0).setPreferredWidth(5);
-        frm.tblOrdenes.getColumnModel().getColumn(6).setPreferredWidth(30);
+        int anchos[] = {0, 100, 200, 180, 90, 90, 90};
+        for (int i = 0; i < 7; i++) {
+            frm.tblOrdenes.getColumnModel().getColumn(i).setWidth(anchos[i]);
+            frm.tblOrdenes.getColumnModel().getColumn(i).setMinWidth(anchos[i]);
+            frm.tblOrdenes.getColumnModel().getColumn(i).setMaxWidth(anchos[i]);
+        }
     }
     
     

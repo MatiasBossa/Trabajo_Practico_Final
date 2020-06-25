@@ -7,6 +7,7 @@ package Model.Data;
 
 import Model.Entities.Horario;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -22,19 +23,20 @@ import java.util.logging.Logger;
  */
 public class HorarioData extends Conexion {
     private Connection con = null;
-
+    private String[] dias = {"Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado", "Domingo"};
+    
     public HorarioData() {
         this.con = getConexion();
     }
     
     public void guardarHorario(Horario horario){
-        String SQL_INSERT = "INSERT INTO horario(dia, horarioAtencion, idPrestador) VALUES(?, ?, ?)";
+        String SQL_INSERT = "INSERT INTO horario(idPrestador, fecha, hora) VALUES(?, ?, ?)";
         try{
             PreparedStatement ps = con.prepareStatement(SQL_INSERT);
-            ps.setString(1, horario.getDia());
-            Time time = Time.valueOf(horario.getHorarioAtencion()); // Convertimos el LocalTime a Time de SQL
-            ps.setTime(2, time);
-            ps.setInt(3, horario.getPrestador().getId());
+            Time time = Time.valueOf(horario.getHora()); // Convertimos el LocalTime a Time de SQL
+            ps.setInt(1, horario.getPrestador().getId());
+            ps.setDate(2, Date.valueOf( horario.getFecha() ) );
+            ps.setTime(3, time);
             
             ps.executeUpdate();
             
@@ -61,12 +63,19 @@ public class HorarioData extends Conexion {
     }
     
     public void modificarHorario(Horario horario){
-        String SQL_UPDATE = "UPDATE horario SET dia = ?, horarioAtencion = ?, idPrestador = ? WHERE idHorario = ?";
+        String SQL_UPDATE = "UPDATE horario SET idPrestador = ?, fecha = ?, hora = ?  WHERE idHorario = ?";
         try{
             PreparedStatement ps = con.prepareStatement(SQL_UPDATE);
-            ps.setString(1, horario.getDia());
-            Time time = Time.valueOf(horario.getHorarioAtencion());
-            ps.setTime(2, time);
+            ps.setInt(1, horario.getPrestador().getId());
+            Time time = Time.valueOf(horario.getHora()); // Convertimos el LocalTime a Time de SQL
+            ps.setInt(1, horario.getPrestador().getId());
+            ps.setDate(2, Date.valueOf( horario.getFecha() ) );
+            ps.setTime(3, time);
+            ps.setInt(4, horario.getIdHorario());
+            
+            ps.executeUpdate();
+            
+            ps.close();
             
         }catch(SQLException e){
             System.out.println("ERROR al modificar el horario");
@@ -74,23 +83,25 @@ public class HorarioData extends Conexion {
         }
     }
     
-    public Horario buscarHorario(int id){
-        String SQL_SELECT = "SELECT * FROM horario WHERE idHorario = ?";
+    public Horario buscarHorario(int idHorario){
+        String sql = "SELECT * FROM horario WHERE idHorario = ?";
         PrestadorData pd = new PrestadorData();
         ResultSet rs;
         Horario horario = null;
         try{
-            PreparedStatement ps = con.prepareStatement(SQL_SELECT);
-            ps.setInt(1, id);
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, idHorario);
             
             rs = ps.executeQuery();
             
             if(rs.next()){
                 horario = new Horario();
-                horario.setIdHorario(rs.getInt(1));
-                horario.setDia(rs.getString(2));
-                horario.setHorarioAtencion(rs.getTime(3).toLocalTime());
-                horario.setPrestador(pd.buscarPrestador(rs.getInt(4)));
+                horario.setIdHorario(rs.getInt("idHorario"));
+                horario.setPrestador(pd.buscarPrestador(rs.getInt("idPrestador")));
+                horario.setFecha( rs.getDate("fecha").toLocalDate() );                
+                int d = rs.getDate("fecha").toLocalDate().getDayOfWeek().getValue();
+                horario.setDia(dias[d-1]);                
+                horario.setHora(rs.getTime("hora").toLocalTime());
             }
             
             rs.close();
@@ -101,6 +112,31 @@ public class HorarioData extends Conexion {
         }
         
         return horario;
+    }
+    public boolean horarioDuplicado(Horario horario){
+        String sql = "SELECT * FROM horario WHERE idPrestador = ? AND fecha = ? AND hora = ?";
+        boolean existe = false;
+        Horario h = null;
+        try{
+            PreparedStatement ps = con.prepareStatement(sql);
+            Time time = Time.valueOf(horario.getHora()); // Convertimos el LocalTime a Time de SQL
+            ps.setInt(1, horario.getPrestador().getId());
+            ps.setDate(2, Date.valueOf( horario.getFecha() ) );
+            ps.setTime(3, time);
+            
+            ResultSet rs = ps.executeQuery();
+            
+            if(rs.next()){
+                existe = true;
+            }
+            
+            ps.close();
+        }catch(SQLException e){
+            System.out.println("ERROR al obtener el horario");
+            e.printStackTrace();
+        }
+        
+        return existe;
     }
     
     public List<Horario> listarHorarios(int idPrestador){
@@ -118,12 +154,13 @@ public class HorarioData extends Conexion {
             horarios = new ArrayList<>();
             while(rs.next()){
                 horario = new Horario();
-                horario.setIdHorario(rs.getInt(1));
-                horario.setDia(rs.getString(2));
-                horario.setHorarioAtencion(rs.getTime(3).toLocalTime());
-                
-                horario.setPrestador(pd.buscarPrestador(rs.getInt(4)));
-                
+                horario.setIdHorario(rs.getInt("idHorario"));
+                horario.setPrestador(pd.buscarPrestador(rs.getInt("idPrestador")));
+                horario.setFecha( rs.getDate("fecha").toLocalDate() );                
+                int d = rs.getDate("fecha").toLocalDate().getDayOfWeek().getValue();
+                horario.setDia(dias[d-1]);
+                horario.setHora(rs.getTime("hora").toLocalTime());
+
                 horarios.add(horario);
             }
             
