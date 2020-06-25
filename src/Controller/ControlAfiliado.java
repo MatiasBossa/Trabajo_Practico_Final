@@ -9,8 +9,11 @@ import Model.Data.OrdenData;
 import Model.Entities.Afiliado;
 import Model.Entities.Orden;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 public class ControlAfiliado implements ActionListener
 {
@@ -34,8 +37,36 @@ public class ControlAfiliado implements ActionListener
         this.frm.btnLimpiar.addActionListener(this);
         this.frm.chkActivo.addActionListener(this);
         
+       this.frm.tblAfiliados.getSelectionModel().addListSelectionListener(new ListSelectionListener(){
+            @Override
+            
+            public void valueChanged(ListSelectionEvent lse) {
+
+                int fila = frm.tblAfiliados.getSelectedRow();
+                String dni = String.valueOf(frm.tblAfiliados.getValueAt(fila, 3));
+                //Afiliado a = modD.buscarAfiliadoDni(Integer.parseInt(dni));
+                int index = 0;
+               // frm.txtIdAfiliado.setText(String.valueOf(a.getId()));
+                frm.txtNombre.setText(String.valueOf(frm.tblAfiliados.getValueAt(fila, index++)));
+                frm.txtApellido.setText(String.valueOf(frm.tblAfiliados.getValueAt(fila, index++)));
+                frm.txtDni.setText(String.valueOf(frm.tblAfiliados.getValueAt(fila, index++)));
+                frm.chkActivo.setSelected((boolean) frm.tblAfiliados.getValueAt(fila, index++));
+
+            }
+
+        });
+
+        
         this.listado = modD.listarAfiliados();
         cargarDatosTabla();
+        
+        Funciones.SNumero(frm.txtIdAfiliado);
+        Funciones.SLetras(frm.txtNombre);
+        Funciones.SLetras(frm.txtApellido);
+        Funciones.SNumero(frm.txtDni);
+        Funciones.SNumero(frm.buscarId);
+        
+        this.Iniciar();
         
     }
     
@@ -93,9 +124,15 @@ public class ControlAfiliado implements ActionListener
         
         
         if (e.getSource() == this.frm.btnAnular) {
+          
             final int idAfiliado = Integer.parseInt(this.frm.txtIdAfiliado.getText());
-            this.modD.desactivarAfiliado(idAfiliado);
-            JOptionPane.showMessageDialog(null, "Afiliado anulado.");
+            if(this.frm.chkActivo.isSelected()){
+                this.modD.desactivarAfiliado(idAfiliado);
+                JOptionPane.showMessageDialog(null, "Afiliado anulado.");
+            }else{
+                JOptionPane.showMessageDialog(frm, "ERROR EL AFILIADO YA ESTA ANULADO", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+            
             cargarDatosTabla();
             this.limpiar();
         }
@@ -116,7 +153,7 @@ public class ControlAfiliado implements ActionListener
                 final Afiliado a = new Afiliado();
                 final AfiliadoData ad = new AfiliadoData();
                 final Afiliado listado = ad.buscarAfiliadoDni(Integer.parseInt(this.frm.buscarId.getText()));
-
+                
                 tabla.addColumn("Nombre");
                 tabla.addColumn("Apellido");
                 tabla.addColumn("DNI");
@@ -202,7 +239,7 @@ public class ControlAfiliado implements ActionListener
         return true;
     }
  
-     private void cargarDatosTabla() {
+    private void cargarDatosTabla() {
          final DefaultTableModel tabla = new DefaultTableModel(){
                 
                 public boolean isCellEditable(int row, int column) {
@@ -225,5 +262,16 @@ public class ControlAfiliado implements ActionListener
                 ob = null;
             }
         
+    }
+    
+    public void mouseClicked(MouseEvent m){
+        int fila = frm.tblAfiliados.getSelectedRow();
+        
+        int indice = 0;
+        frm.txtIdAfiliado.setText(String.valueOf(frm.tblAfiliados.getValueAt(fila, indice++)));
+        frm.txtNombre.setText((String)(frm.tblAfiliados.getValueAt(fila, indice++)));
+        frm.txtApellido.setText((String)(frm.tblAfiliados.getValueAt(fila, indice++)));
+        frm.txtDni.setText(String.valueOf(frm.tblAfiliados.getValueAt(fila, indice++)));
+        frm.chkActivo.setSelected(Boolean.valueOf((String) frm.tblAfiliados.getValueAt(fila, indice++)));
     }
 }
