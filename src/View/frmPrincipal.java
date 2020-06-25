@@ -224,7 +224,8 @@ public class frmPrincipal extends javax.swing.JFrame {
         escritorio.repaint();
         Horario horaE = new Horario();
         HorarioData horaD = new HorarioData();
-        frmHorarios frm = new frmHorarios();
+        //frmHorarios frm = new frmHorarios();
+        viewHorario frm = new viewHorario();
         ControlHorarios ctrl = new ControlHorarios(horaE, horaD, frm);
         
         escritorio.add(frm);

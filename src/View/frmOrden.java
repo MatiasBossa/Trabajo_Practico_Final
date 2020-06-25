@@ -1,6 +1,5 @@
 package View;
 
-import Controller.Funciones;
 import Model.Entities.Afiliado;
 import Model.Entities.Horario;
 import Model.Entities.Prestador;
@@ -192,9 +191,9 @@ public class frmOrden extends javax.swing.JInternalFrame {
                                             .addGroup(layout.createSequentialGroup()
                                                 .addComponent(jLabel8)
                                                 .addGap(18, 18, 18)
-                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                    .addComponent(cbxHorario, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                    .addComponent(cbxPrestador, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                                    .addComponent(cbxHorario, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                    .addComponent(cbxPrestador, 0, 191, Short.MAX_VALUE)))
                                             .addComponent(jLabel5)))
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(jLabel4)
@@ -256,7 +255,7 @@ public class frmOrden extends javax.swing.JInternalFrame {
                     .addComponent(btnAnular)
                     .addComponent(btnLimpiar)
                     .addComponent(btnSalir))
-                .addContainerGap(44, Short.MAX_VALUE))
+                .addContainerGap(48, Short.MAX_VALUE))
         );
 
         pack();
@@ -284,6 +283,7 @@ public class frmOrden extends javax.swing.JInternalFrame {
 
     private void tblOrdenesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblOrdenesMouseClicked
         // TODO add your handling code here:
+/*
         int fila = tblOrdenes.getSelectedRow();
         if (fila != -1) {
             this.txtIdOrden.setText(this.tblOrdenes.getValueAt(fila, 0).toString());
@@ -330,6 +330,7 @@ public class frmOrden extends javax.swing.JInternalFrame {
                 this.btnAnular.setEnabled(false);
             }
         }
+*/
     }//GEN-LAST:event_tblOrdenesMouseClicked
 
 

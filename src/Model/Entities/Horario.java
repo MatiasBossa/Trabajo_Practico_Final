@@ -5,7 +5,7 @@
  */
 package Model.Entities;
 
-
+import java.time.LocalDate;
 import java.time.LocalTime;
 
 /**
@@ -15,48 +15,40 @@ import java.time.LocalTime;
 public class Horario {
     
     private int idHorario;
-    private String dia;
-    private LocalTime horarioAtencion;
     private Prestador prestador;
+    private LocalDate fecha;
+    private String dia;
+    private LocalTime hora;
 
-    public Horario(int idHorario, String dia, LocalTime horarioAtencion, Prestador prestador) {
-        this.idHorario = idHorario;
-        this.dia = dia;
-        this.horarioAtencion = horarioAtencion;
-        this.prestador = prestador;
-    }
+    private String[] dias = {"Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado", "Domingo"};
 
-    public Horario(String dia, LocalTime horarioAtencion, Prestador prestador) {
-        this.dia = dia;
-        this.horarioAtencion = horarioAtencion;
-        this.prestador = prestador;
-    }
 
+    // Constructores
     public Horario() {
     }
+    public Horario(Prestador prestador, LocalDate fecha, String dia, LocalTime hora) {
+        this.prestador = prestador;
+        this.fecha = fecha;
+        this.dia = dia;
+        this.hora = hora;
+    }
+    public Horario(int idHorario, Prestador prestador, LocalDate fecha, String dia, LocalTime hora) {
+        this.idHorario = idHorario;
+        this.prestador = prestador;
+        this.fecha = fecha;
+        this.dia = dia;
+        this.hora = hora;
+    }
+ 
 
+
+    // Getter and Setter
     public int getIdHorario() {
         return idHorario;
     }
 
     public void setIdHorario(int idHorario) {
         this.idHorario = idHorario;
-    }
-
-    public String getDia() {
-        return dia;
-    }
-
-    public void setDia(String dia) {
-        this.dia = dia;
-    }
-
-    public LocalTime getHorarioAtencion() {
-        return horarioAtencion;
-    }
-
-    public void setHorarioAtencion(LocalTime horarioAtencion) {
-        this.horarioAtencion = horarioAtencion;
     }
 
     public Prestador getPrestador() {
@@ -67,9 +59,35 @@ public class Horario {
         this.prestador = prestador;
     }
 
+    public LocalDate getFecha() {
+        return fecha;
+    }
+
+    public void setFecha(LocalDate fecha) {
+        this.fecha = fecha;
+    }
+
+    public String getDia() {
+        return dia;
+    }
+
+    public void setDia(String dia) {
+        this.dia = dia;
+    }
+    
+    public LocalTime getHora() {
+        return hora;
+    }
+
+    public void setHora(LocalTime horaAtencion) {
+        this.hora = horaAtencion;
+    }
+
+
     @Override
     public String toString() {
-        return dia + " - " + horarioAtencion ;
+        int d = fecha.getDayOfWeek().getValue();
+        return fecha +" "+ dias[d-1] + " - " + hora ;
     }
 
 /*
@@ -78,4 +96,6 @@ public class Horario {
         return getIdHorario() == ((Horario) obj).getIdHorario();
     }
 */
+
+
 }

@@ -49,6 +49,16 @@ public class Funciones {
             return null;
         }
     }
+    public java.util.Date StringAFechaHora(String fechaHora) {
+        SimpleDateFormat formato_de_Texto = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date fechaE = null;
+        try {
+            fechaE = formato_de_Texto.parse(fechaHora);
+            return fechaE;
+        } catch (ParseException e) {
+            return null;
+        }
+    }
     
     
     /**
