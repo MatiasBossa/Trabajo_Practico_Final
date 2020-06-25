@@ -9,8 +9,6 @@ import Model.Data.AfiliadoData;
 import Model.Entities.Afiliado;
 import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
-import java.util.List;
-import javax.swing.table.DefaultTableModel;
 
 
 
@@ -25,27 +23,7 @@ public class frmAfiliado extends javax.swing.JInternalFrame {
      */
     public frmAfiliado() {
         initComponents();
-        final DefaultTableModel tabla = new DefaultTableModel(){
-                
-                public boolean isCellEditable(int row, int column) {
-                
-                return false;           
-                 }
-            };
-            this.tblAfiliados.setModel(tabla);
-            final Afiliado a = new Afiliado();
-            final AfiliadoData ad = new AfiliadoData();
-            final List<Afiliado> listado = (List<Afiliado>)ad.listarAfiliados();
-            
-            tabla.addColumn("Nombre");
-            tabla.addColumn("Apellido");
-            tabla.addColumn("DNI");
-            tabla.addColumn("Activo");
-            for (int i = 0; i < listado.size(); ++i) {
-                Object[] ob = { listado.get(i).getNombre(), listado.get(i).getApellido(), listado.get(i).getDni(), listado.get(i).getActivo() };
-                tabla.addRow(ob);
-                ob = null;
-            }
+        
     }
 
     /**
@@ -81,7 +59,7 @@ public class frmAfiliado extends javax.swing.JInternalFrame {
         jLabel8 = new javax.swing.JLabel();
 
         setClosable(true);
-        setTitle("formulario de prestadores");
+        setTitle("Formulario de Afiliados");
         setPreferredSize(new java.awt.Dimension(810, 350));
 
         txtIdAfiliado.addActionListener(new java.awt.event.ActionListener() {

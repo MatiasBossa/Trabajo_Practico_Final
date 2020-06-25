@@ -5,14 +5,22 @@ import javax.swing.JOptionPane;
 import java.awt.event.ActionEvent;
 import View.frmAfiliado;
 import Model.Data.AfiliadoData;
+import Model.Data.OrdenData;
 import Model.Entities.Afiliado;
+import Model.Entities.Orden;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ControlAfiliado implements ActionListener
 {
     private Afiliado modE;
     private AfiliadoData modD;
     private frmAfiliado frm;
+    private List<Afiliado> listado = new ArrayList<>();
+    private OrdenData od = new OrdenData();
+    private List<Orden> listadoOrden = null;
+    
     
     public ControlAfiliado(final Afiliado modE, final AfiliadoData modD, final frmAfiliado frm) {
         this.modE = modE;
@@ -25,6 +33,10 @@ public class ControlAfiliado implements ActionListener
         this.frm.btnAnular.addActionListener(this);
         this.frm.btnLimpiar.addActionListener(this);
         this.frm.chkActivo.addActionListener(this);
+        
+        this.listado = modD.listarAfiliados();
+        cargarDatosTabla();
+        
     }
     
     public void Iniciar() {
@@ -32,34 +44,51 @@ public class ControlAfiliado implements ActionListener
         
     }
     
-    
     @Override
     public void actionPerformed(final ActionEvent e) {
         
         if (e.getSource() == this.frm.btnGuardar) {
-            this.txtAEntidad();
-            this.modD.guardarAfiliado(this.modE);
-            JOptionPane.showMessageDialog(null, "Afiliado guardado.");
-            this.txtATabla();
-            this.limpiar();
+            if(txtAEntidad()){
+                this.modE.setId(-1);
+                if(comprobarDni()){
+                this.modD.guardarAfiliado(this.modE);
+                JOptionPane.showMessageDialog(null, "Afiliado guardado.");
+                cargarDatosTabla();
+                limpiar();
+                }
+            } 
         }
         
         
         if (e.getSource() == this.frm.btnModificar) {
-            this.txtAEntidad();
-            this.modD.modificarAfiliado(this.modE);
-            JOptionPane.showMessageDialog(null, "Afiliado modificado.");
-            this.limpiar();
-        }
+            try{
+                this.txtAEntidad();
+                this.modD.modificarAfiliado(this.modE);
+
+                JOptionPane.showMessageDialog(null, "Afiliado modificado.");
+                cargarDatosTabla();
+                limpiar();
+            }catch(Exception ee){
+                cargarDatosTabla();
+                JOptionPane.showMessageDialog(frm, "ERROR AL MODFICAR EL AFILIADO", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+            
+    }
         
         
 
         if (e.getSource() == this.frm.btnBorrar) {
             final int idAfiliado = Integer.parseInt(this.frm.txtIdAfiliado.getText());
-            this.modD.borrarAfiliado(idAfiliado);
-            JOptionPane.showMessageDialog(null, "Afiliado borrado.");
-            this.limpiar();
-            
+            listadoOrden = od.listarOrdenes(idAfiliado);
+                if(listadoOrden.isEmpty()){
+                     this.modD.borrarAfiliado(idAfiliado);
+                    JOptionPane.showMessageDialog(null, "Afiliado borrado.");
+  
+                }else{
+                    JOptionPane.showMessageDialog(frm, "ERROR AL BORRAR EL AFILIADO", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+                cargarDatosTabla();
+                this.limpiar();
         }
         
         
@@ -67,6 +96,7 @@ public class ControlAfiliado implements ActionListener
             final int idAfiliado = Integer.parseInt(this.frm.txtIdAfiliado.getText());
             this.modD.desactivarAfiliado(idAfiliado);
             JOptionPane.showMessageDialog(null, "Afiliado anulado.");
+            cargarDatosTabla();
             this.limpiar();
         }
         
@@ -75,6 +105,7 @@ public class ControlAfiliado implements ActionListener
             
             final DefaultTableModel tabla = new DefaultTableModel(){
                 
+                @Override
                 public boolean isCellEditable(int row, int column) {
                 //all cells false
                 return false;           
@@ -95,7 +126,9 @@ public class ControlAfiliado implements ActionListener
                     tabla.addRow(ob);
                     ob = null;
                 }
+                
            }catch(Exception ee){
+               cargarDatosTabla();
                JOptionPane.showMessageDialog(frm, "ERROR AL ENCONTRAR EL AFILIADO", "Error", JOptionPane.ERROR_MESSAGE);
            } 
             
@@ -103,6 +136,7 @@ public class ControlAfiliado implements ActionListener
         
         if (e.getSource() == this.frm.btnLimpiar) {
             this.limpiar();
+            cargarDatosTabla();
         }
     }
     
@@ -114,12 +148,34 @@ public class ControlAfiliado implements ActionListener
         this.frm.chkActivo.setSelected(false);
     }
     
-    private void txtAEntidad() {
+    private boolean txtAEntidad() {
+        
+        if(this.frm.txtIdAfiliado.getText().trim().isEmpty()){
+            JOptionPane.showMessageDialog(frm, "INGRESE UN ID VALIDO", "Error", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+        
+        if(this.frm.txtNombre.getText().trim().isEmpty()){
+            JOptionPane.showMessageDialog(frm, "INGRESE UN NOMBRE VALIDO", "Error", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+        
+        if(this.frm.txtApellido.getText().trim().isEmpty()){
+            JOptionPane.showMessageDialog(frm, "INGRESE UN APELLIDO VALIDO", "Error", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+        
+        if(this.frm.txtDni.getText().trim().isEmpty()){
+            JOptionPane.showMessageDialog(frm, "INGRESE UN ID VALIDO", "Error", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+        
         this.modE.setId(Integer.parseInt(this.frm.txtIdAfiliado.getText()));
         this.modE.setNombre(this.frm.txtNombre.getText());
         this.modE.setApellido(this.frm.txtApellido.getText());
         this.modE.setDni((long)Integer.parseInt(this.frm.txtDni.getText()));
         this.modE.setActivo(this.frm.chkActivo.isSelected());
+        return true;
     }
     
     private void txtATabla() {
@@ -132,5 +188,42 @@ public class ControlAfiliado implements ActionListener
         final DefaultTableModel tabla = new DefaultTableModel();
         this.frm.tblAfiliados.setModel(tabla);
         tabla.addRow(fila);
+    }
+    
+    private boolean comprobarDni(){
+        for(int i = 0; i < listado.size(); i++) {
+            if (modE.getDni() == listado.get(i).getDni()&&!modE.equals(listado.get(i))) {
+                //if(!preE.equals(listado.get(i))) {
+                    JOptionPane.showMessageDialog(null, "Ya hay un Afiliado con ese Dni.");
+                    return false;
+                //}
+            }
+        }
+        return true;
+    }
+ 
+     private void cargarDatosTabla() {
+         final DefaultTableModel tabla = new DefaultTableModel(){
+                
+                public boolean isCellEditable(int row, int column) {
+                
+                return false;           
+                 }
+            };
+            frm.tblAfiliados.setModel(tabla);
+            final Afiliado a = new Afiliado();
+            final AfiliadoData ad = new AfiliadoData();
+            final List<Afiliado> listado = (List<Afiliado>)ad.listarAfiliados();
+            
+            tabla.addColumn("Nombre");
+            tabla.addColumn("Apellido");
+            tabla.addColumn("DNI");
+            tabla.addColumn("Activo");
+            for (int i = 0; i < listado.size(); ++i) {
+                Object[] ob = { listado.get(i).getNombre(), listado.get(i).getApellido(), listado.get(i).getDni(), listado.get(i).getActivo() };
+                tabla.addRow(ob);
+                ob = null;
+            }
+        
     }
 }
