@@ -50,7 +50,7 @@ public class Especialidad {
     }
     @Override
     public boolean equals(Object obj) {
-        return this.titulo == obj.toString();
+        return this.idEspecialidad == ((Especialidad)obj).getIdEspecialidad();
     }
 
 }

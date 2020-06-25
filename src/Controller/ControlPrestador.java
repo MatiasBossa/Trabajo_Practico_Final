@@ -45,11 +45,19 @@ public class ControlPrestador implements ActionListener, KeyListener, MouseListe
         bajarDatos();
         cargarDatosTabla();
         cargarDatosComboBox();
+        Iniciar();
     }
 
-    public void Iniciar() {
-        this.frm.setTitle("Prestador");
+    private void Iniciar() {
+        this.frm.setTitle("Formulario de prestadores");
+        //-+
+        
+        
+        System.out.println("Controller.ControlPrestador.Iniciar()");
     }
+    
+    
+    
     
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -61,7 +69,6 @@ public class ControlPrestador implements ActionListener, KeyListener, MouseListe
         // <editor-fold defaultstate="collapsed" desc="Boton Guardar">
         if (e.getSource() == this.frm.btnGuardar) {
             //aca se asegura de no guardar nada si alguno los txtField estan vacios
-            
             if(txtAEntidad() /*&& comprobarDni()*/){
                 this.preE.setId(-1);
                 if(comprobarDni()) {
@@ -81,8 +88,6 @@ public class ControlPrestador implements ActionListener, KeyListener, MouseListe
                 JOptionPane.showMessageDialog(null, "Para modificar un Prestador tiene que seleccionar uno de la lista");
             }
             else if(txtAEntidad()&& comprobarDni()){
-                
-                
                 this.preD.modificarPrestador(this.preE);//modifica el Prestador en la base de datos
                 for(int i =0;i<this.listado.size();i++){
                     if(this.listado.get(i).equals(this.preE)){
@@ -91,8 +96,6 @@ public class ControlPrestador implements ActionListener, KeyListener, MouseListe
                         break;
                     }
                 }
-                
-                
                 JOptionPane.showMessageDialog(null, "Prestador modificado.");
                 cargarDatosTabla();
                 limpiar();
@@ -194,8 +197,6 @@ public class ControlPrestador implements ActionListener, KeyListener, MouseListe
                 break;
             }
         }
-
-        frm.jComboBoxEspecialidad.setSelectedItem(new Especialidad(String.valueOf(frm.jTPrestador.getValueAt(fila, 4))));
 
         frm.chkActivo.setSelected((boolean) frm.jTPrestador.getValueAt(fila, 5));
     }

@@ -15,30 +15,10 @@ import javax.swing.table.DefaultTableModel;
  * @author Matias
  */
 public class frmEspecialidades extends javax.swing.JInternalFrame {
-    private DefaultTableModel modelo;
-    private EspecialidadData especialidadData;
-    private Conexion con;
-    private ArrayList<Especialidad>listaEspecialidades;
-
-    /**
-     * Creates new form frmEspecialidades
-     */
+    
     public frmEspecialidades() {
         initComponents();
-        
-        con = new Conexion();
-        con.getConexion();
-        
-        modelo = new DefaultTableModel();
-        EspecialidadData ed = new EspecialidadData();
-        
-        listaEspecialidades = ed.listarEspecialidades();
-        
-        cabeceraTabla();
-        cargarDatosTabla();
-        
-        
-        
+        jLabel1.setVisible(false);
         
     }
 
@@ -64,6 +44,7 @@ public class frmEspecialidades extends javax.swing.JInternalFrame {
         btnLimpiar = new java.awt.Button();
 
         setClosable(true);
+        setTitle("Formulario especialidad");
 
         label1.setAlignment(java.awt.Label.CENTER);
         label1.setFont(new java.awt.Font("Calisto MT", 1, 18)); // NOI18N
@@ -72,45 +53,36 @@ public class frmEspecialidades extends javax.swing.JInternalFrame {
 
         tblEspecialidades.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Title 1", "Title 2"
             }
-        ));
-        tblEspecialidades.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tblEspecialidadesMouseClicked(evt);
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
             }
         });
         jScrollPane1.setViewportView(tblEspecialidades);
+        if (tblEspecialidades.getColumnModel().getColumnCount() > 0) {
+            tblEspecialidades.getColumnModel().getColumn(0).setResizable(false);
+            tblEspecialidades.getColumnModel().getColumn(1).setResizable(false);
+        }
 
         label2.setAlignment(java.awt.Label.CENTER);
         label2.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         label2.setText("Datos Especialidades");
 
-        txtId.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtIdActionPerformed(evt);
-            }
-        });
-
         btnModificar.setLabel("Modificar");
-        btnModificar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnModificarActionPerformed(evt);
-            }
-        });
 
         btnGuardar.setLabel("Guardar");
-        btnGuardar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnGuardarActionPerformed(evt);
-            }
-        });
 
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("ID:");
@@ -119,170 +91,82 @@ public class frmEspecialidades extends javax.swing.JInternalFrame {
         jLabel2.setText("Especialidad:");
 
         btnLimpiar.setLabel("Limpiar");
-        btnLimpiar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnLimpiarActionPerformed(evt);
-            }
-        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(10, 10, 10)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 456, Short.MAX_VALUE)
-                    .addComponent(label1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(label1, javax.swing.GroupLayout.DEFAULT_SIZE, 240, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(64, 64, 64)
-                        .addComponent(label2, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(40, 40, 40)
+                        .addGap(10, 10, 10)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(btnModificar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 19, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(txtEspecialidad, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(txtId, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(19, 19, 19)
-                                .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
-                                .addComponent(btnLimpiar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(156, 156, 156))))
+                                .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnLimpiar, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txtId, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(10, 10, 10))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(38, 38, 38)
+                        .addComponent(label2, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(0, 11, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(label2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(label1, javax.swing.GroupLayout.DEFAULT_SIZE, 29, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(label1, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(9, 9, 9)
+                        .addGap(19, 19, 19)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(txtId, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(34, 34, 34)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(txtEspecialidad, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(39, 39, 39)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(btnModificar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(btnLimpiar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 29, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(10, 10, 10))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void txtIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtIdActionPerformed
-
-    }//GEN-LAST:event_txtIdActionPerformed
-
-    private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
-            if ( !this.txtId.getText().equals("") && !this.txtEspecialidad.getText().equals("") ) {
-            Especialidad esp = new Especialidad(Integer.parseInt(this.txtId.getText()), this.txtEspecialidad.getText() );
-            EspecialidadData ed = new EspecialidadData();
-            ed.modificarEspecialidad(esp);
-            listaEspecialidades = (ArrayList) ed.listarEspecialidades();
-            JOptionPane.showMessageDialog(null, "Registro modificado.");
-        } else {
-            JOptionPane.showMessageDialog(null, "Debe ingresar ID y un nombre.");
-        }
-            cargarDatosTabla();
-    }//GEN-LAST:event_btnModificarActionPerformed
-
-    private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
-           limpiar();
-    }//GEN-LAST:event_btnLimpiarActionPerformed
-
-    private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
-           if ( !this.txtEspecialidad.getText().equals("") ) {
-           Especialidad es = new Especialidad(-1, this.txtEspecialidad.getText()); 
-           EspecialidadData ed = new EspecialidadData();
-           ed.guardarEspecialidad(es);
-           
-           listaEspecialidades = (ArrayList) ed.listarEspecialidades();
-           limpiar();
-            JOptionPane.showMessageDialog(null, "Registro guardado.");
-        } else {
-            JOptionPane.showMessageDialog(null, "Debe ingresar un nombre.");
-        }
-           cargarDatosTabla();         
-           
-          
-    }//GEN-LAST:event_btnGuardarActionPerformed
-
-    private void tblEspecialidadesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblEspecialidadesMouseClicked
-            int seleccion = tblEspecialidades.rowAtPoint(evt.getPoint());
-            txtId.setText(String.valueOf(tblEspecialidades.getValueAt(seleccion, 0)));
-            txtEspecialidad.setText(String.valueOf(tblEspecialidades.getValueAt(seleccion, 1)));
-            
-    }//GEN-LAST:event_tblEspecialidadesMouseClicked
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private java.awt.Button btnGuardar;
-    private java.awt.Button btnLimpiar;
-    private java.awt.Button btnModificar;
+    public java.awt.Button btnGuardar;
+    public java.awt.Button btnLimpiar;
+    public java.awt.Button btnModificar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
     private java.awt.Label label1;
     private java.awt.Label label2;
-    private javax.swing.JTable tblEspecialidades;
-    private java.awt.TextField txtEspecialidad;
-    private java.awt.TextField txtId;
+    public javax.swing.JTable tblEspecialidades;
+    public java.awt.TextField txtEspecialidad;
+    public java.awt.TextField txtId;
     // End of variables declaration//GEN-END:variables
-
-    
-    public void cabeceraTabla(){
-    ArrayList<Object> columnas = new ArrayList<Object>();
-       columnas.add("ID");
-       columnas.add("ESPECIALIDAD");
-            for(Object it:columnas) {
-                modelo.addColumn(it);
-                }
-        this.tblEspecialidades.setModel(modelo);
-    }
-    
-    public void borrarFilasTabla() {
-
-        int f = modelo.getRowCount()-1;
-        for(int i=f; i>=0; i--) {
-            modelo.removeRow(i);
-        }
-    }
-    
-    public void cargarDatosTabla() {
-        
-        borrarFilasTabla();
-        for(Especialidad es:listaEspecialidades){
-            modelo.addRow(new Object[]{es.getIdEspecialidad(), es.getTitulo()});
-        }       
-        
-    }
-    
-    private void limpiar(){
-        this.txtId.setText("");
-        this.txtEspecialidad.setText("");
-    }
-    
-    
-
-
-
-
 
 }
 
