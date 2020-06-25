@@ -301,7 +301,7 @@ public class ControlOrden implements ActionListener {
     }
     private void cargarHorarios() {
         frm.cbxHorario.removeAllItems();        
-        listaHorarios = (ArrayList)horarioData.listarHorarios( ((Prestador)frm.cbxPrestador.getSelectedItem()).getId() );
+        listaHorarios = (ArrayList)horarioData.listarHorariosDisponibles( ((Prestador)frm.cbxPrestador.getSelectedItem()).getId() );
         for (Horario item : listaHorarios) {
             frm.cbxHorario.addItem(item);
         }

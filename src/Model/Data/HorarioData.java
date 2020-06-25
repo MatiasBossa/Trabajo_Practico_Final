@@ -12,10 +12,16 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Time;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -173,7 +179,52 @@ public class HorarioData extends Conexion {
         
         return horarios;
     }
-    
+    public List<Horario> listarHorariosDisponibles(int idPrestador) {
+        String SQL_SELECT = "SELECT * FROM horario WHERE idPrestador = ? "
+                + "AND fecha > ?"
+                + "AND idHorario NOT IN ( SELECT idHorario FROM orden WHERE idPrestador = ? )";
+        PrestadorData pd = new PrestadorData();
+        ResultSet rs;
+        List<Horario> horarios = null;
+        Horario horario = null;
+        try{
+            PreparedStatement ps = con.prepareStatement(SQL_SELECT);
+            ps.setInt(1, idPrestador);
+            Calendar fecha = new GregorianCalendar();
+            int anio = fecha.get(Calendar.YEAR);
+            int mes = fecha.get(Calendar.MONTH)+1;
+            int dia = fecha.get(Calendar.DAY_OF_MONTH);
+            String fechaHoy = anio+"-"+ ( mes<10 ? "0"+mes : mes )+"-"+ ( dia<10 ? "0"+dia : dia );
+            ps.setString(2, fechaHoy);
+            ps.setInt(3, idPrestador);
+            
+            rs = ps.executeQuery();
+            
+            horarios = new ArrayList<>();
+            while(rs.next()){
+                horario = new Horario();
+                horario.setIdHorario(rs.getInt("idHorario"));
+                horario.setPrestador(pd.buscarPrestador(rs.getInt("idPrestador")));
+                horario.setFecha( rs.getDate("fecha").toLocalDate() );                
+                int d = rs.getDate("fecha").toLocalDate().getDayOfWeek().getValue();
+                horario.setDia(dias[d-1]);
+                horario.setHora(rs.getTime("hora").toLocalTime());
+
+                horarios.add(horario);
+            }
+            
+            rs.close();
+            ps.close();
+        }catch(SQLException e){
+            System.out.println("ERROR al obtener el horario");
+            e.printStackTrace();
+        }
+        
+        return horarios;
+    }    
+
+
+
     /**
      * Esta función se utiliza para saber si el idPrestador esta asociado a algun horario, a partir
      * del idPrestador pasado por parámetro.
